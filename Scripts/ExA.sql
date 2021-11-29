@@ -104,8 +104,8 @@ CREATE TABLE Intervencoes (
     PRIMARY KEY (id),
     CONSTRAINT fk_Intervencoes_activo FOREIGN KEY (activo) REFERENCES Activos(id),
     CONSTRAINT fk_Intervencoes_descricao FOREIGN KEY (descricao) REFERENCES DescricoesIntervencoes(id),
-    CONSTRAINT fk_Intervencoes_estado FOREIGN KEY (estado) REFERENCES EstadosIntervencoes(id),
-    CONSTRAINT fk_Intervencoes_data CHECK (data_inicio > activo.data_aquisicao)
+    CONSTRAINT fk_Intervencoes_estado FOREIGN KEY (estado) REFERENCES EstadosIntervencoes(id)
+    --CONSTRAINT fk_Intervencoes_data CHECK (data_inicio > activo.data_aquisicao)
 )
 
 CREATE TABLE Periodico (
