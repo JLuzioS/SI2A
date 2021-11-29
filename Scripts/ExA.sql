@@ -1,6 +1,7 @@
 CREATE TABLE Funcionarios (
-    cc VARCHAR(12) NOT NULL,
-    nif VARCHAR(12),
+    id INT NOT NULL,
+    cc VARCHAR(12) UNIQUE  NOT NULL,
+    nif VARCHAR(12) UNIQUE,
     nome_completo VARCHAR(256) NOT NULL,
     data_de_nascimento DATE NOT NULL,
     morada VARCHAR(256) NOT NULL,
@@ -10,7 +11,7 @@ CREATE TABLE Funcionarios (
     telefone INT NOT NULL,
     telemovel INT,
 
-    PRIMARY KEY (cc),
+    PRIMARY KEY (id),
     CONSTRAINT valid_cc CHECK (cc LIKE NULL OR cc LIKE '%[^0-9]%%[^0-9]%%[^0-9]%%[^0-9]%%[^0-9]%%[^0-9]%%[^0-9]%%[^0-9]%%[^0-9]% %_%%_%%_%'),
     CONSTRAINT valid_codigo_postal CHECK (codigo_postal LIKE '%[^0-9]%%[^0-9]%%[^0-9]%%[^0-9]%%-%%[^0-9]%%[^0-9]%%[^0-9]%'),
     CONSTRAINT valid_telefone CHECK (telefone LIKE '%[^0-9]%%[^0-9]%%[^0-9]%%[^0-9]%%[^0-9]%%[^0-9]%%[^0-9]%%[^0-9]%%[^0-9]%'),
@@ -19,36 +20,36 @@ CREATE TABLE Funcionarios (
 )
 
 CREATE TABLE Equipas (
-    codEquipa INT NOT NULL,
+    id INT NOT NULL,
     localizacao VARCHAR(256) NOT NULL,
     numElementos INT NOT NULL,
 
-    PRIMARY KEY (codEquipa)
+    PRIMARY KEY (id)
 )
 
 CREATE TABLE Gestores (
-    cc VARCHAR(12) NOT NULL,
+    funcionario INT NOT NULL,
 
-    PRIMARY KEY (cc),
-    CONSTRAINT fk_Gestores_funcionario FOREIGN KEY (cc) REFERENCES Gestores(cc)
+    PRIMARY KEY (funcionario),
+    CONSTRAINT fk_Gestores_funcionario FOREIGN KEY (funcionario) REFERENCES Funcionarios(id)
 )
 
 CREATE TABLE Competencias (
-    codCompetencia INT NOT NULL,
+    id INT NOT NULL,
     descricao VARCHAR(256) NOT NULL,
 
-    PRIMARY KEY (codCompetencia)
+    PRIMARY KEY (id)
 )
 
 CREATE TABLE MembrosEquipas (
-    membro VARCHAR(12) NOT NULL,
+    membro INT NOT NULL,
     equipa INT NOT NULL,
     competencias INT NOT NULL,
 
     PRIMARY KEY (membro),
-    CONSTRAINT fk_MembrosEquipas_funcionario FOREIGN KEY (membro) REFERENCES Funcionarios(cc),
-    CONSTRAINT fk_MembrosEquipas_equipas FOREIGN KEY (equipa) REFERENCES Equipas(codEquipa),
-    CONSTRAINT fk_MembrosEquipas_competencias FOREIGN KEY (competencias) REFERENCES Competencias(codCompetencia)
+    CONSTRAINT fk_MembrosEquipas_funcionario FOREIGN KEY (membro) REFERENCES Funcionarios(id),
+    CONSTRAINT fk_MembrosEquipas_equipas FOREIGN KEY (equipa) REFERENCES Equipas(id),
+    CONSTRAINT fk_MembrosEquipas_competencias FOREIGN KEY (competencias) REFERENCES Competencias(id)
 )
 
 CREATE TABLE Activos (
@@ -59,11 +60,11 @@ CREATE TABLE Activos (
     marca VARCHAR(256) NOT NULL,
     modelo VARCHAR(256) NOT NULL,
     localizacao VARCHAR(256) NOT NULL,
-    gestor VARCHAR(12) NOT NULL,
+    gestor INT NOT NULL,
 
     PRIMARY KEY (id),
     CONSTRAINT estado CHECK (estado = 0 or estado = 1),
-    CONSTRAINT fk_Activos_gestores FOREIGN KEY (gestor) REFERENCES Gestores(cc)
+    CONSTRAINT fk_Activos_gestores FOREIGN KEY (gestor) REFERENCES Gestores(funcionario)
 )
 
 CREATE TABLE PrecosActivos (
@@ -104,6 +105,21 @@ CREATE TABLE Intervencoes (
     CONSTRAINT fk_Intervencoes_estado FOREIGN KEY (estado) REFERENCES EstadosIntervencoes(id),
 )
 
+CREATE TABLE Periodico (
+    intervencao INT NOT NULL,
+
+    CONSTRAINT fk_Periodico_intervencoes FOREIGN KEY (intervencao) REFERENCES Intervencoes(id)
+)
+
+CREATE TABLE NaoPeriodico (
+    intervencao INT NOT NULL,
+    periodicidade INT NOT NULL,
+
+    PRIMARY KEY (intervencao),
+    CONSTRAINT fk_Periodico_Intervencoes FOREIGN KEY (intervencao) REFERENCES Activos(id)
+)
+
+
 CREATE TABLE IntervencoesEquipas (
     equipa INT NOT NULL,
     intervencao INT NOT NULL,
@@ -111,7 +127,7 @@ CREATE TABLE IntervencoesEquipas (
     data_fim DATE,
 
     PRIMARY KEY (equipa, intervencao),
-    CONSTRAINT fk_IntervencoesEquipas_equipas FOREIGN KEY (equipa) REFERENCES Equipas(codEquipa),
+    CONSTRAINT fk_IntervencoesEquipas_equipas FOREIGN KEY (equipa) REFERENCES Equipas(id),
     CONSTRAINT fk_IntervencoesEquipas_intervencoes FOREIGN KEY (intervencao) REFERENCES Intervencoes(id)
 )
 
