@@ -62,12 +62,13 @@ GO
 
 CREATE PROCEDURE deleteFuncionario  @id INT
 AS
+BEGIN
+    if @id IS NOT NULL
     BEGIN
-        if @id IS NOT NULL
-        BEGIN
-            DELETE FROM Funcionarios where id = @id
-        END
+        DELETE FROM Funcionarios where id = @id
     END
+END;
+
 GO
 
 CREATE PROCEDURE p_CriaInter    @descricao INT,
@@ -91,8 +92,19 @@ AS
         ELSE
             BEGIN
             PRINT 'ELSE'
-            RAISERROR(15600, -1, -1, 'Data de inicio da intervenção é inferior à data de acquisição do Activo')
+            RAISERROR('Data de inicio da intervenção é inferior à data de acquisição do Activo', 10, 0)
             END
     END
 
-    drop PROCEDURE p_CriaInter
+GO 
+
+CREATE PROCEDURE insertEquipa @localizacao VARCHAR(256)
+AS
+    BEGIN
+        IF (NULLIF(@localizacao, '') IS NULL)
+            RAISERROR ('Localização can''t be null', 10, 0)
+        DECLARE @id AS BIGINT
+        SELECT TOP 1 @id = id + 1  FROM Equipas ORDER BY id ASC
+        INSERT INTO Equipas VALUES (ISNULL(@id, 1), @localizacao, 0)
+    END
+GO
