@@ -10,9 +10,7 @@ CREATE PROCEDURE insertFuncionario  @cc VARCHAR(13),
                                     @telemovel INT
 AS
     BEGIN
-        DECLARE @id AS BIGINT
-        SELECT TOP 1 @id = id + 1  FROM Funcionarios ORDER BY id ASC
-        INSERT INTO Funcionarios VALUES (ISNULL(@id, 1), @cc, @nif, @nome_completo, @data_de_nascimento, @morada, @codigo_postal, @localidade, @profissao, @telefone, @telemovel)
+        INSERT INTO Funcionarios VALUES (@cc, @nif, @nome_completo, @data_de_nascimento, @morada, @codigo_postal, @localidade, @profissao, @telefone, @telemovel)
     END
     
 GO
@@ -60,7 +58,7 @@ END;
 
 GO
 
-CREATE PROCEDURE deleteFuncionario  @id INT
+CREATE PROCEDURE deleteFuncionario @id INT
 AS
 BEGIN
     if @id IS NOT NULL
@@ -101,10 +99,10 @@ GO
 CREATE PROCEDURE insertEquipa @localizacao VARCHAR(256)
 AS
     BEGIN
+
         IF (NULLIF(@localizacao, '') IS NULL)
             RAISERROR ('Localização can''t be null', 10, 0)
-        DECLARE @id AS BIGINT
-        SELECT TOP 1 @id = id + 1  FROM Equipas ORDER BY id ASC
-        INSERT INTO Equipas VALUES (ISNULL(@id, 1), @localizacao, 0)
+        INSERT INTO Equipas VALUES (@localizacao, 0)
+        
     END
 GO

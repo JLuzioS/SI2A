@@ -92,28 +92,13 @@ CREATE TABLE Intervencoes (
     valor_monetario FLOAT NOT NULL,
     data_inicio DATE NOT NULL,
     data_fim DATE,
+    periodicidade_meses INT NOT NULL
 
     PRIMARY KEY (id),
     CONSTRAINT fk_Intervencoes_activo FOREIGN KEY (activo) REFERENCES Activos(id),
     CONSTRAINT fk_Intervencoes_competencias FOREIGN KEY (competencias) REFERENCES Competencias(id),
     CONSTRAINT fk_Intervencoes_estado FOREIGN KEY (estado) REFERENCES EstadosIntervencoes(id)
 )
-
-CREATE TABLE Periodico (
-    intervencao INT NOT NULL,
-
-    PRIMARY KEY (intervencao),
-    CONSTRAINT fk_Periodico_intervencoes FOREIGN KEY (intervencao) REFERENCES Intervencoes(id)
-)
-
-CREATE TABLE NaoPeriodico (
-    intervencao INT NOT NULL,
-    periodicidade INT NOT NULL,
-
-    PRIMARY KEY (intervencao),
-    CONSTRAINT fk_NaoPeriodico_Intervencoes FOREIGN KEY (intervencao) REFERENCES Activos(id)
-)
-
 
 CREATE TABLE IntervencoesEquipas (
     equipa INT NOT NULL,
