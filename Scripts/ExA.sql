@@ -1,6 +1,6 @@
 CREATE TABLE Funcionarios (
     id INT NOT NULL,
-    cc VARCHAR(12) UNIQUE  NOT NULL,
+    cc VARCHAR(13) UNIQUE  NOT NULL,
     nif VARCHAR(12) UNIQUE,
     nome_completo VARCHAR(256) NOT NULL,
     data_de_nascimento DATE NOT NULL,
@@ -12,11 +12,11 @@ CREATE TABLE Funcionarios (
     telemovel INT,
 
     PRIMARY KEY (id),
-    CONSTRAINT valid_cc CHECK (cc LIKE NULL OR cc LIKE '%[^0-9]%%[^0-9]%%[^0-9]%%[^0-9]%%[^0-9]%%[^0-9]%%[^0-9]%%[^0-9]%%[^0-9]% %_%%_%%_%'),
-    CONSTRAINT valid_codigo_postal CHECK (codigo_postal LIKE '%[^0-9]%%[^0-9]%%[^0-9]%%[^0-9]%%-%%[^0-9]%%[^0-9]%%[^0-9]%'),
-    CONSTRAINT valid_telefone CHECK (telefone LIKE '%[^0-9]%%[^0-9]%%[^0-9]%%[^0-9]%%[^0-9]%%[^0-9]%%[^0-9]%%[^0-9]%%[^0-9]%'),
-    CONSTRAINT valid_telemovel CHECK (telemovel LIKE NULL OR telemovel LIKE '%[^0-9]%%[^0-9]%%[^0-9]%%[^0-9]%%[^0-9]%%[^0-9]%%[^0-9]%%[^0-9]%%[^0-9]%'),
-    CONSTRAINT valid_nif CHECK (codigo_postal LIKE NULL OR codigo_postal LIKE '%[^0-9]%%[^0-9]%%[^0-9]%%[^0-9]%%[^0-9]%%[^0-9]%%[^0-9]%%[^0-9]%%[^0-9]%')
+    CONSTRAINT valid_cc CHECK (cc LIKE NULL OR cc LIKE '%[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]-[A-Z0-9a-z][A-Z0-9a-z][A-Z0-9a-z]%'),
+    CONSTRAINT valid_codigo_postal CHECK (codigo_postal LIKE '%[0-9][0-9][0-9][0-9]-[0-9][0-9][0-9]%'),
+    CONSTRAINT valid_telefone CHECK (telefone LIKE '%[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]%'),
+    CONSTRAINT valid_telemovel CHECK (telemovel LIKE NULL OR telemovel LIKE '%[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]%'),
+    CONSTRAINT valid_nif CHECK (nif LIKE NULL OR nif LIKE '%[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]%')
 )
 
 CREATE TABLE Equipas (
