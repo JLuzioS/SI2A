@@ -56,7 +56,7 @@ CREATE TABLE Activos (
     id INT,
     nome VARCHAR(256) NOT NULL,
     data_aquisicao DATE NOT NULL,
-    estado INT NOT NULL , -- 0 desactivado | 1 desactivado
+    estado INT NOT NULL , -- 0 desactivado | 1 activado
     marca VARCHAR(256) NOT NULL,
     modelo VARCHAR(256) NOT NULL,
     localizacao VARCHAR(256) NOT NULL,
