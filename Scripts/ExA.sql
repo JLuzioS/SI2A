@@ -1,5 +1,5 @@
 CREATE TABLE Funcionarios (
-    id INT NOT NULL,
+    id INT IDENTITY NOT NULL,
     cc VARCHAR(13) UNIQUE  NOT NULL,
     nif VARCHAR(12) UNIQUE,
     nome_completo VARCHAR(256) NOT NULL,
@@ -20,7 +20,7 @@ CREATE TABLE Funcionarios (
 )
 
 CREATE TABLE Equipas (
-    id INT NOT NULL,
+    id INT IDENTITY NOT NULL,
     localizacao VARCHAR(256) NOT NULL,
     numElementos INT NOT NULL,
 
@@ -35,7 +35,7 @@ CREATE TABLE Gestores (
 )
 
 CREATE TABLE Competencias (
-    id INT NOT NULL,
+    id INT IDENTITY NOT NULL,
     descricao VARCHAR(256) NOT NULL,
 
     PRIMARY KEY (id)
@@ -46,14 +46,14 @@ CREATE TABLE MembrosEquipas (
     equipa INT NOT NULL,
     competencias INT NOT NULL,
 
-    PRIMARY KEY (membro),
+    PRIMARY KEY (membro, equipa),
     CONSTRAINT fk_MembrosEquipas_funcionario FOREIGN KEY (membro) REFERENCES Funcionarios(id),
     CONSTRAINT fk_MembrosEquipas_equipas FOREIGN KEY (equipa) REFERENCES Equipas(id),
     CONSTRAINT fk_MembrosEquipas_competencias FOREIGN KEY (competencias) REFERENCES Competencias(id)
 )
 
 CREATE TABLE Activos (
-    id INT,
+    id INT IDENTITY NOT NULL,
     nome VARCHAR(256) NOT NULL,
     data_aquisicao DATE NOT NULL,
     estado INT NOT NULL , -- 0 desactivado | 1 activado
@@ -77,24 +77,16 @@ CREATE TABLE PrecosActivos (
 )
 
 CREATE TABLE EstadosIntervencoes (
-    id INT NOT NULL,
+    id INT IDENTITY NOT NULL,
     estado VARCHAR(30) NOT NULL,
 
     PRIMARY KEY (id),
     CONSTRAINT valid_estado CHECK (estado LIKE 'Por Atribuir' OR estado LIKE 'Em Análise' OR estado LIKE 'Em Execução' OR estado LIKE 'Concluido')
 )
 
-CREATE TABLE DescricoesIntervencoes (
-    id INT NOT NULL,
-    descricao VARCHAR(256) NOT NULL,
-
-    PRIMARY KEY (id),
-    CONSTRAINT valid_descricao CHECK (descricao LIKE 'Avaria' OR descricao LIKE 'Rutura' OR descricao LIKE 'Inspecção')
-)
-
 CREATE TABLE Intervencoes (
-    id INT NOT NULL,
-    descricao INT NOT NULL,
+    id INT IDENTITY NOT NULL,
+    competencias INT NOT NULL,
     estado INT NOT NULL,
     activo INT NOT NULL,
     valor_monetario FLOAT NOT NULL,
@@ -103,9 +95,8 @@ CREATE TABLE Intervencoes (
 
     PRIMARY KEY (id),
     CONSTRAINT fk_Intervencoes_activo FOREIGN KEY (activo) REFERENCES Activos(id),
-    CONSTRAINT fk_Intervencoes_descricao FOREIGN KEY (descricao) REFERENCES DescricoesIntervencoes(id),
+    CONSTRAINT fk_Intervencoes_competencias FOREIGN KEY (competencias) REFERENCES Competencias(id),
     CONSTRAINT fk_Intervencoes_estado FOREIGN KEY (estado) REFERENCES EstadosIntervencoes(id)
-    --CONSTRAINT fk_Intervencoes_data CHECK (data_inicio > activo.data_aquisicao)
 )
 
 CREATE TABLE Periodico (
