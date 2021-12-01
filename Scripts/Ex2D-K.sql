@@ -11,8 +11,7 @@ CREATE PROCEDURE insertFuncionario  @cc VARCHAR(13),
 AS
     BEGIN
         INSERT INTO Funcionarios VALUES (@cc, @nif, @nome_completo, @data_de_nascimento, @morada, @codigo_postal, @localidade, @profissao, @telefone, @telemovel)
-    END
-    
+    END 
 GO
 
 CREATE PROCEDURE updateFuncionario (
@@ -55,7 +54,6 @@ BEGIN
 		telemovel = ISNULL(@telemovel, telemovel) 
     WHERE id = @id;
 END;
-
 GO
 
 CREATE PROCEDURE deleteFuncionario @id INT
@@ -66,7 +64,6 @@ BEGIN
         DELETE FROM Funcionarios where id = @id
     END
 END;
-
 GO
 
 CREATE PROCEDURE p_CriaInter    @descricao INT,
@@ -82,18 +79,14 @@ AS
         IF @data_inicio > @data_aquisicao
             BEGIN
 
-            DECLARE @id AS BIGINT
-            SELECT TOP 1 @id = id + 1  FROM Intervencoes ORDER BY id ASC
-            INSERT INTO Intervencoes VALUES (ISNULL(@id, 1), @descricao, @estado, @activo, @valor_monetario, @data_inicio, NULL)
+            INSERT INTO Intervencoes VALUES (@descricao, @estado, @activo, @valor_monetario, @data_inicio, NULL)
             
             END
         ELSE
             BEGIN
-            PRINT 'ELSE'
             RAISERROR('Data de inicio da intervenção é inferior à data de acquisição do Activo', 10, 0)
             END
     END
-
 GO 
 
 CREATE PROCEDURE insertEquipa @localizacao VARCHAR(256)
@@ -106,3 +99,17 @@ AS
         
     END
 GO
+
+CREATE FUNCTION obtainCodigoDeEquipaLivre (@descricao VARCHAR(256) NOT NULL)
+    RETURNS INT
+        AS
+        BEGIN
+                DECLARE @competenciasID INT
+
+                SELECT equipa FROM IntervencoesEquipas GROUP BY equipa HAVING COUNT(*) < 3
+
+                SELECT @competenciasID = id FROM Competencias WHERE (descricao = @descricao)
+
+                RETURN @a
+        END
+go
