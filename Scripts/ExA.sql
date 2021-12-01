@@ -1,6 +1,6 @@
 CREATE TABLE Funcionarios (
     id INT IDENTITY NOT NULL,
-    cc VARCHAR(13) UNIQUE  NOT NULL,
+    cc VARCHAR(13) UNIQUE,
     nif VARCHAR(12) UNIQUE,
     nome_completo VARCHAR(256) NOT NULL,
     data_de_nascimento DATE NOT NULL,
@@ -8,15 +8,17 @@ CREATE TABLE Funcionarios (
     codigo_postal VARCHAR(8) NOT NULL,
     localidade VARCHAR(256) NOT NULL,
     profissao VARCHAR(256) NOT NULL,
-    telefone INT NOT NULL,
+    telefone INT,
     telemovel INT,
 
     PRIMARY KEY (id),
-    CONSTRAINT valid_cc CHECK (cc LIKE NULL OR cc LIKE '%[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]-[A-Z0-9a-z][A-Z0-9a-z][A-Z0-9a-z]%'),
+    CONSTRAINT valid_id CHECK (cc NOT NULL OR nif NOT NULL),
+    CONSTRAINT valid_cc CHECK (cc LIKE '%[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]-[A-Z0-9a-z][A-Z0-9a-z][A-Z0-9a-z]%'),
+    CONSTRAINT valid_nif CHECK (nif LIKE '%[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]%'),
     CONSTRAINT valid_codigo_postal CHECK (codigo_postal LIKE '%[0-9][0-9][0-9][0-9]-[0-9][0-9][0-9]%'),
+    CONSTRAINT valid_tel CHECK (telefone NOT NULL OR telemovel NOT NULL),
     CONSTRAINT valid_telefone CHECK (telefone LIKE '%[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]%'),
-    CONSTRAINT valid_telemovel CHECK (telemovel LIKE NULL OR telemovel LIKE '%[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]%'),
-    CONSTRAINT valid_nif CHECK (nif LIKE NULL OR nif LIKE '%[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]%')
+    CONSTRAINT valid_telemovel CHECK (telemovel LIKE NULL OR telemovel LIKE '%[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]%')
 )
 
 CREATE TABLE Equipas (
@@ -24,7 +26,8 @@ CREATE TABLE Equipas (
     localizacao VARCHAR(256) NOT NULL,
     numElementos INT NOT NULL,
 
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    CONSTRAINT valid_nelem CHECK (numElementos >= 2)
 )
 
 CREATE TABLE Gestores (
@@ -56,9 +59,9 @@ CREATE TABLE Activos (
     id INT IDENTITY NOT NULL,
     nome VARCHAR(256) NOT NULL,
     data_aquisicao DATE NOT NULL,
-    estado INT NOT NULL , -- 0 desactivado | 1 activado
-    marca VARCHAR(256) NOT NULL,
-    modelo VARCHAR(256) NOT NULL,
+    estado INT NOT NULL , -- 0 desactivado | 1 operacional
+    marca VARCHAR(256),
+    modelo VARCHAR(256),
     localizacao VARCHAR(256) NOT NULL,
     gestor INT NOT NULL,
 
