@@ -21,25 +21,35 @@ CREATE TABLE Funcionarios (
     CONSTRAINT valid_telemovel CHECK (telemovel LIKE NULL OR telemovel LIKE '%[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]%')
 )
 
-CREATE TABLE Equipas (
+CREATE TABLE Competencias (
     id INT IDENTITY NOT NULL,
-    localizacao VARCHAR(256) NOT NULL,
-    numElementos INT NOT NULL,
+    descricao VARCHAR(256) NOT NULL,
 
     PRIMARY KEY (id),
     CONSTRAINT valid_nelem CHECK (numElementos >= 2)
 )
 
-CREATE TABLE Gestores (
-    funcionario INT NOT NULL,
+CREATE TABLE FuncionariosCompetencias (
+    funcionario INT,
+    competencia INT,
 
-    PRIMARY KEY (funcionario),
-    CONSTRAINT fk_Gestores_funcionario FOREIGN KEY (funcionario) REFERENCES Funcionarios(id)
+    PRIMARY KEY (funcionario, competencia),
+    CONSTRAINT fk_FuncionariosCompetencias_funcionario FOREIGN KEY (funcionario) REFERENCES Funcionarios(id),
+    CONSTRAINT fk_FuncionariosCompetencias_competencia FOREIGN KEY (competencia) REFERENCES Competencias(id)
+
 )
 
-CREATE TABLE Competencias (
+CREATE TABLE TipoActivo (
     id INT IDENTITY NOT NULL,
-    descricao VARCHAR(256) NOT NULL,
+    descricao VARCHAR (250),
+
+    PRIMARY KEY (id)
+)
+
+CREATE TABLE Equipas (
+    id INT IDENTITY NOT NULL,
+    localizacao VARCHAR(256) NOT NULL,
+    numElementos INT NOT NULL,
 
     PRIMARY KEY (id)
 )
@@ -63,11 +73,22 @@ CREATE TABLE Activos (
     marca VARCHAR(256),
     modelo VARCHAR(256),
     localizacao VARCHAR(256) NOT NULL,
-    gestor INT NOT NULL,
+    funcionario INT NOT NULL,
+    tipo INT NOT NULL,
 
     PRIMARY KEY (id),
     CONSTRAINT estado CHECK (estado = 0 or estado = 1),
-    CONSTRAINT fk_Activos_gestores FOREIGN KEY (gestor) REFERENCES Gestores(funcionario)
+    CONSTRAINT fk_Activos_funcionarios FOREIGN KEY (funcionario) REFERENCES Funcionarios(id),
+    CONSTRAINT fk_Activos_tipoactivo FOREIGN KEY (tipo) REFERENCES TipoActivo(id)
+)
+
+CREATE TABLE ActivosCompostos (
+    activo_pai INT NOT NULL,
+    activo_filho INT NOT NULL,
+
+    PRIMARY KEY (activo_pai, activo_filho),
+    CONSTRAINT fk_MembrosEquipas_activoPai FOREIGN KEY (activo_pai) REFERENCES Activos(id),
+    CONSTRAINT fk_MembrosEquipas_activoFilho FOREIGN KEY (activo_filho) REFERENCES Activos(id)
 )
 
 CREATE TABLE PrecosActivos (
@@ -106,6 +127,7 @@ CREATE TABLE Intervencoes (
 CREATE TABLE IntervencoesEquipas (
     equipa INT NOT NULL,
     intervencao INT NOT NULL,
+    data_de_atribuicao DATE,
     
     PRIMARY KEY (equipa, intervencao),
     CONSTRAINT fk_IntervencoesEquipas_equipas FOREIGN KEY (equipa) REFERENCES Equipas(id),

@@ -103,13 +103,18 @@ GO
 CREATE FUNCTION obtainCodigoDeEquipaLivre (@descricao VARCHAR(256) NOT NULL)
     RETURNS INT
         AS
-        BEGIN
-                DECLARE @competenciasID INT
+            BEGIN
 
-                SELECT equipa FROM IntervencoesEquipas GROUP BY equipa HAVING COUNT(*) < 3
+            DECLARE @competenciasID INT
 
-                SELECT @competenciasID = id FROM Competencias WHERE (descricao = @descricao)
+            SELECT @competenciasID = id FROM Competencias WHERE (descricao = @descricao)
 
-                RETURN @a
-        END
+            SELECT funcionario FROM FuncionariosCompetencias WHERE @competenciasID = competencia
+
+            SELECT equipa FROM IntervencoesEquipas GROUP BY equipa HAVING COUNT(*) < 3 
+            
+
+            RETURN @a
+
+            END
 go
