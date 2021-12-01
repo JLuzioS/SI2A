@@ -1,3 +1,4 @@
+-- D
 CREATE PROCEDURE insertFuncionario  @cc VARCHAR(13), 
                                     @nif VARCHAR(12), 
                                     @nome_completo VARCHAR(256), 
@@ -66,6 +67,27 @@ BEGIN
 END;
 GO
 
+-- E
+CREATE FUNCTION obtainCodigoDeEquipaLivre (@descricao VARCHAR(256) NOT NULL)
+    RETURNS INT
+        AS
+            BEGIN
+
+            DECLARE @competenciasID INT
+
+            SELECT @competenciasID = id FROM Competencias WHERE (descricao = @descricao)
+
+            SELECT funcionario FROM FuncionariosCompetencias WHERE @competenciasID = competencia
+
+            SELECT equipa FROM IntervencoesEquipas GROUP BY equipa HAVING COUNT(*) < 3 
+            
+
+            RETURN @a
+
+            END
+go
+
+-- F
 CREATE PROCEDURE p_CriaInter    @descricao INT,
                                 @estado INT,
                                 @activo INT,
@@ -89,6 +111,8 @@ AS
     END
 GO 
 
+
+--G
 CREATE PROCEDURE insertEquipa @localizacao VARCHAR(256)
 AS
     BEGIN
@@ -99,22 +123,3 @@ AS
         
     END
 GO
-
-CREATE FUNCTION obtainCodigoDeEquipaLivre (@descricao VARCHAR(256) NOT NULL)
-    RETURNS INT
-        AS
-            BEGIN
-
-            DECLARE @competenciasID INT
-
-            SELECT @competenciasID = id FROM Competencias WHERE (descricao = @descricao)
-
-            SELECT funcionario FROM FuncionariosCompetencias WHERE @competenciasID = competencia
-
-            SELECT equipa FROM IntervencoesEquipas GROUP BY equipa HAVING COUNT(*) < 3 
-            
-
-            RETURN @a
-
-            END
-go
