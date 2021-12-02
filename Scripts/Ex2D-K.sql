@@ -69,20 +69,20 @@ GO
 -- E
 CREATE OR ALTER FUNCTION obtainCodigoDeEquipaLivre ( @descricao INT ) RETURNS INT AS
 	BEGIN
-		RETURN (SELECT TOP 1 equipas.id FROM equipas 
-		        LEFT JOIN IntervencoesEquipas AS IE ON equipas.id = IE.equipa
+		RETURN (SELECT TOP 1 E.id FROM equipas AS E
+		        LEFT JOIN IntervencoesEquipas AS IE ON IE.equipa = E.id
 		        WHERE EXISTS (
 		        	SELECT equipa FROM FuncionariosEquipas AS FE
 		            INNER JOIN Funcionarios AS F ON F.id = FE.funcionario 
 		            INNER JOIN FuncionariosCompetencias AS FC ON FE.funcionario = FC.funcionario
-		            WHERE FE.equipa = equipas.id 
-		            AND FC.competencia = @descricao 
+		            WHERE FE.equipa = E.id 
+		            AND FC.competencia = 1
 		            AND FE.dtSaida IS NULL
 		        ) 
 		        AND IE.dtDispensa IS NULL 
-		        GROUP BY equipas.id 
+		        GROUP BY E.id 
 		        HAVING COUNT(*) < 3
-		        ORDER BY IE.dtAtribuicao )
+		        ORDER BY MIN(IE.dtAtribuicao) )
 	END
 GO
 
