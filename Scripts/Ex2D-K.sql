@@ -68,21 +68,26 @@ END;
 GO
 
 -- E
-CREATE FUNCTION obtainCodigoDeEquipaLivre (@descricao VARCHAR(256) NOT NULL)
+CREATE FUNCTION obtainCodigoDeEquipaLivre (@descricao INT)
     RETURNS INT
         AS
             BEGIN
 
-            DECLARE @competenciasID INT
-
-            SELECT @competenciasID = id FROM Competencias WHERE (descricao = @descricao)
-
-            SELECT funcionario FROM FuncionariosCompetencias WHERE @competenciasID = competencia
-
-            SELECT equipa FROM IntervencoesEquipas GROUP BY equipa HAVING COUNT(*) < 3 
-            
-
-            RETURN @a
+            RETURN (SELECT TOP 1 equipas.id FROM equipas 
+                        LEFT JOIN IntervencoesEquipas AS IE
+                        ON equipas.id = IntervencoesEquipas.equipa
+                        WHERE EXISTS (
+                            SELECT equipa FROM FuncionariosEquipas AS FE
+                            INNER JOIN Funcionarios AS F ON F.id = FE.funcionario 
+                            INNER JOIN FuncionariosCompetencias AS FC ON FE.funcionario = FC.funcionario
+                            WHERE FC.competencia = @descricao 
+                            AND FE.data_de_saida IS NOT NULL
+                    ) 
+                    AND IE.data_dispensa IS NOT NULL 
+                    GROUP BY equipas.id 
+                    HAVING COUNT(*) < 3
+                    ORDER BY IE.data_atribuicao
+                    )
 
             END
 go
@@ -112,7 +117,7 @@ AS
 GO 
 
 
---G
+-- G
 CREATE PROCEDURE insertEquipa @localizacao VARCHAR(256)
 AS
     BEGIN

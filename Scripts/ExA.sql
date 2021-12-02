@@ -49,20 +49,20 @@ CREATE TABLE TipoActivo (
 CREATE TABLE Equipas (
     id INT IDENTITY NOT NULL,
     localizacao VARCHAR(256) NOT NULL,
-    numElementos INT NOT NULL,
+    numFuncionarios INT NOT NULL,
 
     PRIMARY KEY (id)
 )
 
-CREATE TABLE MembrosEquipas (
-    membro INT NOT NULL,
+CREATE TABLE FuncionariosEquipas (
+    funcionario INT NOT NULL,
     equipa INT NOT NULL,
-    competencias INT NOT NULL,
+    data_de_entrada DATE NOT NULL,
+    data_de_saida DATE,
 
-    PRIMARY KEY (membro, equipa),
-    CONSTRAINT fk_MembrosEquipas_funcionario FOREIGN KEY (membro) REFERENCES Funcionarios(id),
-    CONSTRAINT fk_MembrosEquipas_equipas FOREIGN KEY (equipa) REFERENCES Equipas(id),
-    CONSTRAINT fk_MembrosEquipas_competencias FOREIGN KEY (competencias) REFERENCES Competencias(id)
+    PRIMARY KEY (funcionario, equipa),
+    CONSTRAINT fk_MembrosEquipas_funcionario FOREIGN KEY (funcionario) REFERENCES Funcionarios(id),
+    CONSTRAINT fk_MembrosEquipas_equipas FOREIGN KEY (equipa) REFERENCES Equipas(id)
 )
 
 CREATE TABLE Activos (
@@ -114,8 +114,8 @@ CREATE TABLE Intervencoes (
     estado INT NOT NULL,
     activo INT NOT NULL,
     valor_monetario FLOAT NOT NULL,
-    data_inicio DATE NOT NULL,
-    data_fim DATE,
+    data_atribuicao DATE NOT NULL,
+    data_dispensa DATE,
     periodicidade_meses INT NOT NULL
 
     PRIMARY KEY (id),
@@ -127,7 +127,8 @@ CREATE TABLE Intervencoes (
 CREATE TABLE IntervencoesEquipas (
     equipa INT NOT NULL,
     intervencao INT NOT NULL,
-    data_de_atribuicao DATE,
+    data_atribuicao DATE NOT NULL,
+    data_dispensa DATE,
     
     PRIMARY KEY (equipa, intervencao),
     CONSTRAINT fk_IntervencoesEquipas_equipas FOREIGN KEY (equipa) REFERENCES Equipas(id),
