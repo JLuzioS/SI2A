@@ -110,7 +110,7 @@ CREATE OR ALTER PROCEDURE p_CriaInter
 				END
 			ELSE
 				BEGIN
-					RAISERROR('Data de inicio da interven��o � inferior � data de acquisi��o do Activo', 10, 0)
+					RAISERROR('Data de inicio da intervenção é inferior à data de acquisição do Activo', 10, 0)
 				END
 		END TRY
 		BEGIN CATCH
@@ -126,7 +126,7 @@ CREATE OR ALTER PROCEDURE p_CriaInter
             END
         ELSE
             BEGIN
-            	RAISERROR('Data de inicio da interven��o � inferior � data de acquisi��o do Activo', 10, 0)
+            	RAISERROR('Data de inicio da intervenção é inferior à data de acquisição do Activo', 10, 0)
             END
 	END
 GO 
@@ -138,8 +138,7 @@ CREATE OR ALTER PROCEDURE insertEquipa
     BEGIN
 		BEGIN TRY
         IF (NULLIF(@localizacao, '') IS NULL)
-            RAISERROR ('Localiza��o não pode ser nulo', 10, 0)
-            RAISERROR ('Localiza��o can''t be null', 10, 0)
+            RAISERROR ('Localização não pode ser nulo', 10, 0)
         IF (NULLIF(@numElementos, 0) < 2)
             RAISERROR ('numElementos tem que ser pelo menos 2', 10, 0)
         INSERT INTO Equipas(localizacao, numElementos) VALUES
@@ -214,7 +213,7 @@ CREATE OR ALTER PROCEDURE deleteFuncionariosCompetencias
             END
         ELSE
             BEGIN
-            	RAISERROR('Compet�ncia do funcion�rio em uso numa interven��o', 10, 0)
+            	RAISERROR('Competência do funcionário em uso numa intervenção', 10, 0)
             END
 		
 	END
@@ -243,17 +242,17 @@ CREATE OR ALTER PROCEDURE updateIntervencaoState
 
 			SET @estado =
 				CASE @estadoActual
-					WHEN 'Por Atribuir'	 THEN 'Em An�lise'
-					WHEN 'Em An�lise'	THEN 'Em Execu��o'
-					WHEN 'Em Execu��o'  THEN 'Conclu�do'
+					WHEN 'Por Atribuir'	 THEN 'Em Análise'
+					WHEN 'Em Análise'	THEN 'Em Execução'
+					WHEN 'Em Execução'  THEN 'Concluído'
 					ELSE NULL
 				END
 			
 
 			PRINT @estadoActual 
-			IF(@estadoActual = 'Conclu�do')
+			IF(@estadoActual = 'Concluído')
 				BEGIN
-					RAISERROR ('estado já está Conclu�do', 16, 1)
+					RAISERROR ('estado já está Concluído', 16, 1)
 				END
 
 			UPDATE Intervencoes 

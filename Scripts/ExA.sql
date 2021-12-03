@@ -123,7 +123,7 @@ CREATE TABLE Intervencoes (
     perMeses INT NOT NULL
 
     PRIMARY KEY (id),
-    CONSTRAINT valid_estado CHECK (estado IN ('Por Atribuir', 'Em Análise', 'Em Execução', 'Concluído')),
+    CONSTRAINT valid_estado CHECK (estado IN ('Por Atribuir', 'Em AnÃ¡lise', 'Em ExecuÃ§Ã£o', 'ConcluÃ­do')),
     CONSTRAINT valid_vlMonetario CHECK (vlMonetario > 0),
     CONSTRAINT valid_dtFim CHECK (dtFim IS NULL OR dtInicio < dtFim),
     CONSTRAINT valid_perMeses CHECK (perMeses >= 0),
