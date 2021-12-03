@@ -31,7 +31,7 @@ CREATE OR ALTER PROCEDURE updateFuncionario
 	BEGIN
 		BEGIN TRY
 			IF (NULLIF(@id, '') IS NULL)
-				RAISERROR ('Funcionario ID can''t be null', 10, 0)
+				RAISERROR ('ID do Funcionario não pode ser nulo', 10, 0)
 			SET @cc = NULLIF(@cc, '')
 			SET @nif = NULLIF(@nif, '')
 			SET @nome = NULLIF(@nome, '') 
@@ -110,24 +110,12 @@ CREATE OR ALTER PROCEDURE p_CriaInter
 				END
 			ELSE
 				BEGIN
-					RAISERROR('Data de inicio da interven��o � inferior � data de acquisi��o do Activo', 10, 0)
+					RAISERROR('Data de inicio da intervenção é inferior à data de acquisição do Activo', 10, 0)
 				END
 		END TRY
 		BEGIN CATCH
 			THROW
 		END CATCH
-        DECLARE @dtAaquisicao DATE
-        SELECT @dtAaquisicao = dtAaquisicao FROM Activos where @activo = id
-        
-        IF @dtInicio > @dtAaquisicao
-            BEGIN
-            	INSERT INTO Intervencoes(competencias, estado, activo, vlMonetario , dtInicio, dtFim, perMeses) VALUES
-            	(@competencias, @estado, @activo, @vlMonetario, @dtInicio, NULL, @perMeses)
-            END
-        ELSE
-            BEGIN
-            	RAISERROR('Data de inicio da interven��o � inferior � data de acquisi��o do Activo', 10, 0)
-            END
 	END
 GO 
 
@@ -138,8 +126,7 @@ CREATE OR ALTER PROCEDURE insertEquipa
     BEGIN
 		BEGIN TRY
         IF (NULLIF(@localizacao, '') IS NULL)
-            RAISERROR ('Localiza��o não pode ser nulo', 10, 0)
-            RAISERROR ('Localiza��o can''t be null', 10, 0)
+            RAISERROR ('Localização não pode ser nulo', 10, 0)
         IF (NULLIF(@numElementos, 0) < 2)
             RAISERROR ('numElementos tem que ser pelo menos 2', 10, 0)
         INSERT INTO Equipas(localizacao, numElementos) VALUES
@@ -214,7 +201,7 @@ CREATE OR ALTER PROCEDURE deleteFuncionariosCompetencias
             END
         ELSE
             BEGIN
-            	RAISERROR('Compet�ncia do funcion�rio em uso numa interven��o', 10, 0)
+            	RAISERROR('Competência do funcionário em uso numa intervenção', 10, 0)
             END
 		
 	END
