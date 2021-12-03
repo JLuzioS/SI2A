@@ -29,32 +29,37 @@ CREATE OR ALTER PROCEDURE updateFuncionario
                             @telefone VARCHAR(9) = NULL,
                             @telemovel VARCHAR(9) = NULL AS
 	BEGIN
-	    IF (NULLIF(@id, '') IS NULL)
-	        RAISERROR ('Funcionario ID can''t be null', 10, 0)
-	    SET @cc = NULLIF(@cc, '')
-	    SET @nif = NULLIF(@nif, '')
-	    SET @nome = NULLIF(@nome, '') 
-	    SET @dtNascimento = NULLIF(@dtNascimento, '') 
-	    SET @morada = NULLIF(@morada, '')
-	    SET @codigoPostal = NULLIF(@codigoPostal, '')
-	    SET @localidade = NULLIF(@localidade, '')
-	    SET @profissao = NULLIF(@profissao, '') 
-	    SET @telefone = NULLIF(@telefone, '')
-	    SET @telemovel = NULLIF(@telemovel, '') 
-	
-	    UPDATE Funcionarios 
-		SET cc = ISNULL(@cc, cc), 
-			nif = ISNULL(@nif, nif),
-			nome = ISNULL(@nome, nome),
-			dtNascimento = ISNULL(@dtNascimento, dtNascimento),
-			morada = ISNULL(@morada, morada),
-			codigoPostal = ISNULL(@codigoPostal, codigoPostal),
-			localidade = ISNULL(@localidade, localidade),
-			profissao = ISNULL(@profissao, profissao), 
-			telefone = ISNULL(@telefone, telefone),
-			telemovel = ISNULL(@telemovel, telemovel) 
-	    WHERE id = @id;
-	END;
+		BEGIN TRY
+			IF (NULLIF(@id, '') IS NULL)
+				RAISERROR ('Funcionario ID can''t be null', 10, 0)
+			SET @cc = NULLIF(@cc, '')
+			SET @nif = NULLIF(@nif, '')
+			SET @nome = NULLIF(@nome, '') 
+			SET @dtNascimento = NULLIF(@dtNascimento, '') 
+			SET @morada = NULLIF(@morada, '')
+			SET @codigoPostal = NULLIF(@codigoPostal, '')
+			SET @localidade = NULLIF(@localidade, '')
+			SET @profissao = NULLIF(@profissao, '') 
+			SET @telefone = NULLIF(@telefone, '')
+			SET @telemovel = NULLIF(@telemovel, '') 
+		
+			UPDATE Funcionarios 
+			SET cc = ISNULL(@cc, cc), 
+				nif = ISNULL(@nif, nif),
+				nome = ISNULL(@nome, nome),
+				dtNascimento = ISNULL(@dtNascimento, dtNascimento),
+				morada = ISNULL(@morada, morada),
+				codigoPostal = ISNULL(@codigoPostal, codigoPostal),
+				localidade = ISNULL(@localidade, localidade),
+				profissao = ISNULL(@profissao, profissao), 
+				telefone = ISNULL(@telefone, telefone),
+				telemovel = ISNULL(@telemovel, telemovel) 
+			WHERE id = @id;
+		END TRY
+		BEGIN CATCH
+			THROW
+		END CATCH
+	END
 GO
 
 CREATE OR ALTER PROCEDURE deleteFuncionario @id INT AS
@@ -89,24 +94,28 @@ GO
 -- F
 CREATE OR ALTER PROCEDURE p_CriaInter
 							@competencias INT,
-                            @estado VARCHAR(12),
                             @activo INT,
                             @vlMonetario DECIMAL(9,2),
                             @dtInicio DATE,
                             @perMeses INT AS
 	BEGIN
-        DECLARE @dtAaquisicao DATE
-        SELECT @dtAaquisicao = dtAaquisicao FROM Activos where @activo = id
-        
-        IF @dtInicio > @dtAaquisicao
-            BEGIN
-            	INSERT INTO Intervencoes(competencias, estado, activo, vlMonetario , dtInicio, dtFim, perMeses) VALUES
-            	(@competencias, @estado, @activo, @vlMonetario, @dtInicio, NULL, @perMeses)
-            END
-        ELSE
-            BEGIN
-            	RAISERROR('Data de inicio da interven��o � inferior � data de acquisi��o do Activo', 10, 0)
-            END
+		BEGIN TRY
+			DECLARE @dtAaquisicao DATE
+			SELECT @dtAaquisicao = dtAaquisicao FROM Activos where @activo = id
+			
+			IF @dtInicio > @dtAaquisicao
+				BEGIN
+					INSERT INTO Intervencoes(competencias, estado, activo, vlMonetario , dtInicio, dtFim, perMeses) VALUES
+					(@competencias, 'Por Atribuir', @activo, @vlMonetario, @dtInicio, NULL, @perMeses)
+				END
+			ELSE
+				BEGIN
+					RAISERROR('Data de inicio da interven��o � inferior � data de acquisi��o do Activo', 10, 0)
+				END
+		END TRY
+		BEGIN CATCH
+			THROW
+		END CATCH
 	END
 GO 
 
@@ -115,12 +124,17 @@ CREATE OR ALTER PROCEDURE insertEquipa
 							@localizacao VARCHAR(256),
 							@numElementos INT AS
     BEGIN
+		BEGIN TRY
         IF (NULLIF(@localizacao, '') IS NULL)
-            RAISERROR ('Localiza��o can''t be null', 10, 0)
+            RAISERROR ('Localiza��o não pode ser nulo', 10, 0)
         IF (NULLIF(@numElementos, 0) < 2)
-            RAISERROR ('numElementos must be at least 2', 10, 0)
+            RAISERROR ('numElementos tem que ser pelo menos 2', 10, 0)
         INSERT INTO Equipas(localizacao, numElementos) VALUES
         (@localizacao, @numElementos)
+		END TRY
+		BEGIN CATCH
+			THROW
+		END CATCH
     END
 GO
 
@@ -153,12 +167,49 @@ GO
 
 -- I
 CREATE OR ALTER FUNCTION listAllIntervencoesFromDate (@data VARCHAR(4))
-RETURNS TABLE AS
-	RETURN (
-		SELECT I.id, C.descricao FROM  Intervencoes AS I
-		INNER JOIN Competencias AS C
-		ON C.id = I.competencias
-		WHERE YEAR(I.dtInicio) = @data
-		)
+	RETURNS TABLE 
+		AS
+		RETURN (
+			SELECT I.id, C.descricao FROM  Intervencoes AS I
+			INNER JOIN Competencias AS C
+			ON C.id = I.competencias
+			WHERE YEAR(I.dtInicio) = @data
+			)
 GO
 
+-- J
+CREATE OR ALTER PROCEDURE updateIntervencaoState
+							@id INT
+	AS
+	BEGIN
+		BEGIN TRY
+			DECLARE @estadoActual VARCHAR(12), @estado VARCHAR(12), @dtFim DATE
+			SET  @estadoActual = (SELECT estado FROM Intervencoes WHERE id = @id)
+
+			SET @estado =
+				CASE @estadoActual
+					WHEN 'Por Atribuir'	 THEN 'Em An�lise'
+					WHEN 'Em An�lise'	THEN 'Em Execu��o'
+					WHEN 'Em Execu��o'  THEN 'Conclu�do'
+					ELSE NULL
+				END
+			
+
+			PRINT @estadoActual 
+			IF(@estadoActual = 'Conclu�do')
+				BEGIN
+					RAISERROR ('estado já está Conclu�do', 16, 1)
+				END
+
+			UPDATE Intervencoes 
+			SET estado = @estado
+			WHERE id = @id
+		END TRY
+		BEGIN CATCH
+			THROW
+		END CATCH
+	END
+GO
+
+-- K
+CREATE OR ALTER VIEW 
