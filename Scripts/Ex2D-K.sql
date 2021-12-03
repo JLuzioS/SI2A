@@ -1,5 +1,5 @@
 -- D
-CREATE OR ALTER PROCEDURE insertFuncionario ( 
+CREATE OR ALTER PROCEDURE insertFuncionario
 									@cc VARCHAR(13),
                                     @nif VARCHAR(12), 
                                     @nome VARCHAR(256), 
@@ -7,16 +7,16 @@ CREATE OR ALTER PROCEDURE insertFuncionario (
                                     @morada VARCHAR(256), 
                                     @codigoPostal VARCHAR(8), 
                                     @localidade VARCHAR(256), 
-                                    @profissao VARCHAR(256), 
+                                    @profissao INT, 
                                     @telefone VARCHAR(9), 
-                                    @telemovel VARCHAR(9) ) AS
+                                    @telemovel VARCHAR(9) AS
 	BEGIN
         INSERT INTO Funcionarios(cc, nif, nome, dtNascimento, morada, codigoPostal, localidade, profissao, telefone, telemovel) VALUES 
         (@cc, @nif, @nome, @dtNascimento, @morada, @codigoPostal, @localidade, @profissao, @telefone, @telemovel)
     END
 GO
 
-CREATE OR ALTER PROCEDURE updateFuncionario (
+CREATE OR ALTER PROCEDURE updateFuncionario
 									@id INT,
                                     @cc VARCHAR(13) = NULL,
                                     @nif VARCHAR(12) = NULL,
@@ -25,9 +25,9 @@ CREATE OR ALTER PROCEDURE updateFuncionario (
                                     @morada VARCHAR(256) = NULL,
                                     @codigoPostal VARCHAR(8) = NULL,
                                     @localidade VARCHAR(256) = NULL,
-                                    @profissao VARCHAR(256) = NULL,
+                                    @profissao INT = NULL,
                                     @telefone VARCHAR(9) = NULL,
-                                    @telemovel VARCHAR(9) = NULL ) AS
+                                    @telemovel VARCHAR(9) = NULL AS
 	BEGIN
 	    IF (NULLIF(@id, '') IS NULL)
 	        RAISERROR ('Funcionario ID can''t be null', 10, 0)
@@ -57,7 +57,7 @@ CREATE OR ALTER PROCEDURE updateFuncionario (
 	END;
 GO
 
-CREATE OR ALTER PROCEDURE deleteFuncionario ( @id INT ) AS
+CREATE OR ALTER PROCEDURE deleteFuncionario @id INT AS
 	BEGIN
 	    if @id IS NOT NULL
 	    BEGIN
@@ -76,7 +76,7 @@ CREATE OR ALTER FUNCTION obtainCodigoDeEquipaLivre ( @descricao INT ) RETURNS IN
 		            INNER JOIN Funcionarios AS F ON F.id = FE.funcionario 
 		            INNER JOIN FuncionariosCompetencias AS FC ON FE.funcionario = FC.funcionario
 		            WHERE FE.equipa = E.id 
-		            AND FC.competencia = 1
+		            AND FC.competencia = @descricao
 		            AND FE.dtSaida IS NULL
 		        ) 
 		        AND IE.dtDispensa IS NULL 
@@ -87,13 +87,13 @@ CREATE OR ALTER FUNCTION obtainCodigoDeEquipaLivre ( @descricao INT ) RETURNS IN
 GO
 
 -- F
-CREATE OR ALTER PROCEDURE p_CriaInter (
+CREATE OR ALTER PROCEDURE p_CriaInter
 								@competencias INT,
-                                @estado INT,
+                                @estado VARCHAR(12),
                                 @activo INT,
                                 @vlMonetario DECIMAL(9,2),
                                 @dtInicio DATE,
-                                @perMeses INT ) AS
+                                @perMeses INT AS
 	BEGIN
         DECLARE @dtAaquisicao DATE
         SELECT @dtAaquisicao = dtAaquisicao FROM Activos where @activo = id
@@ -111,9 +111,9 @@ CREATE OR ALTER PROCEDURE p_CriaInter (
 GO 
 
 -- G
-CREATE OR ALTER PROCEDURE insertEquipa (
+CREATE OR ALTER PROCEDURE insertEquipa
 							@localizacao VARCHAR(256),
-							@numElementos INT ) AS
+							@numElementos INT AS
     BEGIN
         IF (NULLIF(@localizacao, '') IS NULL)
             RAISERROR ('Localização can''t be null', 10, 0)

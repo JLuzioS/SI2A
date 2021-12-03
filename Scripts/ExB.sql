@@ -1,12 +1,12 @@
 DROP TABLE IF EXISTS IntervencoesEquipas
 DROP TABLE IF EXISTS Intervencoes
-DROP TABLE IF EXISTS EstadosIntervencoes
 DROP TABLE IF EXISTS PrecosActivos
 DROP TABLE IF EXISTS ActivosCompostos
 DROP TABLE IF EXISTS Activos
-DROP TABLE IF EXISTS TipoActivo
+DROP TABLE IF EXISTS TiposActivos
 DROP TABLE IF EXISTS FuncionariosEquipas
 DROP TABLE IF EXISTS Equipas
 DROP TABLE IF EXISTS FuncionariosCompetencias
 DROP TABLE IF EXISTS Competencias
 DROP TABLE IF EXISTS Funcionarios
+DROP TABLE IF EXISTS Profissoes
