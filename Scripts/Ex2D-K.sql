@@ -105,7 +105,7 @@ CREATE OR ALTER PROCEDURE p_CriaInter
             END
         ELSE
             BEGIN
-            	RAISERROR('Data de inicio da intervenção é inferior á data de acquisição do Activo', 10, 0)
+            	RAISERROR('Data de inicio da intervenï¿½ï¿½o ï¿½ inferior ï¿½ data de acquisiï¿½ï¿½o do Activo', 10, 0)
             END
 	END
 GO 
@@ -116,7 +116,7 @@ CREATE OR ALTER PROCEDURE insertEquipa
 							@numElementos INT AS
     BEGIN
         IF (NULLIF(@localizacao, '') IS NULL)
-            RAISERROR ('Localização can''t be null', 10, 0)
+            RAISERROR ('Localizaï¿½ï¿½o can''t be null', 10, 0)
         IF (NULLIF(@numElementos, 0) < 2)
             RAISERROR ('numElementos must be at least 2', 10, 0)
         INSERT INTO Equipas(localizacao, numElementos) VALUES
@@ -150,3 +150,15 @@ CREATE OR ALTER PROCEDURE deleteFuncionariosEquipa
 	    AND equipa = @equipa;
 	END
 GO 
+
+-- I
+CREATE OR ALTER FUNCTION listAllIntervencoesFromDate (@data VARCHAR(4))
+RETURNS TABLE AS
+	RETURN (
+		SELECT I.id, C.descricao FROM  Intervencoes AS I
+		INNER JOIN Competencias AS C
+		ON C.id = I.competencias
+		WHERE YEAR(I.dtInicio) = @data
+		)
+GO
+
