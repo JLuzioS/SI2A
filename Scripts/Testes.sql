@@ -14,7 +14,7 @@ select * from IntervencoesEquipas ie;
 exec insertFuncionario
 	@cc = '000000000-ZZZ',
 	@nif = null,
-	@nome = 'Funcion�rio Z',
+	@nome = 'Funcionário Z',
 	@dtNascimento = '1973-12-31',
 	@morada = 'Morada Z',
 	@codigoPostal = '6712-345',
@@ -57,7 +57,7 @@ exec p_CriaInter
 select top 1 i.* from Intervencoes i order by i.id desc;
 
 exec insertEquipa
-	@localizacao = 'Localiza��o Equipa XPTO',
+	@localizacao = 'Localização Equipa XPTO',
 	@numElementos = 3;
 select top 1 e.* from Equipas e order by e.id desc;
 
