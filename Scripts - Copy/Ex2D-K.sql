@@ -105,7 +105,7 @@ CREATE OR ALTER PROCEDURE p_CriaInter
             END
         ELSE
             BEGIN
-            	RAISERROR('Data de inicio da intervenção é inferior à data de acquisição do Activo', 10, 0)
+            	RAISERROR('Data de inicio da intervenção é inferior á data de acquisição do Activo', 10, 0)
             END
 	END
 GO 
@@ -192,14 +192,3 @@ CREATE OR ALTER PROCEDURE deleteFuncionariosCompetencias
 		
 	END
 GO 
-
--- I
-CREATE OR ALTER FUNCTION listAllIntervencoesFromDate (@data VARCHAR(4))
-RETURNS TABLE AS
-	RETURN (
-		SELECT I.id, C.descricao FROM  Intervencoes AS I
-		INNER JOIN Competencias AS C
-		ON C.id = I.competencias
-		WHERE YEAR(I.dtInicio) = @data
-		)
-GO
