@@ -12,6 +12,7 @@ insert into Funcionarios (cc, nif, nome, dtNascimento, morada, codigoPostal, loc
 ('567891234-ABC', null, 'Funcionário 5', '1973-05-05', 'Morada 5', '5671-234', 'Localidade 5', 2, '256781234', null),
 (null, '123456789', 'Funcionário 6', '1973-06-06', 'Morada 6', '6712-345', 'Localidade 6', 3, null, '912345678'),
 (null, '234567891', 'Funcionário 7', '1973-07-07', 'Morada 7', '7123-456', 'Localidade 7', 1, null, '923456781'),
+(null, '345678912', 'Funcionário 8', '1973-08-08', 'Morada 8', '1234-567', 'Localidade 8', 1, null, '934567812'),
 ('111111111-ABC', null, 'Funcionário A', '1973-08-08', 'Morada A', '1234-567', 'Localidade A', 4, '211111111', null),
 ('222222222-ABC', null, 'Funcionário B', '1973-09-09', 'Morada B', '2345-671', 'Localidade B', 4, '222222222', null),
 ('333333333-ABC', null, 'Funcionário C', '1973-10-10', 'Morada C', '3456-712', 'Localidade C', 4, '233333333', null),
@@ -33,12 +34,14 @@ insert into FuncionariosCompetencias (funcionario, competencia) values
 (4, 2),
 (5, 3),
 (6, 1),
-(7, 2);
+(7, 2),
+(8, 4);
 
 insert into Equipas (localizacao, numElementos) values
 ('Localização Equipa 1', 2),
 ('Localização Equipa 2', 3),
-('Localização Equipa 3', 2);
+('Localização Equipa 3', 2),
+('Localização Equipa 4', 2);
 
 insert into FuncionariosEquipas (funcionario, equipa, dtEntrada, dtSaida) values
 (1, 1, '2021-01-01', null),
@@ -55,10 +58,10 @@ insert into TiposActivos (descricao) values
 ('Tipo Activo 3');
 
 insert into Activos (nome, dtAaquisicao, estado, marca, modelo, localizacao, funcionario, tipo) values
-('Activo 1 Composto', '2021-01-01', 1, null, null, 'Localização Activo 1', 8, 1),
-('Activo 1 A', '2021-01-01', 1, 'Marca A', 'Modelo A', 'Localização Activo 1', 8, 1),
-('Activo 1 B', '2021-01-01', 1, 'Marca B', 'Modelo B', 'Localização Activo 1', 8, 1),
-('Activo 1 C', '2021-01-01', 1, 'Marca C', 'Modelo C', 'Localização Activo 1', 8, 1),
+('Activo 1 Composto', '2021-01-01', 1, null, null, 'Localização Activo 1', 9, 1),
+('Activo 1 A', '2021-01-01', 1, 'Marca A', 'Modelo A', 'Localização Activo 1', 10, 1),
+('Activo 1 B', '2021-01-01', 1, 'Marca B', 'Modelo B', 'Localização Activo 1', 11, 1),
+('Activo 1 C', '2021-01-01', 1, 'Marca C', 'Modelo C', 'Localização Activo 1', 12, 1),
 ('Activo 5', '2021-02-02', 1, 'Marca 5', 'Modelo 5', 'Localização Activo 5', 9, 2),
 ('Activo 6', '2021-03-03', 1, 'Marca 6', 'Modelo 6', 'Localização Activo 6', 10, 3),
 ('Activo 7', '2021-04-04', 0, 'Marca 7', 'Modelo 7', 'Localização Activo 7', 11, 2),

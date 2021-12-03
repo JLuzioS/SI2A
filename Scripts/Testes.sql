@@ -60,3 +60,15 @@ exec insertEquipa
 	@localizacao = 'Localização Equipa XPTO',
 	@numElementos = 3;
 select top 1 e.* from Equipas e order by e.id desc;
+
+exec insertFuncionariosEquipa
+	@funcionario = 9,
+	@equipa = 4,
+	@dtEntrada = '2021-12-01';
+select fe.* from FuncionariosEquipas fe where fe.funcionario = 9 and fe.equipa = 4;
+
+exec deleteFuncionariosEquipa
+	@funcionario = 9,
+	@equipa = 4,
+	@dtSaida = null;
+select fe.* from FuncionariosEquipas fe where fe.funcionario = 9 and fe.equipa = 4;

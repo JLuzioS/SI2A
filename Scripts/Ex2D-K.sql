@@ -150,4 +150,3 @@ CREATE OR ALTER PROCEDURE deleteFuncionariosEquipa
 	    AND equipa = @equipa;
 	END
 GO 
-
