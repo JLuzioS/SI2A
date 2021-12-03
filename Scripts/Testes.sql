@@ -14,7 +14,7 @@ select * from IntervencoesEquipas ie;
 exec insertFuncionario
 	@cc = '000000000-ZZZ',
 	@nif = null,
-	@nome = 'Funcionário Z',
+	@nome = 'Funcionï¿½rio Z',
 	@dtNascimento = '1973-12-31',
 	@morada = 'Morada Z',
 	@codigoPostal = '6712-345',
@@ -57,7 +57,7 @@ exec p_CriaInter
 select top 1 i.* from Intervencoes i order by i.id desc;
 
 exec insertEquipa
-	@localizacao = 'Localização Equipa XPTO',
+	@localizacao = 'Localizaï¿½ï¿½o Equipa XPTO',
 	@numElementos = 3;
 select top 1 e.* from Equipas e order by e.id desc;
 
@@ -72,3 +72,5 @@ exec deleteFuncionariosEquipa
 	@equipa = 4,
 	@dtSaida = null;
 select fe.* from FuncionariosEquipas fe where fe.funcionario = 9 and fe.equipa = 4;
+
+SELECT * FROM dbo.listAllIntervencoesFromDate('2021')
