@@ -1,20 +1,20 @@
---select * from Profissoes p;
---select * from Funcionarios f;
---select * from Competencias c;
---select * from FuncionariosCompetencias fc;
---select * from Equipas e;
---select * from FuncionariosEquipas fe;
---select * from TiposActivos ta;
---select * from Activos a;
---select * from ActivosCompostos ac;
---select * from PrecosActivos pa;
---select * from Intervencoes i;
---select * from IntervencoesEquipas ie;
+select * from Profissoes p;
+select * from Funcionarios f;
+select * from Competencias c;
+select * from FuncionariosCompetencias fc;
+select * from Equipas e;
+select * from FuncionariosEquipas fe;
+select * from TiposActivos ta;
+select * from Activos a;
+select * from ActivosCompostos ac;
+select * from PrecosActivos pa;
+select * from Intervencoes i;
+select * from IntervencoesEquipas ie;
 
 exec insertFuncionario
 	@cc = '000000000-ZZZ',
 	@nif = null,
-	@nome = 'Funcionário Z',
+	@nome = 'Funcion�rio Z',
 	@dtNascimento = '1973-12-31',
 	@morada = 'Morada Z',
 	@codigoPostal = '6712-345',
@@ -25,7 +25,7 @@ exec insertFuncionario
 select top 1 f.* from Funcionarios f order by f.id desc;
 
 DECLARE @id_ INT
-select top 1 @id_ = f.id from Funcionarios f order by f.id desc
+select top 1 @id_ = f.id from Funcionarios f order by f.id desc;
 exec updateFuncionario
     @id = @id_,
 	@cc = '999999999-ZZZ',
@@ -37,11 +37,11 @@ exec updateFuncionario
 	@localidade = '',
 	@profissao = '',
 	@telefone = '299999999',
-	@telemovel = ''
+	@telemovel = '';
 select top 1 f.* from Funcionarios f order by f.id desc;
 
 DECLARE @id_ INT
-select @id_ = f.id from Funcionarios f where f.cc = '999999999-ZZZ'
+select @id_ = f.id from Funcionarios f where f.cc = '999999999-ZZZ';
 exec deleteFuncionario @id = @id_;
 select top 1 f.* from Funcionarios f order by f.id desc;
 
@@ -57,7 +57,7 @@ exec p_CriaInter
 select top 1 i.* from Intervencoes i order by i.id desc;
 
 exec insertEquipa
-	@localizacao = 'Localização Equipa XPTO',
+	@localizacao = 'Localiza��o Equipa XPTO',
 	@numElementos = 3;
 select top 1 e.* from Equipas e order by e.id desc;
 
@@ -73,14 +73,3 @@ exec deleteFuncionariosEquipa
 	@dtSaida = null;
 select fe.* from FuncionariosEquipas fe where fe.funcionario = 9 and fe.equipa = 4;
 
-exec insertFuncionariosCompetencias
-	@funcionario = 2,
-	@competencia = 2;
-select fc.* from FuncionariosCompetencias fc where fc.funcionario = 2;
-
-exec deleteFuncionariosCompetencias
-	@funcionario = 1,
-	@competencia = 2;
-select fc.* from FuncionariosCompetencias fc where fc.funcionario = 1;
-
-SELECT * FROM dbo.listAllIntervencoesFromDate('2021')

@@ -110,7 +110,7 @@ CREATE OR ALTER PROCEDURE p_CriaInter
 				END
 			ELSE
 				BEGIN
-					RAISERROR('Data de inicio da intervenção é inferior à data de acquisição do Activo', 10, 0)
+					RAISERROR('Data de inicio da interven��o � inferior � data de acquisi��o do Activo', 10, 0)
 				END
 		END TRY
 		BEGIN CATCH
@@ -126,7 +126,7 @@ CREATE OR ALTER PROCEDURE p_CriaInter
             END
         ELSE
             BEGIN
-            	RAISERROR('Data de inicio da intervenção é inferior à data de acquisição do Activo', 10, 0)
+            	RAISERROR('Data de inicio da interven��o � inferior � data de acquisi��o do Activo', 10, 0)
             END
 	END
 GO 
@@ -138,7 +138,8 @@ CREATE OR ALTER PROCEDURE insertEquipa
     BEGIN
 		BEGIN TRY
         IF (NULLIF(@localizacao, '') IS NULL)
-            RAISERROR ('Localização não pode ser nulo', 10, 0)
+            RAISERROR ('Localiza��o não pode ser nulo', 10, 0)
+            RAISERROR ('Localiza��o can''t be null', 10, 0)
         IF (NULLIF(@numElementos, 0) < 2)
             RAISERROR ('numElementos tem que ser pelo menos 2', 10, 0)
         INSERT INTO Equipas(localizacao, numElementos) VALUES
@@ -213,7 +214,7 @@ CREATE OR ALTER PROCEDURE deleteFuncionariosCompetencias
             END
         ELSE
             BEGIN
-            	RAISERROR('Competência do funcionário em uso numa intervenção', 10, 0)
+            	RAISERROR('Compet�ncia do funcion�rio em uso numa interven��o', 10, 0)
             END
 		
 	END
@@ -233,28 +234,20 @@ GO
 
 -- J
 CREATE OR ALTER PROCEDURE updateIntervencaoState
-							@id INT
+							@id INT,
+							@estado VARCHAR (12)
 	AS
 	BEGIN
 		BEGIN TRY
-			DECLARE @estadoActual VARCHAR(12), @estado VARCHAR(12), @dtFim DATE
+			DECLARE @estadoActual VARCHAR(12),  @dtFim DATE
 			SET  @estadoActual = (SELECT estado FROM Intervencoes WHERE id = @id)
-
-			SET @estado =
-				CASE @estadoActual
-					WHEN 'Por Atribuir'	 THEN 'Em Análise'
-					WHEN 'Em Análise'	THEN 'Em Execução'
-					WHEN 'Em Execução'  THEN 'Concluído'
-					ELSE NULL
+		
+			PRINT @estadoActual 
+			IF(NULLIF(@estado, @estadoActual) = NULL)
+				BEGIN
+					RAISERROR ('estado igual ao presente ou nulo', 16, 1)
 				END
 			
-
-			PRINT @estadoActual 
-			IF(@estadoActual = 'Concluído')
-				BEGIN
-					RAISERROR ('estado já está Concluído', 16, 1)
-				END
-
 			UPDATE Intervencoes 
 			SET estado = @estado
 			WHERE id = @id
@@ -266,3 +259,11 @@ CREATE OR ALTER PROCEDURE updateIntervencaoState
 GO
 
 -- K
+CREATE OR ALTER VIEW ResumoIntervencoes 
+	AS
+		SELECT ROW_NUMBER() OVER( ORDER BY I.id ) AS id, I.estado AS estadoIntervencoes, I.vlMonetario AS vlMonetarioIntervencoes, I.dtInicio AS dtInicioIntervencoes, I.dtFim AS dtFimIntervencoes, I.perMeses AS perMesesIntervencoes, 
+				A.nome AS nomeActivos, A.dtAaquisicao AS dtAquisicaoActivos, A.estado AS estadoActivos , ISNULL(A.marca, 'Sem Marca') AS marcaActivos, ISNULL(A.modelo, 'Sem modelo') AS modeloActivos, A.localizacao AS localizacaoActivos, A.funcionario AS funcionarioActivos, A.tipo AS tipoActivos
+			FROM Intervencoes AS I
+			INNER JOIN Activos AS A 
+			ON I.id = A.id
+GO
