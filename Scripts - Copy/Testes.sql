@@ -1,15 +1,15 @@
---select * from Profissoes p;
---select * from Funcionarios f;
---select * from Competencias c;
---select * from FuncionariosCompetencias fc;
---select * from Equipas e;
---select * from FuncionariosEquipas fe;
---select * from TiposActivos ta;
---select * from Activos a;
---select * from ActivosCompostos ac;
---select * from PrecosActivos pa;
---select * from Intervencoes i;
---select * from IntervencoesEquipas ie;
+select * from Profissoes p;
+select * from Funcionarios f;
+select * from Competencias c;
+select * from FuncionariosCompetencias fc;
+select * from Equipas e;
+select * from FuncionariosEquipas fe;
+select * from TiposActivos ta;
+select * from Activos a;
+select * from ActivosCompostos ac;
+select * from PrecosActivos pa;
+select * from Intervencoes i;
+select * from IntervencoesEquipas ie;
 
 exec insertFuncionario
 	@cc = '000000000-ZZZ',
@@ -25,7 +25,7 @@ exec insertFuncionario
 select top 1 f.* from Funcionarios f order by f.id desc;
 
 DECLARE @id_ INT
-select top 1 @id_ = f.id from Funcionarios f order by f.id desc
+select top 1 @id_ = f.id from Funcionarios f order by f.id desc;
 exec updateFuncionario
     @id = @id_,
 	@cc = '999999999-ZZZ',
@@ -37,11 +37,11 @@ exec updateFuncionario
 	@localidade = '',
 	@profissao = '',
 	@telefone = '299999999',
-	@telemovel = ''
+	@telemovel = '';
 select top 1 f.* from Funcionarios f order by f.id desc;
 
 DECLARE @id_ INT
-select @id_ = f.id from Funcionarios f where f.cc = '999999999-ZZZ'
+select @id_ = f.id from Funcionarios f where f.cc = '999999999-ZZZ';
 exec deleteFuncionario @id = @id_;
 select top 1 f.* from Funcionarios f order by f.id desc;
 
@@ -82,5 +82,3 @@ exec deleteFuncionariosCompetencias
 	@funcionario = 1,
 	@competencia = 2;
 select fc.* from FuncionariosCompetencias fc where fc.funcionario = 1;
-
-SELECT * FROM dbo.listAllIntervencoesFromDate('2021')
