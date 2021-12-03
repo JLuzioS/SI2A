@@ -1,15 +1,15 @@
 -- D
 CREATE OR ALTER PROCEDURE insertFuncionario
-									@cc VARCHAR(13),
-                                    @nif VARCHAR(12), 
-                                    @nome VARCHAR(256), 
-                                    @dtNascimento DATE, 
-                                    @morada VARCHAR(256), 
-                                    @codigoPostal VARCHAR(8), 
-                                    @localidade VARCHAR(256), 
-                                    @profissao INT, 
-                                    @telefone VARCHAR(9), 
-                                    @telemovel VARCHAR(9) AS
+							@cc VARCHAR(13),
+                            @nif VARCHAR(12), 
+                            @nome VARCHAR(256), 
+                            @dtNascimento DATE, 
+                            @morada VARCHAR(256), 
+                            @codigoPostal VARCHAR(8), 
+                            @localidade VARCHAR(256), 
+                            @profissao INT, 
+                            @telefone VARCHAR(9), 
+                            @telemovel VARCHAR(9) AS
 	BEGIN
         INSERT INTO Funcionarios(cc, nif, nome, dtNascimento, morada, codigoPostal, localidade, profissao, telefone, telemovel) VALUES 
         (@cc, @nif, @nome, @dtNascimento, @morada, @codigoPostal, @localidade, @profissao, @telefone, @telemovel)
@@ -17,17 +17,17 @@ CREATE OR ALTER PROCEDURE insertFuncionario
 GO
 
 CREATE OR ALTER PROCEDURE updateFuncionario
-									@id INT,
-                                    @cc VARCHAR(13) = NULL,
-                                    @nif VARCHAR(12) = NULL,
-                                    @nome VARCHAR(256) = NULL,
-                                    @dtNascimento DATE = NULL,
-                                    @morada VARCHAR(256) = NULL,
-                                    @codigoPostal VARCHAR(8) = NULL,
-                                    @localidade VARCHAR(256) = NULL,
-                                    @profissao INT = NULL,
-                                    @telefone VARCHAR(9) = NULL,
-                                    @telemovel VARCHAR(9) = NULL AS
+							@id INT,
+                            @cc VARCHAR(13) = NULL,
+                            @nif VARCHAR(12) = NULL,
+                            @nome VARCHAR(256) = NULL,
+                            @dtNascimento DATE = NULL,
+                            @morada VARCHAR(256) = NULL,
+                            @codigoPostal VARCHAR(8) = NULL,
+                            @localidade VARCHAR(256) = NULL,
+                            @profissao INT = NULL,
+                            @telefone VARCHAR(9) = NULL,
+                            @telemovel VARCHAR(9) = NULL AS
 	BEGIN
 	    IF (NULLIF(@id, '') IS NULL)
 	        RAISERROR ('Funcionario ID can''t be null', 10, 0)
@@ -88,12 +88,12 @@ GO
 
 -- F
 CREATE OR ALTER PROCEDURE p_CriaInter
-								@competencias INT,
-                                @estado VARCHAR(12),
-                                @activo INT,
-                                @vlMonetario DECIMAL(9,2),
-                                @dtInicio DATE,
-                                @perMeses INT AS
+							@competencias INT,
+                            @estado VARCHAR(12),
+                            @activo INT,
+                            @vlMonetario DECIMAL(9,2),
+                            @dtInicio DATE,
+                            @perMeses INT AS
 	BEGIN
         DECLARE @dtAaquisicao DATE
         SELECT @dtAaquisicao = dtAaquisicao FROM Activos where @activo = id
@@ -123,3 +123,31 @@ CREATE OR ALTER PROCEDURE insertEquipa
         (@localizacao, @numElementos)
     END
 GO
+
+-- H
+CREATE OR ALTER PROCEDURE insertFuncionariosEquipa
+							@funcionario INT,
+							@equipa INT,
+							@dtEntrada DATE AS
+	BEGIN
+		SET @dtEntrada = NULLIF(@dtEntrada, '')
+		
+		INSERT INTO FuncionariosEquipas(funcionario, equipa, dtEntrada, dtSaida) VALUES
+        (@funcionario, @equipa, ISNULL(@dtEntrada, GETDATE()), null)
+	END
+GO 
+
+CREATE OR ALTER PROCEDURE deleteFuncionariosEquipa
+							@funcionario INT,
+							@equipa INT,
+							@dtSaida DATE AS
+	BEGIN
+		SET @dtSaida = NULLIF(@dtSaida, '')
+		
+		UPDATE FuncionariosEquipas 
+		SET dtSaida = ISNULL(@dtSaida, GETDATE()) 
+	    WHERE funcionario = @funcionario
+	    AND equipa = @equipa;
+	END
+GO 
+
