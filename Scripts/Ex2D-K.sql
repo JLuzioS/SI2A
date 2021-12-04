@@ -31,7 +31,7 @@ CREATE OR ALTER PROCEDURE updateFuncionario
 	BEGIN
 		BEGIN TRY
 			IF (NULLIF(@id, '') IS NULL)
-				RAISERROR ('ID do Funcionario não pode ser nulo', 10, 0)
+				RAISERROR ('ID do Funcionario não pode ser nulo', 16, 0)
 			SET @cc = NULLIF(@cc, '')
 			SET @nif = NULLIF(@nif, '')
 			SET @nome = NULLIF(@nome, '') 
@@ -110,7 +110,7 @@ CREATE OR ALTER PROCEDURE p_CriaInter
 				END
 			ELSE
 				BEGIN
-					RAISERROR('Data de inicio da intervenção é inferior à data de acquisição do Activo', 10, 0)
+					RAISERROR('Data de inicio da intervenção é inferior à data de acquisição do Activo', 16, 0)
 				END
 		END TRY
 		BEGIN CATCH
@@ -126,9 +126,9 @@ CREATE OR ALTER PROCEDURE insertEquipa
     BEGIN
 		BEGIN TRY
         IF (NULLIF(@localizacao, '') IS NULL)
-            RAISERROR ('Localização não pode ser nulo', 10, 0)
+            RAISERROR ('Localização não pode ser nulo', 16, 0)
         IF (NULLIF(@numElementos, 0) < 2)
-            RAISERROR ('numElementos tem que ser pelo menos 2', 10, 0)
+            RAISERROR ('numElementos tem que ser pelo menos 2', 16, 0)
         INSERT INTO Equipas(localizacao, numElementos) VALUES
         (@localizacao, @numElementos)
 		END TRY
@@ -201,7 +201,7 @@ CREATE OR ALTER PROCEDURE deleteFuncionariosCompetencias
             END
         ELSE
             BEGIN
-            	RAISERROR('Competência do funcionário em uso numa intervenção', 10, 0)
+            	RAISERROR('Competência do funcionário em uso numa intervenção', 16, 0)
             END
 		
 	END
@@ -226,13 +226,12 @@ CREATE OR ALTER PROCEDURE updateIntervencaoState
 	AS
 	BEGIN
 		BEGIN TRY
-			DECLARE @estadoActual VARCHAR(12),  @dtFim DATE
+			DECLARE @estadoActual VARCHAR(12)
 			SET  @estadoActual = (SELECT estado FROM Intervencoes WHERE id = @id)
 		
-			PRINT @estadoActual 
-			IF(NULLIF(@estado, @estadoActual) = NULL)
+			IF(NULLIF(@estado, '') IS NULL OR @estado = @estadoActual)
 				BEGIN
-					RAISERROR ('estado igual ao presente ou nulo', 16, 1)
+					RAISERROR ('Estado igual ao existente ou nulo', 16, 1)
 				END
 			
 			UPDATE Intervencoes 
