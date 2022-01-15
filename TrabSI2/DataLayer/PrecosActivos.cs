@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DataLayer
+namespace EntityFramework
 {
     using System;
     using System.Collections.Generic;
