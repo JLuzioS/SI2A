@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace EntityFramework
+namespace EntityFrameworkLayer
 {
     using System;
     using System.Collections.Generic;

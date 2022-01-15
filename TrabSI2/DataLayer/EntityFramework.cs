@@ -1,6 +1,7 @@
 ﻿using ModelLayer;
+using System.Collections.Generic;
 
-namespace EntityFramework
+namespace EntityFrameworkLayer
 {
     public class EntityFramework : IDataBase
     {
@@ -25,6 +26,11 @@ namespace EntityFramework
                 ctx.SaveChanges();
             }
             return false;
+        }
+
+        public List<ModelLayer.Funcionarios> GetAllFuncionarios()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

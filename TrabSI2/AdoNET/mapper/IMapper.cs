@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AdoNET.mapper
+namespace AdoNETLayer.mapper
 {
-    interface IMapper<T, Tid, TCol>
+    public interface IMapper<T, Tid, TCol>
     {
         T Create(T entity);
         T Read(Tid id);

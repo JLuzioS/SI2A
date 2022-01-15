@@ -1,12 +1,12 @@
-﻿using AdoNET.dal;
+﻿using AdoNETLayer.dal;
 using System.Data;
 using System.Data.SqlClient;
 using System.Transactions;
 
-namespace AdoNET.concrete
+namespace AdoNETLayer.concrete
 {
 
-    class Context : IContext
+    public class Context : IContext
     {
         private string connectionString;
         private SqlConnection con = null;
@@ -16,7 +16,7 @@ namespace AdoNET.concrete
         public Context(string cs)
         {
             connectionString = cs;
-            _countryRepository = new FuncionarioRepository(this);
+            _funcionarioRepository = new FuncionarioRepository(this);
         }
 
         public void Open()
@@ -58,7 +58,7 @@ namespace AdoNET.concrete
         {
             get
             {
-                return _funcionariosRepository;
+                return _funcionarioRepository;
             }
         }
 

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AdoNET.dal
+namespace AdoNETLayer.dal
 {
-    interface IFuncionarioRepository : IRepository<Funcionarios> { }
+    public interface IFuncionarioRepository : IRepository<Funcionarios> { }
 }

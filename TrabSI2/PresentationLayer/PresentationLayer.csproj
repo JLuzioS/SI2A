@@ -49,17 +49,17 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AdoNET\AdoNET.csproj">
+    <ProjectReference Include="..\AdoNET\AdoNETLayer.csproj">
       <Project>{6B992A0C-B02C-4754-A92C-E9D84EED425E}</Project>
-      <Name>AdoNET</Name>
+      <Name>AdoNETLayer</Name>
     </ProjectReference>
     <ProjectReference Include="..\BusinessLayer\BusinessLayer.csproj">
       <Project>{FA4D947C-290C-44B6-B5D9-F6DB6D7CD3A1}</Project>
       <Name>BusinessLayer</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DataLayer\EntityFramework.csproj">
+    <ProjectReference Include="..\DataLayer\EntityFrameworkLayer.csproj">
       <Project>{005FDF59-811B-4E99-AD7F-1FA63EEAE695}</Project>
-      <Name>EntityFramework</Name>
+      <Name>EntityFrameworkLayer</Name>
     </ProjectReference>
     <ProjectReference Include="..\ModelLayer\ModelLayer.csproj">
       <Project>{49C17CCF-F30E-4430-99B0-630EEF69606C}</Project>

@@ -1,4 +1,4 @@
-﻿using AdoNET.dal;
+﻿using AdoNETLayer.dal;
 using ModelLayer;
 using System;
 using System.Collections.Generic;
@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AdoNET.concrete
+namespace AdoNETLayer.concrete
 {
-    class FuncionarioRepository
+    class FuncionarioRepository: IFuncionarioRepository
     {
         private IContext context;
         public FuncionarioRepository(IContext ctx)

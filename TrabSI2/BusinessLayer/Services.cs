@@ -1,10 +1,5 @@
-﻿using DataLayer;
-using ModelLayer;
-using System;
+﻿using ModelLayer;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BusinessLayer
 {
@@ -20,9 +15,14 @@ namespace BusinessLayer
             dataBase = db;
         }
 
-        public bool CreateFuncionario(ModelLayer.Funcionarios funcionario)
+        public bool CreateFuncionario(Funcionarios funcionario)
         {
             return dataBase.CreateFuncionario(funcionario);
+        }
+
+        public List<Funcionarios> GetAllFuncionarios()
+        {
+            return dataBase.GetAllFuncionarios();
         }
     }
 }

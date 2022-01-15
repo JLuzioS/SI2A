@@ -1,11 +1,12 @@
-﻿using System;
+﻿using AdoNETLayer.dal;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AdoNET.mapper
+namespace AdoNETLayer.mapper
 {
     #region ExtensionMethods
     public static class CollectionExtensions

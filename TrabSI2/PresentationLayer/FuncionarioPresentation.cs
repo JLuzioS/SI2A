@@ -17,6 +17,14 @@ namespace PresentationLayer
             this.service = service;
         }
 
+        public void GetAllFuncionarios()
+        {
+            foreach(var fun in service.GetAllFuncionarios())
+            {
+                Console.WriteLine(fun.nome);
+            }
+        }
+
         public void CreateFuncionario()
         {
             Console.WriteLine("Insira os dados do novo Funcionario: ");

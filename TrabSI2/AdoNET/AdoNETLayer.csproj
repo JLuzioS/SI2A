@@ -51,6 +51,7 @@
     <Compile Include="dal\IContext.cs" />
     <Compile Include="dal\IRepository.cs" />
     <Compile Include="mapper\AbstractMapper.cs" />
+    <Compile Include="mapper\FuncionariosProxy.cs" />
     <Compile Include="mapper\IFuncionarioMapper.cs" />
     <Compile Include="mapper\IMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

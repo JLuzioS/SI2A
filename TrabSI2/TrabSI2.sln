@@ -17,9 +17,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLayer", "BusinessLa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelLayer", "ModelLayer\ModelLayer.csproj", "{49C17CCF-F30E-4430-99B0-630EEF69606C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework", "DataLayer\EntityFramework.csproj", "{005FDF59-811B-4E99-AD7F-1FA63EEAE695}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFrameworkLayer", "DataLayer\EntityFrameworkLayer.csproj", "{005FDF59-811B-4E99-AD7F-1FA63EEAE695}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdoNET", "AdoNET\AdoNET.csproj", "{6B992A0C-B02C-4754-A92C-E9D84EED425E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdoNETLayer", "AdoNET\AdoNETLayer.csproj", "{6B992A0C-B02C-4754-A92C-E9D84EED425E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

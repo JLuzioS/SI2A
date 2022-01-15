@@ -1,8 +1,9 @@
-﻿using System.Data.SqlClient;
+﻿using System;
+using System.Data.SqlClient;
 
-namespace AdoNET.dal
+namespace AdoNETLayer.dal
 {
-    interface IContext
+    public interface IContext : IDisposable
     {
         void Open();
         SqlCommand createCommand();

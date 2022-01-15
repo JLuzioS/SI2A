@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AdoNET.mapper
+namespace AdoNETLayer.mapper
 {
-    interface IFuncionariosMapper : IMapper<Funcionarios, int?, List<Funcionarios>>
+    public interface IFuncionariosMapper : IMapper<Funcionarios, int?, List<Funcionarios>>
     {
     }
 }
