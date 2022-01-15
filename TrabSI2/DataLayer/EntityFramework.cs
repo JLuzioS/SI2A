@@ -1,5 +1,6 @@
 ﻿using ModelLayer;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace EntityFrameworkLayer
 {
@@ -30,7 +31,36 @@ namespace EntityFrameworkLayer
 
         public List<ModelLayer.Funcionarios> GetAllFuncionarios()
         {
-            throw new System.NotImplementedException();
+            using (var ctx = new L51NG3Entities())
+            {
+                var EFfuncionarios = from allFunc in ctx.Funcionarios select allFunc;
+
+                var ModelFunc = new List<ModelLayer.Funcionarios>();
+
+                foreach(var EFfunc in EFfuncionarios)
+                {
+                    ModelFunc.Add(Map(EFfunc));
+                }
+
+                return ModelFunc;
+            }
+        }
+
+        public ModelLayer.Funcionarios Map(Funcionarios entityFrameWorkFuncionario)
+        {
+            return new ModelLayer.Funcionarios
+            {
+                cc = entityFrameWorkFuncionario.cc,
+                nif = entityFrameWorkFuncionario.nif,
+                nome = entityFrameWorkFuncionario.nome,
+                dtNascimento = entityFrameWorkFuncionario.dtNascimento,
+                morada = entityFrameWorkFuncionario.morada,
+                codigoPostal = entityFrameWorkFuncionario.codigoPostal,
+                localidade = entityFrameWorkFuncionario.localidade,
+                profissao = entityFrameWorkFuncionario.profissao,
+                telefone = entityFrameWorkFuncionario.telefone,
+                telemovel = entityFrameWorkFuncionario.telemovel
+            };
         }
     }
 }
