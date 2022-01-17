@@ -33,6 +33,7 @@ namespace AdoNETLayer.concrete
                     entity = UpdateEntityID(cmd, entity);
                 }
 
+                /*
                 if (entity != null)
                 {
                     SqlParameter p = new SqlParameter("@cc", entity.cc);
@@ -62,10 +63,11 @@ namespace AdoNETLayer.concrete
                     
                     ts.Complete();
                     return entity;
-                }
+                }*/
 
-                return null;
-                
+                ts.Complete();
+                return entity;
+
             }
 
         }
