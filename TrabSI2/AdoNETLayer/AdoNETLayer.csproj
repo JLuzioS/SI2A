@@ -4,17 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{6B992A0C-B02C-4754-A92C-E9D84EED425E}</ProjectGuid>
+    <ProjectGuid>{A64D4220-9F37-4390-9579-65BA8875D5A1}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AdoNET</RootNamespace>
-    <AssemblyName>AdoNET</AssemblyName>
+    <RootNamespace>AdoNETLayer</RootNamespace>
+    <AssemblyName>AdoNETLayer</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,12 +24,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -47,8 +51,8 @@
     <Compile Include="concrete\Context.cs" />
     <Compile Include="concrete\FuncionarioMapper.cs" />
     <Compile Include="concrete\FuncionarioRepository.cs" />
-    <Compile Include="dal\IFuncionarioRepository.cs" />
     <Compile Include="dal\IContext.cs" />
+    <Compile Include="dal\IFuncionarioRepository.cs" />
     <Compile Include="dal\IRepository.cs" />
     <Compile Include="mapper\AbstractMapper.cs" />
     <Compile Include="mapper\FuncionariosProxy.cs" />
@@ -57,8 +61,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\ModelLayer\ModelLayer.csproj">
-      <Project>{49C17CCF-F30E-4430-99B0-630EEF69606C}</Project>
+      <Project>{8720df66-2fe6-4c16-b1cf-6fc68ce491ed}</Project>
       <Name>ModelLayer</Name>
     </ProjectReference>
   </ItemGroup>

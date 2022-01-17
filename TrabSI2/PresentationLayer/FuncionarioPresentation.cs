@@ -19,7 +19,7 @@ namespace PresentationLayer
 
         public void GetAllFuncionarios()
         {
-            foreach(var fun in service.GetAllFuncionarios())
+            foreach (var fun in service.GetAllFuncionarios())
             {
                 Console.WriteLine(fun.nome);
             }
@@ -42,10 +42,11 @@ namespace PresentationLayer
             funcionario.telefone = GetPhone();
             funcionario.telemovel = GetCellPhone();
 
-            if(service.CreateFuncionario(funcionario))
+            if (service.CreateFuncionario(funcionario))
             {
                 Console.WriteLine("Funcionario criado com sucesso!");
-            } else
+            }
+            else
             {
                 Console.WriteLine("Algo correu mal! Nao sei");
             }

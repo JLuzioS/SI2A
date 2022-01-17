@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="829d8f4c70fa447babcf13daef71dc08" Name="Diagram1">
+      <Diagram DiagramId="4dcc54784ac549d7a4d6fabd1dbf756b" Name="Diagram1">
         <EntityTypeShape EntityType="L51NG3Model.Activos" Width="1.5" PointX="8.25" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="L51NG3Model.Competencias" Width="1.5" PointX="0.75" PointY="5.875" IsExpanded="true" />
         <EntityTypeShape EntityType="L51NG3Model.Equipas" Width="1.5" PointX="6" PointY="1.75" IsExpanded="true" />
@@ -14,6 +14,7 @@
         <EntityTypeShape EntityType="L51NG3Model.IntervencoesEquipas" Width="1.5" PointX="8.25" PointY="5.625" IsExpanded="true" />
         <EntityTypeShape EntityType="L51NG3Model.PrecosActivos" Width="1.5" PointX="10.5" PointY="1.875" IsExpanded="true" />
         <EntityTypeShape EntityType="L51NG3Model.Profissoes" Width="1.5" PointX="0.75" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="L51NG3Model.sysdiagrams" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="L51NG3Model.TiposActivos" Width="1.5" PointX="6" PointY="9.375" IsExpanded="true" />
         <EntityTypeShape EntityType="L51NG3Model.ResumoIntervencoes" Width="1.5" PointX="0.75" PointY="9.75" IsExpanded="true" />
         <AssociationConnector Association="L51NG3Model.fk_Activos_Funcionarios" ManuallyRouted="false" />

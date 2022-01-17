@@ -24,7 +24,7 @@ namespace PresentationLayer
 
 
             IDataBase db;
-            switch(DataAccessModelOption)
+            switch (DataAccessModelOption)
             {
                 case DataAccessModel.AdoNET:
                     using (Context ctx = new Context(connectionString))
@@ -45,7 +45,7 @@ namespace PresentationLayer
 
             var OperationOption = GetOperation();
 
-            switch(OperationOption)
+            switch (OperationOption)
             {
                 case Operation.CreateFunc:
                     fP.CreateFuncionario();
