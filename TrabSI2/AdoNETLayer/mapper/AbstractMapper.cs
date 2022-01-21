@@ -2,6 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace AdoNETLayer.mapper
 {
@@ -109,6 +112,7 @@ namespace AdoNETLayer.mapper
                 cmd.CommandText = InsertCommandText;
                 cmd.CommandType = InsertCommandType;
                 InsertParameters(cmd, entity);
+                Console.WriteLine(cmd.ToString());
                 cmd.ExecuteNonQuery();
                 T ent = UpdateEntityID(cmd, entity);
                 cmd.Parameters.Clear();

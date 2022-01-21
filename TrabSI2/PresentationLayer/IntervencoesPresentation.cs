@@ -33,7 +33,7 @@ namespace PresentationLayer
 
             GetAllCompetencias();
             intervencoes.competencias = GetCompetencia();
-            intervencoes.estado = GetEstado();
+            intervencoes.estado = "Por atribuir";
             GetAllActivos();
             intervencoes.activo = GetActivo();
             intervencoes.vlMonetario = GetValorMonetario();
@@ -66,15 +66,6 @@ namespace PresentationLayer
             var option = Console.ReadLine();
             // TODO DATA Validation
             return Int32.Parse(option);
-        }
-
-
-        private string GetEstado()
-        {
-            Console.WriteLine("Estado: ");
-            var option = Console.ReadLine();
-            // TODO DATA Validation
-            return option;
         }
 
         private void GetAllActivos()
