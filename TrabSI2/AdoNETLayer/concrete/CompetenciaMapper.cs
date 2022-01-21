@@ -97,14 +97,16 @@ namespace AdoNETLayer.concrete
                     cmd.CommandText = "select dbo.obtainCodigoDeEquipaLivre(@descricao)";
                     cmd.CommandType = CommandType.Text;
                     cmd.Parameters.Add(new SqlParameter("@descricao", competenciaId));
-                    var query = cmd.ExecuteReader();
-                    if(query.Read())
-                    {
-                        return query.GetInt32(0);
-                    }
-                    else
-                    {
-                        return 0;
+                    using (var query = cmd.ExecuteReader())
+                    { 
+                        if (query.Read())
+                        {
+                            return query.GetInt32(0);
+                        }
+                        else
+                        {
+                            return 0;
+                        }
                     }
                 }
             }
