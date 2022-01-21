@@ -1,4 +1,5 @@
 ﻿using ModelLayer;
+using System;
 using System.Collections.Generic;
 
 namespace BusinessLayer
@@ -40,18 +41,24 @@ namespace BusinessLayer
         public bool CreateIntervencao(Intervencoes intervencoes)
         {
             Activos activo = dataBase.GetActivo(intervencoes.activo);
-            if (activo.dtAaquisicao < intervencoes.dtInicio) 
+            if (activo.dtAaquisicao < intervencoes.dtInicio)
                 throw new Exception("Data de inicio da intervenção é inferior à data de acquisição do Activo");
             return dataBase.CreateIntervencao(intervencoes);
         }
 
-        public List<Activos> GetAllActivos()
+        public Equipas AddFuncionarioToEquipa(Equipas equipa, Funcionarios funcionario)
         {
-            return dataBase.GetAllActivos();
+            return dataBase.AddFuncionario(equipa, funcionario);
         }
-        public bool CreateEquipa(string localizacao, int numElementos)
+
+        public Funcionarios GetFuncionarios(int idFuncionario)
         {
-            return dataBase.CreateEquipa(localizacao, numElementos);
+            return dataBase.GetFuncionarios(idFuncionario);
+        }
+
+        public Equipas DeleteFuncionarioFromEquipa(Equipas equipa, Funcionarios funcionario)
+        {
+            return dataBase.DeleteFuncionario(equipa, funcionario);
         }
     }
 }

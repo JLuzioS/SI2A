@@ -66,6 +66,12 @@ namespace PresentationLayer
                     case Operation.CreateEqu:
                         eP.CreateEquipa();
                         break;
+                    case Operation.AddUserToEquipa:
+                        cP.AddFuncionarioToEquipa();
+                        break;
+                    case Operation.RemoveUserFromEquipa:
+                        cP.DeleteFuncionarioFromEquipa();
+                        break;
                     case Operation.Exit:
                         return;
                 }
@@ -106,6 +112,8 @@ namespace PresentationLayer
             Console.WriteLine("E1. Get free Equipa");
             Console.WriteLine("Fa. Create Intervencao");
             Console.WriteLine("G. Create Equipa");
+            Console.WriteLine("G1. Add Funcionario to Equipa");
+            Console.WriteLine("G2. Remove Funcionario from Equipa");
             Console.WriteLine("0. Exit");
 
             while (true)
@@ -128,6 +136,10 @@ namespace PresentationLayer
                         return Operation.CreateInterv;
                     case "G":
                         return Operation.CreateEqu;
+                    case "G1":
+                        return Operation.AddUserToEquipa;
+                    case "G2":
+                        return Operation.RemoveUserFromEquipa;
                     case "0":
                         return Operation.Exit;
                     default:

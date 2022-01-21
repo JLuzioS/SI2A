@@ -110,5 +110,25 @@ namespace AdoNETLayer
         {
             return equipasMapper.Read(idEquipa);
         }
+
+        public Equipas AddFuncionario(Equipas equipa, Funcionarios funcionario)
+        {
+            return equipasMapper.AddFuncionario(equipa, funcionario);
+        }
+
+        public Equipas DeleteFuncionario(Equipas equipa, Funcionarios funcionario)
+        {
+            return equipasMapper.DeleteFuncionario(equipa, funcionario);
+        }
+
+        public Funcionarios GetFuncionarios(int idFuncionario)
+        {
+            return funcionarioMapper.Read(idFuncionario);
+        }
+
+        public Equipas GetEquipas(int idEquipa)
+        {
+            return equipasMapper.Read(idEquipa);
+        }
     }
 }
