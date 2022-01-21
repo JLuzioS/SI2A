@@ -223,5 +223,10 @@ namespace EntityFrameworkLayer
                 };
             }
         }
+
+        public bool CreateIntervencaoProcedure(ModelLayer.Intervencoes intervencoes)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

@@ -92,6 +92,11 @@ namespace AdoNETLayer
             return activosMapper.Read(activo);
         }
 
+        public bool CreateIntervencaoProcedure(Intervencoes intervencoes)
+        {
+            return intervencoesMapper.CreateWithProcedure(intervencoes);
+        }
+
         public Equipas AddFuncionario(Equipas equipa, Funcionarios funcionario)
         {
             return equipasMapper.AddFuncionario(equipa, funcionario);
