@@ -54,9 +54,6 @@
     <Compile Include="concrete\FuncionarioMapper.cs" />
     <Compile Include="dal\IContext.cs" />
     <Compile Include="mapper\AbstractMapper.cs" />
-    <Compile Include="mapper\ICompetenciasMapper.cs" />
-    <Compile Include="mapper\IIntervencoesMapper.cs" />
-    <Compile Include="mapper\IFuncionarioMapper.cs" />
     <Compile Include="mapper\IMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

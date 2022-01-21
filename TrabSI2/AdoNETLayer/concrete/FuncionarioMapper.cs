@@ -12,7 +12,7 @@ using System.Transactions;
 
 namespace AdoNETLayer.concrete
 {
-    class FuncionarioMapper :AbstracMapper<Funcionarios, int, List<Funcionarios>>,  IFuncionariosMapper
+    class FuncionarioMapper :AbstracMapper<Funcionarios, int, List<Funcionarios>>, IMapper<Funcionarios, int?, List<Funcionarios>>
     {
 
         public FuncionarioMapper(IContext ctx) : base(ctx) { }

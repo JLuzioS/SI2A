@@ -12,7 +12,7 @@ using System.Transactions;
 
 namespace AdoNETLayer.concrete
 {
-    class IntervencoesMapper : AbstracMapper<Intervencoes, int, List<Intervencoes>>,  IIntervencoesMapper
+    class IntervencoesMapper : AbstracMapper<Intervencoes, int, List<Intervencoes>>, IMapper<Intervencoes, int?, List<Intervencoes>>
     {
 
         public IntervencoesMapper(IContext ctx) : base(ctx) { }
