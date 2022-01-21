@@ -366,5 +366,11 @@ namespace EntityFrameworkLayer
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("updateIntervencaoState", idParameter, estadoParameter);
         }
+
+        public int obtainCodigoDeEquipaLivre(int descricao)
+        {
+            var value = Database.SqlQuery<int>("select dbo.obtainCodigoDeEquipaLivre(@descricao) equipaId", new System.Data.SqlClient.SqlParameter("@descricao", descricao)).Single();
+            return value;
+        }
     }
 }
