@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Transactions;
 
 namespace AdoNETLayer.concrete
 {
@@ -26,7 +27,7 @@ namespace AdoNETLayer.concrete
             get
             {
                 return "INSERT INTO Intervencoes values(@competencias, " +
-                        "@estado, @activo, @vlMonetario, @dtInicio, null, @perMeses) output id; ";
+                        "@estado, @activo, @vlMonetario, @dtInicio, null, @perMeses); SELECT SCOPE_IDENTITY();";
             }
         }
 
@@ -114,9 +115,34 @@ namespace AdoNETLayer.concrete
             return intervencoes;
         }
 
+        public override Intervencoes Create(Intervencoes entity)
+        {
+            using (TransactionScope ts = new TransactionScope(TransactionScopeOption.Required))
+            {
+                EnsureContext();
+                using (IDbCommand cmd = context.createCommand())
+                {
+                    cmd.CommandText = InsertCommandText;
+                    cmd.CommandType = InsertCommandType;
+                    InsertParameters(cmd, entity);
+                    Console.WriteLine(cmd.ToString());
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        if (!reader.Read()) throw new Exception("Id was not returned.");
+                        SqlParameter p = new SqlParameter("@id", reader.GetValue(0));
+                        cmd.Parameters.Add(p);
+                    }
+                    Intervencoes ent = UpdateEntityID(cmd, entity);
+                    cmd.Parameters.Clear();
+                    ts.Complete();
+                    return ent;
+                }
+            }
+               
+        }
         public Intervencoes Read(int? id)
         {
-            throw new NotImplementedException();
+            return Read(id);
         }
     }
 }
