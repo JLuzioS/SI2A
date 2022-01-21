@@ -1,4 +1,5 @@
 ﻿using ModelLayer;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -74,7 +75,10 @@ namespace EntityFrameworkLayer
 
         public int GetFreeEquipa(int competenciaId)
         {
-            throw new System.NotImplementedException();
+            using (var ctx = new L51NG3Entities())
+            {
+                return ctx.obtainCodigoDeEquipaLivre(competenciaId);
+            }
         }
 
         public ModelLayer.Funcionarios Map(Funcionarios entityFrameWorkFuncionario)
@@ -101,7 +105,18 @@ namespace EntityFrameworkLayer
 
         public bool CreateEquipa(string localizacao, int numElementos)
         {
-            throw new System.NotImplementedException();
+            using (var ctx = new L51NG3Entities())
+            {
+                try
+                {
+                    ctx.insertEquipa(localizacao, numElementos);
+                    return true;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
         }
 
         public bool CreateIntervencao(ModelLayer.Intervencoes intervencoes)
