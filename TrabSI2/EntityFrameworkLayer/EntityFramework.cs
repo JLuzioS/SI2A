@@ -113,5 +113,10 @@ namespace EntityFrameworkLayer
         {
             throw new System.NotImplementedException();
         }
+
+        public ModelLayer.Activos GetActivo(int activo)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

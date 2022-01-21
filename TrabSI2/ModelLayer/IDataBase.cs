@@ -12,5 +12,6 @@ namespace ModelLayer
         bool CreateEquipa(string localizacao, int numElementos);
         bool CreateIntervencao(Intervencoes intervencoes);
         List<Activos> GetAllActivos();
+        Activos GetActivo(int activo);
     }
 }

@@ -85,5 +85,10 @@ namespace AdoNETLayer
                 return false;
             }
         }
+
+        public Activos GetActivo(int activo)
+        {
+            return activosMapper.Read(activo);
+        }
     }
 }
