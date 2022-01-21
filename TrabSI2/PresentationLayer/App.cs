@@ -10,35 +10,43 @@ namespace PresentationLayer
     public class App
     {
 
-        enum DataAccessModel { AdoNET, EntityFramework }
+        enum DataAccessModel { AdoNET, EntityFramework, Exit }
         enum Operation { CreateFunc, ReadFunc, UpdateFunc, GetALLFunc, GetFreeEqu, CreateInterv, CreateIntervProc, CreateEqu, AddUserToEquipa, RemoveUserFromEquipa,  Exit }
 
         public static void Main()
         {
-            var DataAccessModelOption = GetDataAccessModelFromUser();
-
-            Console.WriteLine($"\nChosen option -> {DataAccessModelOption}");
-
             string connectionString = "Data Source=10.62.73.87;Initial Catalog=L51NG3;User Id=L51NG3;Password=L51NG3.passwd88;";
 
+            while (true) {
+                var DataAccessModelOption = GetDataAccessModelFromUser();
 
-            IDataBase db;
-            switch (DataAccessModelOption)
-            {
-                case DataAccessModel.AdoNET:
-                    using (Context ctx = new Context(connectionString))
-                    {
-                        db = new AdoNet(ctx);
-                    }
-                    break;
+                Console.WriteLine($"\nChosen option -> {DataAccessModelOption}");
 
-                case DataAccessModel.EntityFramework:
-                    db = new EntityFramework();
-                    break;
-                default:
-                    throw new Exception("Invalid Data Access Model");
+                IDataBase db;
+                switch (DataAccessModelOption)
+                {
+                    case DataAccessModel.AdoNET:
+                        using (Context ctx = new Context(connectionString))
+                        {
+                            db = new AdoNet(ctx);
+                        }
+                        break;
+
+                    case DataAccessModel.EntityFramework:
+                        db = new EntityFramework();
+                        break;
+                    case DataAccessModel.Exit:
+                        return;
+                    default:
+                        throw new Exception("Invalid Data Access Model");
+                }
+
+                OperationsMenu(db);
             }
 
+        }
+
+        private static void OperationsMenu(IDataBase db) {
             Services service = new Services(db);
             FuncionarioPresentation fP = new FuncionarioPresentation(service);
             EquipasPresentation eP = new EquipasPresentation(service);
@@ -87,6 +95,7 @@ namespace PresentationLayer
             Console.WriteLine("Select which Data Access Module to use:");
             Console.WriteLine("1. ADO.NET");
             Console.WriteLine("2. Entity Framework");
+            Console.WriteLine("3. Exit");
 
             while (true)
             {
@@ -98,6 +107,8 @@ namespace PresentationLayer
                         return DataAccessModel.AdoNET;
                     case '2':
                         return DataAccessModel.EntityFramework;
+                    case '3':
+                        return DataAccessModel.Exit;
                     default:
                         Console.WriteLine("\nNot a valid option.");
                         break;

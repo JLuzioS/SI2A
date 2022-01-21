@@ -109,7 +109,7 @@ namespace AdoNETLayer.concrete
                     cmd.CommandText = "deleteFuncionariosEquipa";
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add(new SqlParameter("@funcionario", funcionario.id));
-                    cmd.Parameters.Add(new SqlParameter("@equipas", equipa.id));
+                    cmd.Parameters.Add(new SqlParameter("@equipa", equipa.id));
                     cmd.Parameters.Add(new SqlParameter("@dtSaida", DateTime.Now));
                     cmd.ExecuteNonQuery();
                 }

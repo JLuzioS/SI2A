@@ -97,14 +97,30 @@ namespace AdoNETLayer
             return intervencoesMapper.CreateWithProcedure(intervencoes);
         }
 
-        public Equipas AddFuncionario(Equipas equipa, Funcionarios funcionario)
+        public bool AddFuncionario(Equipas equipa, Funcionarios funcionario)
         {
-            return equipasMapper.AddFuncionario(equipa, funcionario);
+            try
+            {
+                equipasMapper.AddFuncionario(equipa, funcionario);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
-        public Equipas DeleteFuncionario(Equipas equipa, Funcionarios funcionario)
+        public bool DeleteFuncionario(Equipas equipa, Funcionarios funcionario)
         {
-            return equipasMapper.DeleteFuncionario(equipa, funcionario);
+            try
+            {
+                equipasMapper.DeleteFuncionario(equipa, funcionario);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         public Funcionarios GetFuncionarios(int idFuncionario)

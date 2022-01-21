@@ -55,7 +55,7 @@ namespace BusinessLayer
             return dataBase.CreateEquipa(localizacao, numElementos);
         }
 
-        public Equipas AddFuncionarioToEquipa(Equipas equipa, Funcionarios funcionario)
+        public bool AddFuncionarioToEquipa(Equipas equipa, Funcionarios funcionario)
         {
             return dataBase.AddFuncionario(equipa, funcionario);
         }
@@ -70,7 +70,7 @@ namespace BusinessLayer
             return dataBase.GetFuncionarios(idFuncionario);
         }
 
-        public Equipas DeleteFuncionarioFromEquipa(Equipas equipa, Funcionarios funcionario)
+        public bool DeleteFuncionarioFromEquipa(Equipas equipa, Funcionarios funcionario)
         {
             return dataBase.DeleteFuncionario(equipa, funcionario);
         }

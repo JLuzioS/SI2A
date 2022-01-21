@@ -8,8 +8,8 @@ namespace ModelLayer
         List<Funcionarios> GetAllFuncionarios();
         List<Competencias> GetAllCompetencias();
         List<Intervencoes> GetAllIntervencoes();
-        Equipas AddFuncionario(Equipas equipa, Funcionarios funcionario);
-        Equipas DeleteFuncionario(Equipas equipa, Funcionarios funcionario);
+        bool AddFuncionario(Equipas equipa, Funcionarios funcionario);
+        bool DeleteFuncionario(Equipas equipa, Funcionarios funcionario);
         int GetFreeEquipa(int competenciaId);
         bool CreateEquipa(string localizacao, int numElementos);
         bool CreateIntervencao(Intervencoes intervencoes);

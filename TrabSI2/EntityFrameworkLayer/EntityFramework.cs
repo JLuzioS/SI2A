@@ -120,59 +120,21 @@ namespace EntityFrameworkLayer
             throw new System.NotImplementedException();
         }
 
-        public ModelLayer.Equipas AddFuncionario(ModelLayer.Equipas equipa, ModelLayer.Funcionarios funcionario)
+        public bool AddFuncionario(ModelLayer.Equipas equipa, ModelLayer.Funcionarios funcionario)
         {
             using (var ctx = new L51NG3Entities())
             {
-                var funcionarioEF = (from func in ctx.Funcionarios select func).FirstOrDefault();
-
-                if (funcionarioEF != null)
-                {
-                    throw new Exception("Funcionario nao encontrado");
-                }
-
-                var equipaEF = (from equipas in ctx.Equipas select equipas).FirstOrDefault();
-                if (equipaEF != null)
-                {
-                    throw new Exception("Equipa nao encontrada");
-                }
-
-                ctx.insertFuncionariosEquipa(funcionarioEF.id, equipaEF.id, DateTime.Now);
-
-                return new ModelLayer.Equipas
-                {
-                    id = equipaEF.id,
-                    localizacao = equipaEF.localizacao,
-                    numElementos = equipaEF.numElementos,
-                };
+                ctx.insertFuncionariosEquipa(funcionario.id, equipa.id, DateTime.Now);
+                return true;
             }
         }
 
-        public ModelLayer.Equipas DeleteFuncionario(ModelLayer.Equipas equipa, ModelLayer.Funcionarios funcionario)
+        public bool DeleteFuncionario(ModelLayer.Equipas equipa, ModelLayer.Funcionarios funcionario)
         {
             using (var ctx = new L51NG3Entities())
             {
-                var funcionarioEF = (from func in ctx.Funcionarios select func).FirstOrDefault();
-
-                if (funcionarioEF != null)
-                {
-                    throw new Exception("Funcionario nao encontrado");
-                }
-
-                var equipaEF = (from equipas in ctx.Equipas select equipas).FirstOrDefault();
-                if (equipaEF != null)
-                {
-                    throw new Exception("Equipa nao encontrada");
-                }
-
-                ctx.deleteFuncionariosEquipa(funcionarioEF.id, equipaEF.id, DateTime.Now);
-
-                return new ModelLayer.Equipas
-                {
-                    id = equipaEF.id,
-                    localizacao = equipaEF.localizacao,
-                    numElementos = equipaEF.numElementos,
-                };
+                ctx.deleteFuncionariosEquipa(funcionario.id, equipa.id, DateTime.Now);
+                return true;
             }
         }
 
@@ -180,9 +142,9 @@ namespace EntityFrameworkLayer
         {
             using (var ctx = new L51NG3Entities())
             {
-                var funcionarioEF = (from func in ctx.Funcionarios select func).FirstOrDefault();
+                var funcionarioEF = (from func in ctx.Funcionarios where func.id == idFuncionario select func).FirstOrDefault();
 
-                if (funcionarioEF != null)
+                if (funcionarioEF == null)
                 {
                     throw new Exception("Funcionario nao encontrado");
                 }
@@ -208,11 +170,11 @@ namespace EntityFrameworkLayer
         {
             using (var ctx = new L51NG3Entities())
             {
-                var equipaEF = (from equipas in ctx.Equipas select equipas).FirstOrDefault();
+                var equipaEF = (from equipas in ctx.Equipas where equipas.id == idEquipa select equipas).FirstOrDefault();
 
-                if (equipaEF != null)
+                if (equipaEF == null)
                 {
-                    throw new Exception("Funcionario nao encontrado");
+                    throw new Exception("Equipa nao encontrada");
                 }
 
                 return new ModelLayer.Equipas
