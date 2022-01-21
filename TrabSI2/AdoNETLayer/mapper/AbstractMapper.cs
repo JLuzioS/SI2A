@@ -2,6 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Transactions;
 
 namespace AdoNETLayer.mapper
 {
@@ -73,25 +77,34 @@ namespace AdoNETLayer.mapper
         }
         protected IDataReader ExecuteReader(String commandText, List<IDataParameter> parameters)
         {
-            using (IDbCommand cmd = context.createCommand())
+            using (TransactionScope ts = new TransactionScope(TransactionScopeOption.Required))
             {
-                if (parameters != null)
-                    cmd.Parameters.AddRange(parameters);
+                using (IDbCommand cmd = context.createCommand())
+                {
+                    if (parameters != null)
+                        cmd.Parameters.AddRange(parameters);
 
-                cmd.CommandText = commandText;
-                return cmd.ExecuteReader(CommandBehavior.Default);
+                    cmd.CommandText = commandText;
+                    var reader = cmd.ExecuteReader(CommandBehavior.Default);
+                    ts.Complete();
+                    return reader;
+                }
             }
         }
         protected void ExecuteNonQuery(String commandText, List<IDataParameter> parameters)
         {
-            using (IDbCommand cmd = context.createCommand())
+            using (TransactionScope ts = new TransactionScope(TransactionScopeOption.Required))
             {
-                if (parameters != null)
-                    cmd.Parameters.AddRange(parameters);
+                using (IDbCommand cmd = context.createCommand())
+                {
+                    if (parameters != null)
+                        cmd.Parameters.AddRange(parameters);
 
-                cmd.CommandText = commandText;
-                cmd.ExecuteNonQuery();
-                cmd.Parameters.Clear();
+                    cmd.CommandText = commandText;
+                    cmd.ExecuteNonQuery();
+                    cmd.Parameters.Clear();
+                    ts.Complete();
+                }
             }
         }
 
@@ -103,77 +116,102 @@ namespace AdoNETLayer.mapper
         #region IMapper implementation
         public virtual T Create(T entity)
         {
-            EnsureContext();
-            using (IDbCommand cmd = context.createCommand())
+            using (TransactionScope ts = new TransactionScope(TransactionScopeOption.Required))
             {
-                cmd.CommandText = InsertCommandText;
-                cmd.CommandType = InsertCommandType;
-                InsertParameters(cmd, entity);
-                cmd.ExecuteNonQuery();
-                T ent = UpdateEntityID(cmd, entity);
-                cmd.Parameters.Clear();
-                return ent;
+                EnsureContext();
+                using (IDbCommand cmd = context.createCommand())
+                {
+                    cmd.CommandText = InsertCommandText;
+                    cmd.CommandType = InsertCommandType;
+                    InsertParameters(cmd, entity);
+                    cmd.ExecuteNonQuery();
+                    T ent = UpdateEntityID(cmd, entity);
+                    cmd.Parameters.Clear();
+                    ts.Complete();
+                    return ent;
+                }
             }
         }
 
         public virtual T Delete(T entity)
         {
-            if (entity == null)
-                throw new ArgumentException("The " + typeof(T) + " to delete cannot be null");
-
-            EnsureContext();
-
-            using (IDbCommand cmd = context.createCommand())
+            using (TransactionScope ts = new TransactionScope(TransactionScopeOption.Required))
             {
-                cmd.CommandText = DeleteCommandText;
-                cmd.CommandType = DeleteCommandType;
-                DeleteParameters(cmd, entity);
-                int result = cmd.ExecuteNonQuery();
-                return (result == 0) ? null : entity;
+                if (entity == null)
+                    throw new ArgumentException("The " + typeof(T) + " to delete cannot be null");
+
+                EnsureContext();
+
+                using (IDbCommand cmd = context.createCommand())
+                {
+                    cmd.CommandText = DeleteCommandText;
+                    cmd.CommandType = DeleteCommandType;
+                    DeleteParameters(cmd, entity);
+                    int result = cmd.ExecuteNonQuery();
+                    ts.Complete();
+                    return (result == 0) ? null : entity;
+                }
             }
         }
 
         public virtual T Read(Tid id)
         {
-            EnsureContext();
-            using (IDbCommand cmd = context.createCommand())
+            using (TransactionScope ts = new TransactionScope(TransactionScopeOption.Required))
             {
-                cmd.CommandText = SelectCommandText;
-                cmd.CommandType = SelectCommandType;
-                SelectParameters(cmd, id);
-                using (IDataReader reader = cmd.ExecuteReader())
-                    return reader.Read() ? Map(reader) : null;
+                EnsureContext();
+                using (IDbCommand cmd = context.createCommand())
+                {
+                    cmd.CommandText = SelectCommandText;
+                    cmd.CommandType = SelectCommandType;
+                    SelectParameters(cmd, id);
+                    using (IDataReader reader = cmd.ExecuteReader()) { 
+                        var res = reader.Read() ? Map(reader) : null;
+                        ts.Complete();
+                        return res;
+                    }
+                }
             }
         }
 
         public virtual TCol ReadAll()
         {
-            EnsureContext();
-
-            using (IDbCommand cmd = context.createCommand())
+            using (TransactionScope ts = new TransactionScope(TransactionScopeOption.Required))
             {
-                cmd.CommandText = SelectAllCommandText;
-                cmd.CommandType = SelectAllCommandType;
-                SelectAllParameters(cmd);
-                using (IDataReader reader = cmd.ExecuteReader())
-                    return MapAll(reader);
+                EnsureContext();
+                using (IDbCommand cmd = context.createCommand())
+                {
+                    cmd.CommandText = SelectAllCommandText;
+                    cmd.CommandType = SelectAllCommandType;
+                    SelectAllParameters(cmd);
+                    using (IDataReader reader = cmd.ExecuteReader())
+                    {
+                        var res = MapAll(reader);
+                        ts.Complete();
+                        return res;
+                    }
+                }
             }
         }
 
         public virtual T Update(T entity)
         {
-            if (entity == null)
-                throw new ArgumentException("The " + typeof(T) + " to update cannot be null");
-
-            EnsureContext();
-
-            using (IDbCommand cmd = context.createCommand())
+            using (TransactionScope ts = new TransactionScope(TransactionScopeOption.Required))
             {
-                cmd.CommandText = UpdateCommandText;
-                cmd.CommandType = UpdateCommandType;
-                UpdateParameters(cmd, entity);
-                int result = cmd.ExecuteNonQuery();
-                return (result == 0) ? null : entity;
+                if (entity == null)
+                    throw new ArgumentException("The " + typeof(T) + " to update cannot be null");
+
+                EnsureContext();
+
+                using (IDbCommand cmd = context.createCommand())
+                {
+                    cmd.CommandText = UpdateCommandText;
+                    cmd.CommandType = UpdateCommandType;
+                    UpdateParameters(cmd, entity);
+                    int result = cmd.ExecuteNonQuery();
+                    var res = (result == 0) ? null : entity;
+                    ts.Complete();
+                    return res;
+                }
             }
         }
         #endregion

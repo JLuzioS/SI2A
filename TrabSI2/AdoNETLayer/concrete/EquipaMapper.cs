@@ -39,8 +39,8 @@ namespace AdoNETLayer.concrete
         {
             Equipas equipa = new Equipas();
             equipa.id = record.GetInt32(0);
-            equipa.localizacao = record.GetString(1);
-            equipa.numElementos = record.GetInt32(2);
+            equipa.localizacao= record.GetString(1);
+            equipa.numElementos= record.GetInt32(2);
             return equipa;
         }
 
@@ -130,7 +130,7 @@ namespace AdoNETLayer.concrete
                     cmd.CommandType = CommandType.Text;
                     cmd.Parameters.Add(new SqlParameter("@descricao", competenciaId));
                     using (var query = cmd.ExecuteReader())
-                    {
+                    { 
                         if (query.Read())
                         {
                             return query.GetInt32(0);
@@ -141,6 +141,24 @@ namespace AdoNETLayer.concrete
                         }
                     }
                 }
+            }
+        }
+
+        public void CreateEquipa(string localizacao, int numElementos)
+        {
+            using (TransactionScope ts = new TransactionScope(TransactionScopeOption.Required))
+            {
+                EnsureContext();
+                context.EnlistTransaction();
+                using (IDbCommand cmd = context.createCommand())
+                {
+                    cmd.CommandText = "insertEquipa";
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new SqlParameter("@localizacao", localizacao));
+                    cmd.Parameters.Add(new SqlParameter("@numElementos", numElementos));
+                    cmd.ExecuteNonQuery();
+                }
+                ts.Complete();
             }
         }
     }

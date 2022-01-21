@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Transactions;
 
 namespace AdoNETLayer.concrete
 {
@@ -26,7 +27,7 @@ namespace AdoNETLayer.concrete
             get
             {
                 return "INSERT INTO Intervencoes values(@competencias, " +
-                        "@estado, @activo, @vlMonetario, @dtInicio, @dtFim, @perMeses);";
+                        "@estado, @activo, @vlMonetario, @dtInicio, null, @perMeses); SELECT SCOPE_IDENTITY();";
             }
         }
 
@@ -71,28 +72,27 @@ namespace AdoNETLayer.concrete
 
         protected override void InsertParameters(IDbCommand cmd, Intervencoes entity)
         {
-            UpdateParameters(cmd, entity);
-        }
-
-        protected override void UpdateParameters(IDbCommand cmd, Intervencoes entity)
-        {
-            SqlParameter p = new SqlParameter("@id", entity.id);
             SqlParameter p1 = new SqlParameter("@competencias", entity.competencias);
             SqlParameter p2 = new SqlParameter("@estado", entity.estado);
             SqlParameter p3 = new SqlParameter("@activo", entity.activo);
             SqlParameter p4 = new SqlParameter("@vlMonetario", entity.vlMonetario);
             SqlParameter p5 = new SqlParameter("@dtInicio", entity.dtInicio);
-            SqlParameter p6 = new SqlParameter("@dtFim", entity.dtFim);
             SqlParameter p7 = new SqlParameter("@perMeses", entity.perMeses);
 
-            cmd.Parameters.Add(p);
             cmd.Parameters.Add(p1);
             cmd.Parameters.Add(p2);
             cmd.Parameters.Add(p3);
             cmd.Parameters.Add(p4);
             cmd.Parameters.Add(p5);
-            cmd.Parameters.Add(p6);
             cmd.Parameters.Add(p7);
+        }
+
+        protected override void UpdateParameters(IDbCommand cmd, Intervencoes entity)
+        {
+            SqlParameter p = new SqlParameter("@id", entity.id);
+
+            cmd.Parameters.Add(p);
+            InsertParameters(cmd, entity);
         }
 
         protected override void SelectParameters(IDbCommand cmd, int id)
@@ -115,9 +115,34 @@ namespace AdoNETLayer.concrete
             return intervencoes;
         }
 
+        public override Intervencoes Create(Intervencoes entity)
+        {
+            using (TransactionScope ts = new TransactionScope(TransactionScopeOption.Required))
+            {
+                EnsureContext();
+                using (IDbCommand cmd = context.createCommand())
+                {
+                    cmd.CommandText = InsertCommandText;
+                    cmd.CommandType = InsertCommandType;
+                    InsertParameters(cmd, entity);
+                    Console.WriteLine(cmd.ToString());
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        if (!reader.Read()) throw new Exception("Id was not returned.");
+                        SqlParameter p = new SqlParameter("@id", reader.GetValue(0));
+                        cmd.Parameters.Add(p);
+                    }
+                    Intervencoes ent = UpdateEntityID(cmd, entity);
+                    cmd.Parameters.Clear();
+                    ts.Complete();
+                    return ent;
+                }
+            }
+               
+        }
         public Intervencoes Read(int? id)
         {
-            throw new NotImplementedException();
+            return Read(id);
         }
     }
 }
