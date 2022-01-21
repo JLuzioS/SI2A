@@ -57,10 +57,6 @@ namespace AdoNETLayer.concrete
             throw new NotImplementedException();
         }
 
-        public Competencias Read(int? id)
-        {
-            throw new NotImplementedException();
-        }
 
     }
 }

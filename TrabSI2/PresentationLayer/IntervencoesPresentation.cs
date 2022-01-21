@@ -95,7 +95,7 @@ namespace PresentationLayer
 
         private DateTime GetDataInicio()
         {
-            Console.WriteLine("Data de inicio:");
+            Console.WriteLine("Data de inicio <YYYY-MM-DD>:");
             var option = Console.ReadLine();
             // TODO DATA Validation
             return DateTime.Parse(option);

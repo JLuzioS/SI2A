@@ -127,5 +127,26 @@ namespace AdoNETLayer.concrete
 
             return funcionario;
         }
+
+        public Funcionarios Read(int? id)
+        {
+            throw new NotImplementedException();
+        }
+        public Funcionarios Read(int? id)
+        {
+            throw new NotImplementedException();
+        }
+        public Funcionarios Read(int? id)
+        {
+            throw new NotImplementedException();
+        }
+        public Funcionarios Read(int? id)
+        {
+            throw new NotImplementedException();
+        }
+        public Funcionarios Read(int? id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

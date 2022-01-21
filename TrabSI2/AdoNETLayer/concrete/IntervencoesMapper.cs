@@ -125,7 +125,6 @@ namespace AdoNETLayer.concrete
                     cmd.CommandText = InsertCommandText;
                     cmd.CommandType = InsertCommandType;
                     InsertParameters(cmd, entity);
-                    Console.WriteLine(cmd.ToString());
                     using (var reader = cmd.ExecuteReader())
                     {
                         if (!reader.Read()) throw new Exception("Id was not returned.");
@@ -139,10 +138,6 @@ namespace AdoNETLayer.concrete
                 }
             }
                
-        }
-        public Intervencoes Read(int? id)
-        {
-            return Read(id);
         }
     }
 }

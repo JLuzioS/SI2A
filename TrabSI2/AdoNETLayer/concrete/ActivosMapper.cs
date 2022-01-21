@@ -4,6 +4,7 @@ using ModelLayer;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 
 namespace AdoNETLayer.concrete
 {
@@ -15,7 +16,7 @@ namespace AdoNETLayer.concrete
 
         protected override string SelectAllCommandText => $"select * from {this.Table}";
 
-        protected override string SelectCommandText => throw new NotImplementedException();
+        protected override string SelectCommandText => String.Format("{0} where id = @id", SelectAllCommandText);
 
         protected override string UpdateCommandText => throw new NotImplementedException();
 
@@ -48,9 +49,10 @@ namespace AdoNETLayer.concrete
             return activos;
         }
 
-        protected override void SelectParameters(IDbCommand command, int k)
+        protected override void SelectParameters(IDbCommand cmd, int id)
         {
-            throw new NotImplementedException();
+            SqlParameter p = new SqlParameter("@id", id);
+            cmd.Parameters.Add(p);
         }
 
         protected override Activos UpdateEntityID(IDbCommand cmd, Activos e)
@@ -59,11 +61,6 @@ namespace AdoNETLayer.concrete
         }
 
         protected override void UpdateParameters(IDbCommand command, Activos e)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Activos Read(int? id)
         {
             throw new NotImplementedException();
         }
