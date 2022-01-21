@@ -11,7 +11,7 @@ namespace PresentationLayer
     {
 
         enum DataAccessModel { AdoNET, EntityFramework }
-        enum Operation { CreateFunc, ReadFunc, UpdateFunc, GetALLFunc, GetFreeEqu, CreateInterv, Exit }
+        enum Operation { CreateFunc, ReadFunc, UpdateFunc, GetALLFunc, GetFreeEqu, CreateInterv, CreateEqu, Exit }
 
         public static void Main()
         {
@@ -41,7 +41,7 @@ namespace PresentationLayer
 
             Services service = new Services(db);
             FuncionarioPresentation fP = new FuncionarioPresentation(service);
-            CompetenciasPresentation cP = new CompetenciasPresentation(service);
+            EquipasPresentation eP = new EquipasPresentation(service);
             IntervencoesPresentation iP = new IntervencoesPresentation(service);
 
             while (true)
@@ -58,10 +58,13 @@ namespace PresentationLayer
                         fP.GetAllFuncionarios();
                         break;
                     case Operation.GetFreeEqu:
-                        cP.GetFreeEquipa();
+                        eP.GetFreeEquipa();
                         break;
                     case Operation.CreateInterv:
                         iP.CreateIntervencao();
+                        break;
+                    case Operation.CreateEqu:
+                        eP.CreateEquipa();
                         break;
                     case Operation.Exit:
                         return;
@@ -102,6 +105,7 @@ namespace PresentationLayer
             Console.WriteLine("D4. GetAll Funcionarios");
             Console.WriteLine("E1. Get free Equipa");
             Console.WriteLine("Fa. Create Intervencao");
+            Console.WriteLine("G. Create Equipa");
             Console.WriteLine("0. Exit");
 
             while (true)
@@ -122,6 +126,8 @@ namespace PresentationLayer
                         return Operation.GetFreeEqu;
                     case "Fa":
                         return Operation.CreateInterv;
+                    case "G":
+                        return Operation.CreateEqu;
                     case "0":
                         return Operation.Exit;
                     default:
