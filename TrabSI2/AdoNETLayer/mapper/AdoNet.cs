@@ -55,5 +55,18 @@ namespace AdoNETLayer
         {
             return intervencoesMapper.GetAllInternvencoes(); 
         }
+
+        public bool CreateEquipa(string localizacao, int numElementos)
+        {
+            try
+            {
+                equipasMapper.CreateEquipa(localizacao, numElementos);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
     }
 }
