@@ -39,8 +39,8 @@ namespace AdoNETLayer.concrete
         {
             Equipas equipa = new Equipas();
             equipa.id = record.GetInt32(0);
-            equipa.localizacao= record.GetString(1);
-            equipa.numElementos= record.GetInt32(2);
+            equipa.localizacao = record.GetString(1);
+            equipa.numElementos = record.GetInt32(2);
             return equipa;
         }
 
@@ -134,7 +134,7 @@ namespace AdoNETLayer.concrete
                     cmd.CommandType = CommandType.Text;
                     cmd.Parameters.Add(new SqlParameter("@descricao", competenciaId));
                     using (var query = cmd.ExecuteReader())
-                    { 
+                    {
                         if (query.Read())
                         {
                             return query.GetInt32(0);

@@ -11,6 +11,7 @@ namespace ModelLayer
         Equipas AddFuncionario(Equipas equipa, Funcionarios funcionario);
         Equipas DeleteFuncionario(Equipas equipa, Funcionarios funcionario);
         int GetFreeEquipa(int competenciaId);
-        
+        bool CreateIntervencao(Intervencoes intervencoes);
+        List<Activos> GetAllActivos();
     }
 }

@@ -11,7 +11,7 @@ namespace PresentationLayer
     {
 
         enum DataAccessModel { AdoNET, EntityFramework }
-        enum Operation { CreateFunc, ReadFunc, UpdateFunc, GetALLFunc, GetFreeEqu, Exit }
+        enum Operation { CreateFunc, ReadFunc, UpdateFunc, GetALLFunc, GetFreeEqu, CreateInterv, Exit }
 
         public static void Main()
         {
@@ -41,7 +41,8 @@ namespace PresentationLayer
 
             Services service = new Services(db);
             FuncionarioPresentation fP = new FuncionarioPresentation(service);
-            FreeEquipaPresentation feP = new FreeEquipaPresentation(service);
+            CompetenciasPresentation cP = new CompetenciasPresentation(service);
+            IntervencoesPresentation iP = new IntervencoesPresentation(service);
 
             while (true)
             {
@@ -57,7 +58,10 @@ namespace PresentationLayer
                         fP.GetAllFuncionarios();
                         break;
                     case Operation.GetFreeEqu:
-                        feP.GetFreeEquipa();
+                        cP.GetFreeEquipa();
+                        break;
+                    case Operation.CreateInterv:
+                        iP.CreateIntervencao();
                         break;
                     case Operation.Exit:
                         return;
@@ -97,6 +101,7 @@ namespace PresentationLayer
             Console.WriteLine("D3. Update Funcionario");
             Console.WriteLine("D4. GetAll Funcionarios");
             Console.WriteLine("E1. Get free Equipa");
+            Console.WriteLine("Fa. Create Intervencao");
             Console.WriteLine("0. Exit");
 
             while (true)
@@ -115,6 +120,8 @@ namespace PresentationLayer
                         return Operation.GetALLFunc;
                     case "E1":
                         return Operation.GetFreeEqu;
+                    case "Fa":
+                        return Operation.CreateInterv;
                     case "0":
                         return Operation.Exit;
                     default:

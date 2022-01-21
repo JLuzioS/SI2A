@@ -4,11 +4,6 @@ using ModelLayer;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Transactions;
 
 namespace AdoNETLayer.concrete
 {
@@ -16,7 +11,7 @@ namespace AdoNETLayer.concrete
     {
         public ActivosMapper(IContext ctx) : base(ctx) { }
 
-        string Table => "Competencias";
+        string Table => "Activos";
 
         protected override string SelectAllCommandText => $"select * from {this.Table}";
 
@@ -45,9 +40,9 @@ namespace AdoNETLayer.concrete
             activos.nome = record.GetString(1);
             activos.dtAaquisicao = record.GetDateTime(2);
             activos.estado = record.GetByte(3);
-            activos.marca = record.GetString(4);
-            activos.modelo= record.GetString(5);
-            activos.localizacao = record.GetString(6);
+            activos.marca = record.GetValue(4) is DBNull ? null : record.GetString(4);
+            activos.modelo = record.GetValue(5) is DBNull ? null : record.GetString(5);
+            activos.localizacao = record.GetValue(6) is DBNull ? null : record.GetString(6);
             activos.funcionario = record.GetInt32(7);
             activos.tipo = record.GetInt32(8);
             return activos;
@@ -66,21 +61,6 @@ namespace AdoNETLayer.concrete
         protected override void UpdateParameters(IDbCommand command, Activos e)
         {
             throw new NotImplementedException();
-        }
-
-        public List<Activos> GetAllCompetencias()
-        {
-            using (TransactionScope ts = new TransactionScope(TransactionScopeOption.Required))
-            {
-                EnsureContext();
-                context.EnlistTransaction();
-                using (var query = ExecuteReader(SelectAllCommandText, null))
-                {
-                    var result = MapAll(query);
-                    ts.Complete();
-                    return result;
-                }
-            }
         }
 
         public Activos Read(int? id)
