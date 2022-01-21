@@ -36,7 +36,7 @@ namespace BusinessLayer
         public bool CreateIntervencao(Intervencoes intervencoes)
         {
             Activos activo = dataBase.GetActivo(intervencoes.activo);
-            if (activo.dtAaquisicao < intervencoes.dtInicio) 
+            if (activo.dtAaquisicao > intervencoes.dtInicio) 
                 throw new Exception("Data de inicio da intervenção é inferior à data de acquisição do Activo");
             return dataBase.CreateIntervencao(intervencoes);
         }

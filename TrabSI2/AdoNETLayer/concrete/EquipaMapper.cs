@@ -9,7 +9,7 @@ using System.Transactions;
 
 namespace AdoNETLayer.concrete
 {
-    class EquipasMapper : AbstracMapper<Equipas, int, List<Equipas>>, IMapper<Equipas, int?, List<Equipas>>
+    class EquipasMapper : AbstracMapper<Equipas, int, List<Equipas>>
     {
         public EquipasMapper(IContext ctx) : base(ctx) { }
 

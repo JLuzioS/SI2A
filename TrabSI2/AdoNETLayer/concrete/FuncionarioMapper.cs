@@ -8,7 +8,7 @@ using System.Data.SqlClient;
 
 namespace AdoNETLayer.concrete
 {
-    class FuncionarioMapper :AbstracMapper<Funcionarios, int, List<Funcionarios>>, IMapper<Funcionarios, int?, List<Funcionarios>>
+    class FuncionarioMapper :AbstracMapper<Funcionarios, int, List<Funcionarios>>
     {
 
         public FuncionarioMapper(IContext ctx) : base(ctx) { }
@@ -128,9 +128,5 @@ namespace AdoNETLayer.concrete
             return funcionario;
         }
 
-        public Funcionarios Read(int? id)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

@@ -7,7 +7,7 @@ using System.Data;
 
 namespace AdoNETLayer.concrete
 {
-    class CompetenciaMapper : AbstracMapper<Competencias, int, List<Competencias>>, IMapper<Competencias, int?, List<Competencias>>
+    class CompetenciaMapper : AbstracMapper<Competencias, int, List<Competencias>>
     {
         public CompetenciaMapper(IContext ctx) : base(ctx) { }
 
@@ -57,10 +57,6 @@ namespace AdoNETLayer.concrete
             throw new NotImplementedException();
         }
 
-        public Competencias Read(int? id)
-        {
-            throw new NotImplementedException();
-        }
 
     }
 }
