@@ -33,37 +33,6 @@ namespace AdoNETLayer.concrete
                     entity = UpdateEntityID(cmd, entity);
                 }
 
-                /*
-                if (entity != null)
-                {
-                    SqlParameter p = new SqlParameter("@cc", entity.cc);
-                    SqlParameter p1 = new SqlParameter("@nif", entity.nif);
-                    SqlParameter p2 = new SqlParameter("@nome", entity.cc);
-                    SqlParameter p3 = new SqlParameter("@dtNascimento", entity.nif);
-                    SqlParameter p4 = new SqlParameter("@morada", entity.cc);
-                    SqlParameter p5 = new SqlParameter("@codigoPostal", entity.nif);
-                    SqlParameter p6 = new SqlParameter("@localidade", entity.cc);
-                    SqlParameter p7 = new SqlParameter("@profissao", entity.nif);
-                    SqlParameter p8 = new SqlParameter("@telefone", entity.nif);
-                    SqlParameter p9 = new SqlParameter("@telemovel", entity.nif);
-
-                    List<IDataParameter> parameters = new List<IDataParameter>();
-                    parameters.Add(p);
-                    parameters.Add(p1);
-                    parameters.Add(p2);
-                    parameters.Add(p3);
-                    parameters.Add(p4);
-                    parameters.Add(p5);
-                    parameters.Add(p6);
-                    parameters.Add(p7);
-                    parameters.Add(p8);
-                    parameters.Add(p9);
-
-                    ExecuteNonQuery(InsertCommandText, parameters);
-                    
-                    ts.Complete();
-                    return entity;
-                }*/
 
                 ts.Complete();
                 return entity;
@@ -78,13 +47,11 @@ namespace AdoNETLayer.concrete
             {
                 EnsureContext();
                 context.EnlistTransaction();
+                
                 using (var query = ExecuteReader(SelectAllCommandText, null))
                 {
-                    List<Funcionarios> result = new List<Funcionarios>();
-                    while (query.Read())
-                    {
-                        result.Add(Map(query));
-                    }
+                    var result = MapAll(query);
+                    ts.Complete();
                     return result;
                 }
             }
@@ -199,7 +166,7 @@ namespace AdoNETLayer.concrete
             funcionario.telefone = record.GetValue(9) is DBNull ? null : record.GetString(9);
             funcionario.telemovel = record.GetValue(10) is DBNull ? null : record.GetString(10);
 
-            return new FuncionariosProxy(funcionario);
+            return funcionario;
         }
 
         public Funcionarios Read(int? id)

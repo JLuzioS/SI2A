@@ -5,7 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AdoNETLayer.dal
+namespace AdoNETLayer.mapper
 {
-    public interface IFuncionarioRepository : IRepository<Funcionarios> { }
+    public interface IIntervencoesMapper : IMapper<Intervencoes, int?, List<Intervencoes>>
+    {
+    }
 }

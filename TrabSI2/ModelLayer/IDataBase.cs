@@ -7,6 +7,8 @@ namespace ModelLayer
         bool CreateFuncionario(Funcionarios funcionario);
         List<Funcionarios> GetAllFuncionarios();
         List<Competencias> GetAllCompetencias();
+        List<Intervencoes> GetAllIntervencoes();
         int GetFreeEquipa(int competenciaId);
+        
     }
 }

@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="FreeEquipaPresentation.cs" />
+    <Compile Include="IntervencoesPresentation.cs" />
     <Compile Include="FuncionarioPresentation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -44,7 +44,7 @@ namespace AdoNETLayer.concrete
             competencia.id = record.GetInt32(0);
             competencia.descricao = record.GetString(1);
 
-            return new CompetenciasProxy(competencia);
+            return competencia;
         }
 
         protected override void SelectParameters(IDbCommand command, int k)
@@ -70,12 +70,8 @@ namespace AdoNETLayer.concrete
                 context.EnlistTransaction();
                 using (var query = ExecuteReader(SelectAllCommandText, null))
                 {
-                    List<Competencias> result = new List<Competencias>();
-                    while (query.Read())
-                    {
-                        result.Add(Map(query));
-                    }
-
+                    var result = MapAll(query);
+                    ts.Complete();
                     return result;
                 }
             }

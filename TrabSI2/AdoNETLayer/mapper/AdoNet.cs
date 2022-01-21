@@ -10,18 +10,23 @@ namespace AdoNETLayer
     {
 
         private IContext ctx;
+        private FuncionarioMapper funcionarioMapper;
+        private CompetenciaMapper competenciaMapper;
+        private IntervencoesMapper intervencoesMapper;
 
         public AdoNet(IContext ctx)
         {
             this.ctx = ctx;
+            funcionarioMapper = new FuncionarioMapper(ctx);
+            competenciaMapper = new CompetenciaMapper(ctx); 
+            intervencoesMapper = new IntervencoesMapper(ctx);
         }
 
         public bool CreateFuncionario(Funcionarios funcionario)
         {
             try
             {
-                FuncionarioMapper mapper = new FuncionarioMapper(ctx);
-                mapper.Create(funcionario);
+                funcionarioMapper.Create(funcionario);
                 return true;
             } catch (Exception)
             {
@@ -31,21 +36,22 @@ namespace AdoNETLayer
 
         public List<Funcionarios> GetAllFuncionarios()
         {
-            FuncionarioMapper mapper = new FuncionarioMapper(ctx);
-            return mapper.GetAllFuncionarios();
+            return funcionarioMapper.GetAllFuncionarios();
         }
 
         public List<Competencias> GetAllCompetencias()
         {
-            CompetenciaMapper mapper = new CompetenciaMapper(ctx);
-            return mapper.GetAllCompetencias();
-
+            return competenciaMapper.GetAllCompetencias();
         }
 
         public int GetFreeEquipa(int competenciaId)
         {
-            CompetenciaMapper mapper = new CompetenciaMapper(ctx);
-            return mapper.GetFreeEquipa(competenciaId);
+            return competenciaMapper.GetFreeEquipa(competenciaId);
+        }
+
+        public List<Intervencoes> GetAllIntervencoes()
+        {
+            return intervencoesMapper.GetAllInternvencoes(); 
         }
     }
 }

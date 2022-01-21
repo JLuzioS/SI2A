@@ -47,18 +47,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AdoNet.cs" />
+    <Compile Include="mapper\AdoNet.cs" />
     <Compile Include="concrete\CompetenciaMapper.cs" />
     <Compile Include="concrete\Context.cs" />
+    <Compile Include="concrete\IntervencoesMapper.cs" />
     <Compile Include="concrete\FuncionarioMapper.cs" />
-    <Compile Include="concrete\FuncionarioRepository.cs" />
     <Compile Include="dal\IContext.cs" />
-    <Compile Include="dal\IFuncionarioRepository.cs" />
-    <Compile Include="dal\IRepository.cs" />
     <Compile Include="mapper\AbstractMapper.cs" />
-    <Compile Include="mapper\CompetenciasProxy.cs" />
-    <Compile Include="mapper\FuncionariosProxy.cs" />
-    <Compile Include="mapper\ICompetenciaMapper.cs" />
+    <Compile Include="mapper\ICompetenciasMapper.cs" />
+    <Compile Include="mapper\IIntervencoesMapper.cs" />
     <Compile Include="mapper\IFuncionarioMapper.cs" />
     <Compile Include="mapper\IMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

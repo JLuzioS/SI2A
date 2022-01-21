@@ -11,12 +11,9 @@ namespace AdoNETLayer.concrete
         private string connectionString;
         private SqlConnection con = null;
 
-        private IFuncionarioRepository _funcionarioRepository;
-
         public Context(string cs)
         {
             connectionString = cs;
-            _funcionarioRepository = new FuncionarioRepository(this);
         }
 
         public void Open()
@@ -51,14 +48,6 @@ namespace AdoNETLayer.concrete
             if (con != null)
             {
                 con.EnlistTransaction(Transaction.Current);
-            }
-        }
-
-        public IFuncionarioRepository funcionarios
-        {
-            get
-            {
-                return _funcionarioRepository;
             }
         }
 

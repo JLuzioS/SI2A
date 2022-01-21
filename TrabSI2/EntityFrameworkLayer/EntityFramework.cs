@@ -1,5 +1,4 @@
 ﻿using ModelLayer;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -93,6 +92,11 @@ namespace EntityFrameworkLayer
                 telefone = entityFrameWorkFuncionario.telefone,
                 telemovel = entityFrameWorkFuncionario.telemovel
             };
+        }
+
+        public List<ModelLayer.Intervencoes> GetAllIntervencoes()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
