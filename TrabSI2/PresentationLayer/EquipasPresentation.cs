@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace PresentationLayer
 {
-    class CompetenciasPresentation
+    class EquipasPresentation
     {
         private Services service;
 
-        public CompetenciasPresentation(Services service)
+        public EquipasPresentation(Services service)
         {
             this.service = service;
         }
@@ -41,6 +41,16 @@ namespace PresentationLayer
 
             int competenciaId = GetCompetencia();
             Console.WriteLine("A equipa " + service.GetFreeEquipa(competenciaId) + " contendo funcionários com a competência " + competenciaId + " está disponível.");
+        }
+
+        public void CreateEquipa()
+        {
+            Console.WriteLine("Insira a localização: ");
+            var localizacao = Console.ReadLine();
+            Console.WriteLine("Insira o número minimo de funcionários: ");
+            var numfuncionarios = Console.ReadLine();
+            service.CreateEquipa(localizacao, Int32.Parse(numfuncionarios));
+            // TODO DATA Validation
         }
     }
 }
