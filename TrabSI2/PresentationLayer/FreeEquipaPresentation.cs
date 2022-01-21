@@ -19,6 +19,7 @@ namespace PresentationLayer
 
         void GetAllCompetencias()
         {
+            Console.WriteLine("Lista de Competências: ");
             foreach (var comp in service.GetAllCompetencias())
             {
                 Console.WriteLine(comp.id + " - " + comp.descricao);
@@ -35,7 +36,7 @@ namespace PresentationLayer
 
         public void GetFreeEquipa()
         {
-            Console.WriteLine("Lista de Competências: ");
+            
             GetAllCompetencias();
 
             int competenciaId = GetCompetencia();

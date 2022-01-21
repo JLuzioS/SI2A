@@ -68,14 +68,15 @@ namespace AdoNETLayer.concrete
             {
                 EnsureContext();
                 context.EnlistTransaction();
-                var query = ExecuteReader(SelectAllCommandText, null);
-                List<Competencias> result = new List<Competencias>();
-                while (query.Read())
-                {
-                    result.Add(Map(query));
-                }
+                using (var query = ExecuteReader(SelectAllCommandText, null)) {
+                    List<Competencias> result = new List<Competencias>();
+                    while (query.Read())
+                    {
+                        result.Add(Map(query));
+                    }
 
-                return result;
+                    return result;
+                }
             }
         }
 
