@@ -16,5 +16,7 @@ namespace ModelLayer
         List<Activos> GetAllActivos();
         Activos GetActivo(int activo);
         bool CreateIntervencaoProcedure(Intervencoes intervencoes);
+        Funcionarios GetFuncionarios(int idFuncionario);
+        Equipas GetEquipas(int idEquipa);
     }
 }
