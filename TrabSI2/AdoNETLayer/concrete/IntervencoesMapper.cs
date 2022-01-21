@@ -90,7 +90,7 @@ namespace AdoNETLayer.concrete
         {
             get
             {
-                return "update Funcionarios set id=@id competencias=@competencias, estado=@estado" +
+                return "update Intervencoes set id=@id competencias=@competencias, estado=@estado" +
                     ", activo=@activo, vlMonetario=@vlMonetario, dtInicio=@dtInicio," +
                     " dtFim=@dtFim, perMeses=@perMeses where studentNumber=@id";
             }

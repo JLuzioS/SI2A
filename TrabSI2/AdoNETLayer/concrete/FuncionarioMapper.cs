@@ -14,9 +14,6 @@ namespace AdoNETLayer.concrete
 
         public FuncionarioMapper(IContext ctx) : base(ctx) { }
 
-        
-
-
         string Table => "Funcionarios";
 
         protected override string DeleteCommandText
