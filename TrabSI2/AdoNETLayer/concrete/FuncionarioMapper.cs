@@ -74,16 +74,20 @@ namespace AdoNETLayer.concrete
 
         public List<Funcionarios> GetAllFuncionarios()
         {
-            EnsureContext();
-            context.EnlistTransaction();
-            var query = ExecuteReader(SelectAllCommandText, null);
-            List<Funcionarios> result = new List<Funcionarios>();
-            while(query.Read())
+            using (TransactionScope ts = new TransactionScope(TransactionScopeOption.Required))
             {
-                result.Add(Map(query));
+                EnsureContext();
+                context.EnlistTransaction();
+                using (var query = ExecuteReader(SelectAllCommandText, null))
+                {
+                    List<Funcionarios> result = new List<Funcionarios>();
+                    while (query.Read())
+                    {
+                        result.Add(Map(query));
+                    }
+                    return result;
+                }
             }
-
-            return result;
         }
 
         protected override string DeleteCommandText
