@@ -42,5 +42,9 @@ namespace BusinessLayer
         {
             return dataBase.GetAllActivos();
         }
+        public bool CreateEquipa(string localizacao, int numElementos)
+        {
+            return dataBase.CreateEquipa(localizacao, numElementos);
+        }
     }
 }
