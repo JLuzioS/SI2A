@@ -41,7 +41,7 @@ namespace AdoNETLayer.concrete
             activos.dtAaquisicao = record.GetDateTime(2);
             activos.estado = record.GetByte(3);
             activos.marca = record.GetValue(4) is DBNull ? null : record.GetString(4);
-            activos.modelo = record.GetValue(5) is DBNull ? null : record.GetString(5);
+            activos.modelo= record.GetValue(5) is DBNull ? null : record.GetString(5);
             activos.localizacao = record.GetValue(6) is DBNull ? null : record.GetString(6);
             activos.funcionario = record.GetInt32(7);
             activos.tipo = record.GetInt32(8);

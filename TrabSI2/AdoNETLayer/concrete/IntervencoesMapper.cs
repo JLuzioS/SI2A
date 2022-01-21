@@ -26,7 +26,7 @@ namespace AdoNETLayer.concrete
             get
             {
                 return "INSERT INTO Intervencoes values(@competencias, " +
-                        "@estado, @activo, @vlMonetario, @dtInicio, @dtFim, @perMeses);";
+                        "@estado, @activo, @vlMonetario, @dtInicio, null, @perMeses) output id; ";
             }
         }
 
@@ -71,28 +71,27 @@ namespace AdoNETLayer.concrete
 
         protected override void InsertParameters(IDbCommand cmd, Intervencoes entity)
         {
-            UpdateParameters(cmd, entity);
-        }
-
-        protected override void UpdateParameters(IDbCommand cmd, Intervencoes entity)
-        {
-            SqlParameter p = new SqlParameter("@id", entity.id);
             SqlParameter p1 = new SqlParameter("@competencias", entity.competencias);
             SqlParameter p2 = new SqlParameter("@estado", entity.estado);
             SqlParameter p3 = new SqlParameter("@activo", entity.activo);
             SqlParameter p4 = new SqlParameter("@vlMonetario", entity.vlMonetario);
             SqlParameter p5 = new SqlParameter("@dtInicio", entity.dtInicio);
-            SqlParameter p6 = new SqlParameter("@dtFim", entity.dtFim);
             SqlParameter p7 = new SqlParameter("@perMeses", entity.perMeses);
 
-            cmd.Parameters.Add(p);
             cmd.Parameters.Add(p1);
             cmd.Parameters.Add(p2);
             cmd.Parameters.Add(p3);
             cmd.Parameters.Add(p4);
             cmd.Parameters.Add(p5);
-            cmd.Parameters.Add(p6);
             cmd.Parameters.Add(p7);
+        }
+
+        protected override void UpdateParameters(IDbCommand cmd, Intervencoes entity)
+        {
+            SqlParameter p = new SqlParameter("@id", entity.id);
+
+            cmd.Parameters.Add(p);
+            InsertParameters(cmd, entity);
         }
 
         protected override void SelectParameters(IDbCommand cmd, int id)

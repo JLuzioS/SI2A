@@ -17,7 +17,7 @@ namespace AdoNETLayer
         public AdoNet(IContext ctx)
         {
             funcionarioMapper = new FuncionarioMapper(ctx);
-            competenciaMapper = new CompetenciaMapper(ctx);
+            competenciaMapper = new CompetenciaMapper(ctx); 
             intervencoesMapper = new IntervencoesMapper(ctx);
             equipasMapper = new EquipasMapper(ctx);
             activosMapper = new ActivosMapper(ctx);
@@ -29,8 +29,7 @@ namespace AdoNETLayer
             {
                 funcionarioMapper.Create(funcionario);
                 return true;
-            }
-            catch (Exception)
+            } catch (Exception)
             {
                 return false;
             }
@@ -53,7 +52,7 @@ namespace AdoNETLayer
 
         public List<Intervencoes> GetAllIntervencoes()
         {
-            return intervencoesMapper.ReadAll();
+            return intervencoesMapper.ReadAll(); 
         }
 
         public bool CreateIntervencao(Intervencoes intervencoes)
@@ -71,7 +70,7 @@ namespace AdoNETLayer
 
         public List<Activos> GetAllActivos()
         {
-            return activosMapper.ReadAll();
+            return activosMapper.ReadAll(); 
         }
 
         public bool CreateEquipa(string localizacao, int numElementos)
