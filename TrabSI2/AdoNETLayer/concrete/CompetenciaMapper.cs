@@ -7,7 +7,7 @@ using System.Data;
 
 namespace AdoNETLayer.concrete
 {
-    class CompetenciaMapper : AbstracMapper<Competencias, int, List<Competencias>>, IMapper<Competencias, int?, List<Competencias>>
+    class CompetenciaMapper : AbstracMapper<Competencias, int, List<Competencias>>
     {
         public CompetenciaMapper(IContext ctx) : base(ctx) { }
 
@@ -15,7 +15,7 @@ namespace AdoNETLayer.concrete
 
         protected override string SelectAllCommandText => $"select * from {this.Table}";
 
-        protected override string SelectCommandText => throw new NotImplementedException();
+        protected override string SelectCommandText => String.Format("{0} where id = @id", SelectAllCommandText);
 
         protected override string UpdateCommandText => throw new NotImplementedException();
 
@@ -57,10 +57,6 @@ namespace AdoNETLayer.concrete
             throw new NotImplementedException();
         }
 
-        public Competencias Read(int? id)
-        {
-            throw new NotImplementedException();
-        }
 
     }
 }

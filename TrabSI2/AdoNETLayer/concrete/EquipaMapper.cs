@@ -9,7 +9,7 @@ using System.Transactions;
 
 namespace AdoNETLayer.concrete
 {
-    class EquipasMapper : AbstracMapper<Equipas, int, List<Equipas>>, IMapper<Equipas, int?, List<Equipas>>
+    class EquipasMapper : AbstracMapper<Equipas, int, List<Equipas>>
     {
         public EquipasMapper(IContext ctx) : base(ctx) { }
 
@@ -17,7 +17,7 @@ namespace AdoNETLayer.concrete
 
         protected override string SelectAllCommandText => $"select * from {this.Table}";
 
-        protected override string SelectCommandText => throw new NotImplementedException();
+        protected override string SelectCommandText => String.Format("{0} where id = @id", SelectAllCommandText);
 
         protected override string UpdateCommandText => throw new NotImplementedException();
 
@@ -46,7 +46,8 @@ namespace AdoNETLayer.concrete
 
         protected override void SelectParameters(IDbCommand command, int k)
         {
-            throw new NotImplementedException();
+            SqlParameter p = new SqlParameter("@id", k);
+            command.Parameters.Add(p);
         }
 
         protected override Equipas UpdateEntityID(IDbCommand cmd, Equipas e)
@@ -74,9 +75,47 @@ namespace AdoNETLayer.concrete
             }
         }
 
-        public Equipas Read(int? id)
+        public Equipas AddFuncionario(Equipas equipa, Funcionarios funcionario)
         {
-            throw new NotImplementedException();
+            //insertFuncionariosEquipa @funcionario INT, @equipa INT, @dtEntrada DATE
+            using (TransactionScope ts = new TransactionScope(TransactionScopeOption.Required))
+            {
+                EnsureContext();
+                context.EnlistTransaction();
+                using (IDbCommand cmd = context.createCommand())
+                {
+                    cmd.CommandText = "insertFuncionariosEquipa";
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new SqlParameter("@funcionario", funcionario.id));
+                    cmd.Parameters.Add(new SqlParameter("@equipa", equipa.id));
+                    cmd.Parameters.Add(new SqlParameter("@dtEntrada", DateTime.Now));
+                    cmd.ExecuteNonQuery();
+                }
+                ts.Complete();
+            }
+            return equipa;
+        }
+
+        
+        public Equipas DeleteFuncionario(Equipas equipa, Funcionarios funcionario)
+        {
+            // deleteFuncionariosEquipa @funcionario INT, @equipa INT, @dtSaida DATE AS
+            using (TransactionScope ts = new TransactionScope(TransactionScopeOption.Required))
+            {
+                EnsureContext();
+                context.EnlistTransaction();
+                using (IDbCommand cmd = context.createCommand())
+                {
+                    cmd.CommandText = "deleteFuncionariosEquipa";
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new SqlParameter("@funcionario", funcionario.id));
+                    cmd.Parameters.Add(new SqlParameter("@equipas", equipa.id));
+                    cmd.Parameters.Add(new SqlParameter("@dtSaida", DateTime.Now));
+                    cmd.ExecuteNonQuery();
+                }
+                ts.Complete();
+            }
+            return equipa;
         }
 
         public int GetFreeEquipa(int competenciaId)

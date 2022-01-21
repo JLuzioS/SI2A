@@ -9,7 +9,7 @@ using System.Transactions;
 
 namespace AdoNETLayer.concrete
 {
-    class IntervencoesMapper : AbstracMapper<Intervencoes, int, List<Intervencoes>>, IMapper<Intervencoes, int?, List<Intervencoes>>
+    class IntervencoesMapper : AbstracMapper<Intervencoes, int, List<Intervencoes>>
     {
 
         public IntervencoesMapper(IContext ctx) : base(ctx) { }
@@ -87,6 +87,28 @@ namespace AdoNETLayer.concrete
             cmd.Parameters.Add(p7);
         }
 
+        internal bool CreateWithProcedure(Intervencoes intervencoes)
+        {
+            using (TransactionScope ts = new TransactionScope(TransactionScopeOption.Required))
+            {
+                EnsureContext();
+                context.EnlistTransaction();
+                using (IDbCommand cmd = context.createCommand())
+                {
+                    cmd.CommandText = "p_CriaInter";
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new SqlParameter("@competencias", intervencoes.competencias));
+                    cmd.Parameters.Add(new SqlParameter("@activo", intervencoes.activo));
+                    cmd.Parameters.Add(new SqlParameter("@vlMonetario", intervencoes.vlMonetario));
+                    cmd.Parameters.Add(new SqlParameter("@dtInicio", intervencoes.dtInicio));
+                    cmd.Parameters.Add(new SqlParameter("@perMeses", intervencoes.perMeses));
+                    cmd.ExecuteNonQuery();
+                }
+                ts.Complete();
+                return true;
+            }
+        }
+
         protected override void UpdateParameters(IDbCommand cmd, Intervencoes entity)
         {
             SqlParameter p = new SqlParameter("@id", entity.id);
@@ -125,7 +147,6 @@ namespace AdoNETLayer.concrete
                     cmd.CommandText = InsertCommandText;
                     cmd.CommandType = InsertCommandType;
                     InsertParameters(cmd, entity);
-                    Console.WriteLine(cmd.ToString());
                     using (var reader = cmd.ExecuteReader())
                     {
                         if (!reader.Read()) throw new Exception("Id was not returned.");
@@ -139,10 +160,6 @@ namespace AdoNETLayer.concrete
                 }
             }
                
-        }
-        public Intervencoes Read(int? id)
-        {
-            return Read(id);
         }
     }
 }

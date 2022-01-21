@@ -11,7 +11,7 @@ namespace PresentationLayer
     {
 
         enum DataAccessModel { AdoNET, EntityFramework }
-        enum Operation { CreateFunc, ReadFunc, UpdateFunc, GetALLFunc, GetFreeEqu, CreateInterv, CreateEqu, Exit }
+        enum Operation { CreateFunc, ReadFunc, UpdateFunc, GetALLFunc, GetFreeEqu, CreateInterv, CreateIntervProc, CreateEqu, AddUserToEquipa, RemoveUserFromEquipa,  Exit }
 
         public static void Main()
         {
@@ -60,11 +60,20 @@ namespace PresentationLayer
                     case Operation.GetFreeEqu:
                         eP.GetFreeEquipa();
                         break;
+                    case Operation.CreateIntervProc:
+                        iP.CreateIntervencaoProcedure();
+                        break;
                     case Operation.CreateInterv:
                         iP.CreateIntervencao();
                         break;
                     case Operation.CreateEqu:
                         eP.CreateEquipa();
+                        break;
+                    case Operation.AddUserToEquipa:
+                        eP.AddFuncionarioToEquipa();
+                        break;
+                    case Operation.RemoveUserFromEquipa:
+                        eP.DeleteFuncionarioFromEquipa();
                         break;
                     case Operation.Exit:
                         return;
@@ -104,8 +113,11 @@ namespace PresentationLayer
             Console.WriteLine("D3. Update Funcionario");
             Console.WriteLine("D4. GetAll Funcionarios");
             Console.WriteLine("E1. Get free Equipa");
-            Console.WriteLine("Fa. Create Intervencao");
+            Console.WriteLine("FA. Create Intervencao Procedure");
+            Console.WriteLine("FB. Create Intervencao");
             Console.WriteLine("G. Create Equipa");
+            Console.WriteLine("G1. Add Funcionario to Equipa");
+            Console.WriteLine("G2. Remove Funcionario from Equipa");
             Console.WriteLine("0. Exit");
 
             while (true)
@@ -124,10 +136,16 @@ namespace PresentationLayer
                         return Operation.GetALLFunc;
                     case "E1":
                         return Operation.GetFreeEqu;
-                    case "Fa":
+                    case "FA":
+                        return Operation.CreateIntervProc;
+                    case "FB":
                         return Operation.CreateInterv;
                     case "G":
                         return Operation.CreateEqu;
+                    case "G1":
+                        return Operation.AddUserToEquipa;
+                    case "G2":
+                        return Operation.RemoveUserFromEquipa;
                     case "0":
                         return Operation.Exit;
                     default:

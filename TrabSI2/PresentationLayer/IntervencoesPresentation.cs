@@ -24,6 +24,31 @@ namespace PresentationLayer
                 Console.WriteLine("Intervencao %d Competencia %d", interv.id, interv.competencias);
             }
         }
+        public void CreateIntervencaoProcedure()
+        {
+            Console.WriteLine("Insira os dados para nova intervenção: ");
+
+            Intervencoes intervencoes = new Intervencoes();
+
+            GetAllCompetencias();
+            intervencoes.competencias = GetCompetencia();
+            intervencoes.estado = "Por atribuir";
+            GetAllActivos();
+            intervencoes.activo = GetActivo();
+            intervencoes.vlMonetario = GetValorMonetario();
+            intervencoes.dtInicio = GetDataInicio();
+            intervencoes.dtFim = null;
+            intervencoes.perMeses = GetPerMeses();
+
+            if (service.CreateIntervencaoProcedure(intervencoes))
+            {
+                Console.WriteLine("Intervencao criado com sucesso!");
+            }
+            else
+            {
+                Console.WriteLine("Algo correu mal! Nao sei");
+            }
+        }
 
         public void CreateIntervencao()
         {
@@ -95,7 +120,7 @@ namespace PresentationLayer
 
         private DateTime GetDataInicio()
         {
-            Console.WriteLine("Data de inicio:");
+            Console.WriteLine("Data de inicio <YYYY-MM-DD>:");
             var option = Console.ReadLine();
             // TODO DATA Validation
             return DateTime.Parse(option);
