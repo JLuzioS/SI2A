@@ -13,6 +13,7 @@ namespace AdoNETLayer
         private FuncionarioMapper funcionarioMapper;
         private CompetenciaMapper competenciaMapper;
         private IntervencoesMapper intervencoesMapper;
+        private EquipasMapper equipasMapper;
 
         public AdoNet(IContext ctx)
         {
@@ -20,6 +21,7 @@ namespace AdoNETLayer
             funcionarioMapper = new FuncionarioMapper(ctx);
             competenciaMapper = new CompetenciaMapper(ctx); 
             intervencoesMapper = new IntervencoesMapper(ctx);
+            equipasMapper = new EquipasMapper(ctx);
         }
 
         public bool CreateFuncionario(Funcionarios funcionario)
@@ -46,7 +48,7 @@ namespace AdoNETLayer
 
         public int GetFreeEquipa(int competenciaId)
         {
-            return competenciaMapper.GetFreeEquipa(competenciaId);
+            return equipasMapper.GetFreeEquipa(competenciaId);
         }
 
         public List<Intervencoes> GetAllIntervencoes()

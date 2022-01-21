@@ -82,30 +82,5 @@ namespace AdoNETLayer.concrete
             throw new NotImplementedException();
         }
 
-        public int GetFreeEquipa(int competenciaId)
-        {
-            using (TransactionScope ts = new TransactionScope(TransactionScopeOption.Required))
-            {
-                EnsureContext();
-                context.EnlistTransaction();
-                using (IDbCommand cmd = context.createCommand())
-                {
-                    cmd.CommandText = "select dbo.obtainCodigoDeEquipaLivre(@descricao)";
-                    cmd.CommandType = CommandType.Text;
-                    cmd.Parameters.Add(new SqlParameter("@descricao", competenciaId));
-                    using (var query = cmd.ExecuteReader())
-                    { 
-                        if (query.Read())
-                        {
-                            return query.GetInt32(0);
-                        }
-                        else
-                        {
-                            return 0;
-                        }
-                    }
-                }
-            }
-        }
     }
 }
