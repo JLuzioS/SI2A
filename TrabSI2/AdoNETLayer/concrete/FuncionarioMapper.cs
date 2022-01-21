@@ -5,9 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Transactions;
 
 namespace AdoNETLayer.concrete
@@ -17,6 +14,55 @@ namespace AdoNETLayer.concrete
 
         public FuncionarioMapper(IContext ctx) : base(ctx) { }
 
+        
+
+
+        string Table => "Funcionarios";
+
+        protected override string DeleteCommandText
+        {
+            get
+            {
+                return $"delete from {this.Table} where id=@id";
+            }
+        }
+
+        protected override string InsertCommandText
+        {
+            get
+            {
+                return $"INSERT INTO {this.Table} values(@cc,@nif, " +
+                        "@nome, @dtNascimento, @morada, @codigoPostal, @localidade, @profissao" +
+                        ", @telefone, @telemovel);";
+            }
+        }
+
+        protected override string SelectAllCommandText
+        {
+            get
+            {
+                return $"select * from {this.Table}";
+            }
+        }
+
+        protected override string SelectCommandText
+        {
+            get
+            {
+                return String.Format("{0} where id = @id", SelectAllCommandText);
+            }
+        }
+
+        protected override string UpdateCommandText
+        {
+            get
+            {
+                return $"update {this.Table} set cc=@cc, nif=@nif, nome=@nome" +
+                    ", dtNascimento=@dtNascimento, morada=@morada, codigoPostal=@codigoPostal," +
+                    " localidade=@localidade, profissao=@profissao, telefone=@telefone, telemovel=@telemovel" +
+                    " where studentNumber=@id";
+            }
+        }
         public override Funcionarios Create(Funcionarios entity)
         {
             using (TransactionScope ts = new TransactionScope(TransactionScopeOption.Required))
@@ -47,7 +93,7 @@ namespace AdoNETLayer.concrete
             {
                 EnsureContext();
                 context.EnlistTransaction();
-                
+
                 using (var query = ExecuteReader(SelectAllCommandText, null))
                 {
                     var result = MapAll(query);
@@ -56,52 +102,6 @@ namespace AdoNETLayer.concrete
                 }
             }
         }
-
-        protected override string DeleteCommandText
-        {
-            get
-            {
-                return "delete from Funcionarios where id=@id";
-            }
-        }
-
-        protected override string InsertCommandText
-        {
-            get
-            {
-                return "INSERT INTO Funcionarios values(@cc,@nif, " +
-                        "@nome, @dtNascimento, @morada, @codigoPostal, @localidade, @profissao" +
-                        ", @telefone, @telemovel);";
-            }
-        }
-
-        protected override string SelectAllCommandText
-        {
-            get
-            {
-                return "select * from Funcionarios";
-            }
-        }
-
-        protected override string SelectCommandText
-        {
-            get
-            {
-                return String.Format("{0} where id = @id", SelectAllCommandText);
-            }
-        }
-
-        protected override string UpdateCommandText
-        {
-            get
-            {
-                return "update Funcionarios set cc=@cc, nif=@nif, nome=@nome" +
-                    ", dtNascimento=@dtNascimento, morada=@morada, codigoPostal=@codigoPostal," +
-                    " localidade=@localidade, profissao=@profissao, telefone=@telefone, telemovel=@telemovel" +
-                    " where studentNumber=@id";
-            }
-        }
-
         protected override void DeleteParameters(IDbCommand cmd, Funcionarios entity)
         {
             SqlParameter p1 = new SqlParameter("@id", entity.id);

@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="concrete\EquipaMapper.cs" />
     <Compile Include="mapper\AdoNet.cs" />
     <Compile Include="concrete\CompetenciaMapper.cs" />
     <Compile Include="concrete\Context.cs" />
