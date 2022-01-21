@@ -11,14 +11,13 @@ namespace PresentationLayer
     {
 
         enum DataAccessModel { AdoNET, EntityFramework }
-        enum Operation { CreateFunc, ReadFunc, UpdateFunc, GetALLFunc }
+        enum Operation { CreateFunc, ReadFunc, UpdateFunc, GetALLFunc, GetFreeEqu, Exit }
 
         public static void Main()
         {
             var DataAccessModelOption = GetDataAccessModelFromUser();
 
             Console.WriteLine($"\nChosen option -> {DataAccessModelOption}");
-            Console.WriteLine($"\n");
 
             string connectionString = "Data Source=10.62.73.87;Initial Catalog=L51NG3;User Id=L51NG3;Password=L51NG3.passwd88;";
 
@@ -42,20 +41,29 @@ namespace PresentationLayer
 
             Services service = new Services(db);
             FuncionarioPresentation fP = new FuncionarioPresentation(service);
+            FreeEquipaPresentation feP = new FreeEquipaPresentation(service);
 
-            var OperationOption = GetOperation();
-
-            switch (OperationOption)
+            while (true)
             {
-                case Operation.CreateFunc:
-                    fP.CreateFuncionario();
-                    break;
-                case Operation.GetALLFunc:
-                    fP.GetAllFuncionarios();
-                    break;
+                var OperationOption = GetOperation();
+
+                Console.WriteLine($"Chosen option -> {OperationOption}\n");
+                switch (OperationOption)
+                {
+                    case Operation.CreateFunc:
+                        fP.CreateFuncionario();
+                        break;
+                    case Operation.GetALLFunc:
+                        fP.GetAllFuncionarios();
+                        break;
+                    case Operation.GetFreeEqu:
+                        feP.GetFreeEquipa();
+                        break;
+                    case Operation.Exit:
+                        return;
+                }
+                Console.ReadKey();
             }
-            Console.WriteLine($"\nChosen option -> {OperationOption}");
-            Console.ReadKey();
         }
 
         private static DataAccessModel GetDataAccessModelFromUser()
@@ -83,11 +91,13 @@ namespace PresentationLayer
 
         private static Operation GetOperation()
         {
-            Console.WriteLine("Select which Operation to use:");
+            Console.WriteLine("\nSelect which Operation to use:");
             Console.WriteLine("D1. Create Funcionario");
             Console.WriteLine("D2. Delete Funcionario");
             Console.WriteLine("D3. Update Funcionario");
             Console.WriteLine("D4. GetAll Funcionarios");
+            Console.WriteLine("E1. Get free Equipa");
+            Console.WriteLine("0. Exit");
 
             while (true)
             {
@@ -103,6 +113,10 @@ namespace PresentationLayer
                         return Operation.UpdateFunc;
                     case "D4":
                         return Operation.GetALLFunc;
+                    case "E1":
+                        return Operation.GetFreeEqu;
+                    case "0":
+                        return Operation.Exit;
                     default:
                         Console.WriteLine("\nNot a valid option.");
                         break;

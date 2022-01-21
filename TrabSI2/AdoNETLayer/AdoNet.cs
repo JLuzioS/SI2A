@@ -34,5 +34,18 @@ namespace AdoNETLayer
             FuncionarioMapper mapper = new FuncionarioMapper(ctx);
             return mapper.GetAllFuncionarios();
         }
+
+        public List<Competencias> GetAllCompetencias()
+        {
+            CompetenciaMapper mapper = new CompetenciaMapper(ctx);
+            return mapper.GetAllCompetencias();
+
+        }
+
+        public int GetFreeEquipa(int competenciaId)
+        {
+            CompetenciaMapper mapper = new CompetenciaMapper(ctx);
+            return mapper.GetFreeEquipa(competenciaId);
+        }
     }
 }

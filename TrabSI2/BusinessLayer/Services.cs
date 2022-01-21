@@ -24,5 +24,15 @@ namespace BusinessLayer
         {
             return dataBase.GetAllFuncionarios();
         }
+
+        public List<Competencias> GetAllCompetencias()
+        {
+            return dataBase.GetAllCompetencias();
+        }
+
+        public int GetFreeEquipa(int competenciaId)
+        {
+            return dataBase.GetFreeEquipa(competenciaId);
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using ModelLayer;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -29,6 +30,32 @@ namespace EntityFrameworkLayer
             return false;
         }
 
+        public List<ModelLayer.Competencias> GetAllCompetencias()
+        {
+            using (var ctx = new L51NG3Entities())
+            {
+                var EFcompetencias = from allComp in ctx.Competencias select allComp;
+
+                var ModelComp = new List<ModelLayer.Competencias>();
+
+                foreach (var EFcomp in EFcompetencias)
+                {
+                    ModelComp.Add(Map(EFcomp));
+                }
+
+                return ModelComp;
+            }
+        }
+
+        private ModelLayer.Competencias Map(Competencias entityFrameWorkCompetencia)
+        {
+            return new ModelLayer.Competencias
+            {
+                id = entityFrameWorkCompetencia.id,
+                descricao = entityFrameWorkCompetencia.descricao
+            };
+        }
+
         public List<ModelLayer.Funcionarios> GetAllFuncionarios()
         {
             using (var ctx = new L51NG3Entities())
@@ -44,6 +71,11 @@ namespace EntityFrameworkLayer
 
                 return ModelFunc;
             }
+        }
+
+        public int GetFreeEquipa(int competenciaId)
+        {
+            throw new System.NotImplementedException();
         }
 
         public ModelLayer.Funcionarios Map(Funcionarios entityFrameWorkFuncionario)

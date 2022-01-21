@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdoNet.cs" />
+    <Compile Include="concrete\CompetenciaMapper.cs" />
     <Compile Include="concrete\Context.cs" />
     <Compile Include="concrete\FuncionarioMapper.cs" />
     <Compile Include="concrete\FuncionarioRepository.cs" />
@@ -55,7 +56,9 @@
     <Compile Include="dal\IFuncionarioRepository.cs" />
     <Compile Include="dal\IRepository.cs" />
     <Compile Include="mapper\AbstractMapper.cs" />
+    <Compile Include="mapper\CompetenciasProxy.cs" />
     <Compile Include="mapper\FuncionariosProxy.cs" />
+    <Compile Include="mapper\ICompetenciaMapper.cs" />
     <Compile Include="mapper\IFuncionarioMapper.cs" />
     <Compile Include="mapper\IMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
