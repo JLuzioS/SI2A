@@ -29,22 +29,21 @@ namespace PresentationLayer
         {
             Console.WriteLine("Insira os dados para nova intervenção: ");
 
-            Funcionarios funcionario = new Funcionarios();
+            Intervencoes intervencoes = new Intervencoes();
 
-            funcionario.cc = GetCC();
-            funcionario.nif = GetNIF();
-            funcionario.nome = GetName();
-            funcionario.dtNascimento = GetBirthDate();
-            funcionario.morada = GetAddress();
-            funcionario.codigoPostal = GetPostalCode();
-            funcionario.localidade = GetTown();
-            funcionario.profissao = GetProfession();
-            funcionario.telefone = GetPhone();
-            funcionario.telemovel = GetCellPhone();
+            GetAllCompetencias();
+            intervencoes.competencias = GetCompetencia();
+            intervencoes.estado = GetEstado();
+            GetAllActivos();
+            intervencoes.activo = GetActivo();
+            intervencoes.vlMonetario = GetValorMonetario();
+            intervencoes.dtInicio = GetDataInicio();
+            intervencoes.dtFim = null;
+            intervencoes.perMeses = GetPerMeses();
 
-            if (service.CreateFuncionario(funcionario))
+            if (service.CreateIntervencao(intervencoes))
             {
-                Console.WriteLine("Funcionario criado com sucesso!");
+                Console.WriteLine("Intervencao criado com sucesso!");
             }
             else
             {
@@ -52,84 +51,71 @@ namespace PresentationLayer
             }
         }
 
-        private string GetCC()
+        private void GetAllCompetencias()
         {
-            Console.WriteLine("CC: ");
-            var option = Console.ReadLine();
-            // TODO DATA Validation
-            return option;
+            Console.WriteLine("Lista de Competências: ");
+            foreach (var comp in service.GetAllCompetencias())
+            {
+                Console.WriteLine(comp.id + " - " + comp.descricao);
+            }
         }
 
-        private string GetNIF()
+        private int GetCompetencia()
         {
-            Console.WriteLine("NIF: ");
-            var option = Console.ReadLine();
-            // TODO DATA Validation
-            return option;
-        }
-
-        private string GetName()
-        {
-            Console.WriteLine("Nome: ");
-            var option = Console.ReadLine();
-            // TODO DATA Validation
-            return option;
-        }
-
-        private DateTime GetBirthDate()
-        {
-            Console.WriteLine("Data de Nascimento: ");
-            var option = Console.ReadLine();
-            // TODO DATA Validation
-            return default;
-        }
-
-        private string GetAddress()
-        {
-            Console.WriteLine("Morada: ");
-            var option = Console.ReadLine();
-            // TODO DATA Validation
-            return option;
-        }
-
-        private string GetPostalCode()
-        {
-            Console.WriteLine("Codigo de Postal: ");
-            var option = Console.ReadLine();
-            // TODO DATA Validation
-            return option;
-        }
-
-        private string GetTown()
-        {
-            Console.WriteLine("Localidade: ");
-            var option = Console.ReadLine();
-            // TODO DATA Validation
-            return option;
-        }
-
-        private int GetProfession()
-        {
-            Console.WriteLine("Profissao: ");
+            Console.WriteLine("Competência para associar a intervencão:");
             var option = Console.ReadLine();
             // TODO DATA Validation
             return Int32.Parse(option);
         }
 
-        private string GetPhone()
+
+        private string GetEstado()
         {
-            Console.WriteLine("Telefone: ");
+            Console.WriteLine("Estado: ");
             var option = Console.ReadLine();
             // TODO DATA Validation
             return option;
         }
 
-        private string GetCellPhone()
+        private void GetAllActivos()
         {
-            Console.WriteLine("Telemovel: ");
+            Console.WriteLine("Lista de Activos: ");
+            foreach (var activo in service.GetAllActivos())
+            {
+                Console.WriteLine(activo.id + " - " + activo.nome);
+            }
+        }
+
+        private int GetActivo()
+        {
+            Console.WriteLine("Activo para associar a intervencão:");
             var option = Console.ReadLine();
             // TODO DATA Validation
-            return option;
+            return Int32.Parse(option);
+        }
+
+        private decimal GetValorMonetario()
+        {
+            Console.WriteLine("Valor monetario:");
+            var option = Console.ReadLine();
+            // TODO DATA Validation
+            return decimal.Parse(option);
+        }
+
+        private DateTime GetDataInicio()
+        {
+            Console.WriteLine("Data de inicio:");
+            var option = Console.ReadLine();
+            // TODO DATA Validation
+            return DateTime.Parse(option);
+        }
+
+        private int GetPerMeses()
+        {
+            Console.WriteLine("Periodo da intervenção:");
+            var option = Console.ReadLine();
+            // TODO DATA Validation
+            return int.Parse(option);
         }
     }
 }

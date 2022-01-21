@@ -53,5 +53,5 @@ namespace AdoNETLayer.concrete
 
 
     }
-    
+
 }

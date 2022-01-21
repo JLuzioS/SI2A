@@ -8,16 +8,16 @@ using System.Threading.Tasks;
 
 namespace PresentationLayer
 {
-    class FreeEquipaPresentation
+    class CompetenciasPresentation
     {
         private Services service;
 
-        public FreeEquipaPresentation(Services service)
+        public CompetenciasPresentation(Services service)
         {
             this.service = service;
         }
 
-        void GetAllCompetencias()
+        private void GetAllCompetencias()
         {
             Console.WriteLine("Lista de Competências: ");
             foreach (var comp in service.GetAllCompetencias())

@@ -5,10 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Transactions;
 
 namespace AdoNETLayer.concrete
 {
@@ -16,42 +12,6 @@ namespace AdoNETLayer.concrete
     {
 
         public IntervencoesMapper(IContext ctx) : base(ctx) { }
-
-        public override Intervencoes Create(Intervencoes entity)
-        {
-            using (TransactionScope ts = new TransactionScope(TransactionScopeOption.Required))
-            {
-                EnsureContext();
-                context.EnlistTransaction();
-
-                using (IDbCommand cmd = context.createCommand())
-                {
-                    cmd.CommandText = InsertCommandText;
-                    cmd.CommandType = InsertCommandType;
-                    InsertParameters(cmd, entity);
-                    cmd.ExecuteNonQuery();
-                    entity = UpdateEntityID(cmd, entity);
-                }
-
-                ts.Complete();
-                return entity;
-            }
-        }
-
-        public List<Intervencoes> GetAllInternvencoes()
-        {
-            using (TransactionScope ts = new TransactionScope(TransactionScopeOption.Required))
-            {
-                EnsureContext();
-                context.EnlistTransaction();
-                using (var query = ExecuteReader(SelectAllCommandText, null))
-                {
-                    var result = MapAll(query);
-                    ts.Complete();
-                    return result;
-                }
-            }
-        }
 
         protected override string DeleteCommandText
         {
