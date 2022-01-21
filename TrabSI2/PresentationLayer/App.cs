@@ -11,7 +11,7 @@ namespace PresentationLayer
     {
 
         enum DataAccessModel { AdoNET, EntityFramework }
-        enum Operation { CreateFunc, ReadFunc, UpdateFunc, GetALLFunc, GetFreeEqu, CreateInterv, CreateEqu, Exit }
+        enum Operation { CreateFunc, ReadFunc, UpdateFunc, GetALLFunc, GetFreeEqu, CreateInterv, CreateEqu, AddUserToEquipa, RemoveUserFromEquipa,  Exit }
 
         public static void Main()
         {
@@ -67,10 +67,10 @@ namespace PresentationLayer
                         eP.CreateEquipa();
                         break;
                     case Operation.AddUserToEquipa:
-                        cP.AddFuncionarioToEquipa();
+                        eP.AddFuncionarioToEquipa();
                         break;
                     case Operation.RemoveUserFromEquipa:
-                        cP.DeleteFuncionarioFromEquipa();
+                        eP.DeleteFuncionarioFromEquipa();
                         break;
                     case Operation.Exit:
                         return;

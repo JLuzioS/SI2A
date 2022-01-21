@@ -17,7 +17,7 @@ namespace AdoNETLayer
         public AdoNet(IContext ctx)
         {
             funcionarioMapper = new FuncionarioMapper(ctx);
-            competenciaMapper = new CompetenciaMapper(ctx); 
+            competenciaMapper = new CompetenciaMapper(ctx);
             intervencoesMapper = new IntervencoesMapper(ctx);
             equipasMapper = new EquipasMapper(ctx);
             activosMapper = new ActivosMapper(ctx);
@@ -29,7 +29,8 @@ namespace AdoNETLayer
             {
                 funcionarioMapper.Create(funcionario);
                 return true;
-            } catch (Exception)
+            }
+            catch (Exception)
             {
                 return false;
             }
@@ -52,7 +53,7 @@ namespace AdoNETLayer
 
         public List<Intervencoes> GetAllIntervencoes()
         {
-            return intervencoesMapper.ReadAll(); 
+            return intervencoesMapper.ReadAll();
         }
 
         public bool CreateIntervencao(Intervencoes intervencoes)
@@ -70,7 +71,7 @@ namespace AdoNETLayer
 
         public List<Activos> GetAllActivos()
         {
-            return activosMapper.ReadAll(); 
+            return activosMapper.ReadAll();
         }
 
         public bool CreateEquipa(string localizacao, int numElementos)
@@ -89,26 +90,6 @@ namespace AdoNETLayer
         public Activos GetActivo(int activo)
         {
             return activosMapper.Read(activo);
-        }
-
-        public Equipas AddFuncionario(Equipas equipa, Funcionarios funcionario)
-        {
-            return equipasMapper.AddFuncionario(equipa, funcionario);
-        }
-
-        public Equipas DeleteFuncionario(Equipas equipa, Funcionarios funcionario)
-        {
-            return equipasMapper.DeleteFuncionario(equipa, funcionario);
-        }
-
-        public Funcionarios GetFuncionarios(int idFuncionario)
-        {
-            return funcionarioMapper.Read(idFuncionario);
-        }
-
-        public Equipas GetEquipas(int idEquipa)
-        {
-            return equipasMapper.Read(idEquipa);
         }
 
         public Equipas AddFuncionario(Equipas equipa, Funcionarios funcionario)

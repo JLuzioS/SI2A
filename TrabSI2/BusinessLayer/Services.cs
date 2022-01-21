@@ -16,11 +16,6 @@ namespace BusinessLayer
         {
             return dataBase.CreateFuncionario(funcionario);
         }
-        public Equipas GetEquipa(int idEquipa)
-        {
-            return dataBase.GetEquipas(idEquipa);
-        }
-
         public List<Funcionarios> GetAllFuncionarios()
         {
             return dataBase.GetAllFuncionarios();
@@ -41,14 +36,28 @@ namespace BusinessLayer
         public bool CreateIntervencao(Intervencoes intervencoes)
         {
             Activos activo = dataBase.GetActivo(intervencoes.activo);
-            if (activo.dtAaquisicao > intervencoes.dtInicio) 
+            if (activo.dtAaquisicao > intervencoes.dtInicio)
                 throw new Exception("Data de inicio da intervenção é inferior à data de acquisição do Activo");
             return dataBase.CreateIntervencao(intervencoes);
+        }
+
+        public List<Activos> GetAllActivos()
+        {
+            return dataBase.GetAllActivos();
+        }
+        public bool CreateEquipa(string localizacao, int numElementos)
+        {
+            return dataBase.CreateEquipa(localizacao, numElementos);
         }
 
         public Equipas AddFuncionarioToEquipa(Equipas equipa, Funcionarios funcionario)
         {
             return dataBase.AddFuncionario(equipa, funcionario);
+        }
+
+        public Equipas GetEquipa(int idEquipa)
+        {
+            return dataBase.GetEquipas(idEquipa);
         }
 
         public Funcionarios GetFuncionarios(int idFuncionario)
