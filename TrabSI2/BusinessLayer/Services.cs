@@ -41,6 +41,11 @@ namespace BusinessLayer
             return dataBase.CreateIntervencao(intervencoes);
         }
 
+        public bool CreateIntervencaoProcedure(Intervencoes intervencoes)
+        {
+            return dataBase.CreateIntervencaoProcedure(intervencoes);
+        }
+
         public List<Activos> GetAllActivos()
         {
             return dataBase.GetAllActivos();

@@ -13,5 +13,6 @@ namespace ModelLayer
         bool CreateIntervencao(Intervencoes intervencoes);
         List<Activos> GetAllActivos();
         Activos GetActivo(int activo);
+        bool CreateIntervencaoProcedure(Intervencoes intervencoes);
     }
 }

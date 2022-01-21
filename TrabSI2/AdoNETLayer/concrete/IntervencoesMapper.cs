@@ -87,6 +87,28 @@ namespace AdoNETLayer.concrete
             cmd.Parameters.Add(p7);
         }
 
+        internal bool CreateWithProcedure(Intervencoes intervencoes)
+        {
+            using (TransactionScope ts = new TransactionScope(TransactionScopeOption.Required))
+            {
+                EnsureContext();
+                context.EnlistTransaction();
+                using (IDbCommand cmd = context.createCommand())
+                {
+                    cmd.CommandText = "p_CriaInter";
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new SqlParameter("@competencias", intervencoes.competencias));
+                    cmd.Parameters.Add(new SqlParameter("@activo", intervencoes.activo));
+                    cmd.Parameters.Add(new SqlParameter("@vlMonetario", intervencoes.vlMonetario));
+                    cmd.Parameters.Add(new SqlParameter("@dtInicio", intervencoes.dtInicio));
+                    cmd.Parameters.Add(new SqlParameter("@perMeses", intervencoes.perMeses));
+                    cmd.ExecuteNonQuery();
+                }
+                ts.Complete();
+                return true;
+            }
+        }
+
         protected override void UpdateParameters(IDbCommand cmd, Intervencoes entity)
         {
             SqlParameter p = new SqlParameter("@id", entity.id);
