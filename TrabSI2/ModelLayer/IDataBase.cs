@@ -10,5 +10,7 @@ namespace ModelLayer
         List<Intervencoes> GetAllIntervencoes();
         int GetFreeEquipa(int competenciaId);
         bool CreateEquipa(string localizacao, int numElementos);
+        bool CreateIntervencao(Intervencoes intervencoes);
+        List<Activos> GetAllActivos();
     }
 }

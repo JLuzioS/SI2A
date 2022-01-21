@@ -103,5 +103,15 @@ namespace EntityFrameworkLayer
         {
             throw new System.NotImplementedException();
         }
+
+        public bool CreateIntervencao(ModelLayer.Intervencoes intervencoes)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public List<ModelLayer.Activos> GetAllActivos()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

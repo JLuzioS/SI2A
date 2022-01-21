@@ -5,11 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Transactions;
 
 namespace AdoNETLayer.concrete
 {
-    class FuncionarioMapper :AbstracMapper<Funcionarios, int, List<Funcionarios>>, IMapper<Funcionarios, int?, List<Funcionarios>>
+    class FuncionarioMapper : AbstracMapper<Funcionarios, int, List<Funcionarios>>, IMapper<Funcionarios, int?, List<Funcionarios>>
     {
 
         public FuncionarioMapper(IContext ctx) : base(ctx) { }
@@ -60,45 +59,8 @@ namespace AdoNETLayer.concrete
                     " where studentNumber=@id";
             }
         }
-        public override Funcionarios Create(Funcionarios entity)
-        {
-            using (TransactionScope ts = new TransactionScope(TransactionScopeOption.Required))
-            {
-                EnsureContext();
-                context.EnlistTransaction();
-
-                using (IDbCommand cmd = context.createCommand())
-                {
-                    cmd.CommandText = InsertCommandText;
-                    cmd.CommandType = InsertCommandType;
-                    InsertParameters(cmd, entity);
-                    cmd.ExecuteNonQuery();
-                    entity = UpdateEntityID(cmd, entity);
-                }
 
 
-                ts.Complete();
-                return entity;
-
-            }
-
-        }
-
-        public List<Funcionarios> GetAllFuncionarios()
-        {
-            using (TransactionScope ts = new TransactionScope(TransactionScopeOption.Required))
-            {
-                EnsureContext();
-                context.EnlistTransaction();
-
-                using (var query = ExecuteReader(SelectAllCommandText, null))
-                {
-                    var result = MapAll(query);
-                    ts.Complete();
-                    return result;
-                }
-            }
-        }
         protected override void DeleteParameters(IDbCommand cmd, Funcionarios entity)
         {
             SqlParameter p1 = new SqlParameter("@id", entity.id);

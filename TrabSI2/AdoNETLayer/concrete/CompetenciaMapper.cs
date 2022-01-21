@@ -4,11 +4,6 @@ using ModelLayer;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Transactions;
 
 namespace AdoNETLayer.concrete
 {
@@ -60,21 +55,6 @@ namespace AdoNETLayer.concrete
         protected override void UpdateParameters(IDbCommand command, Competencias e)
         {
             throw new NotImplementedException();
-        }
-
-        public List<Competencias> GetAllCompetencias()
-        {
-            using (TransactionScope ts = new TransactionScope(TransactionScopeOption.Required))
-            {
-                EnsureContext();
-                context.EnlistTransaction();
-                using (var query = ExecuteReader(SelectAllCommandText, null))
-                {
-                    var result = MapAll(query);
-                    ts.Complete();
-                    return result;
-                }
-            }
         }
 
         public Competencias Read(int? id)
