@@ -40,5 +40,15 @@ namespace BusinessLayer
         {
             return dataBase.GetAllIntervencoes();
         }
+
+        public Equipas AddFuncionario(Equipas equipa, Funcionarios funcionario)
+        {
+            return dataBase.AddFuncionario(equipa, funcionario);
+        }
+
+        public Equipas DeleteFuncionario(Equipas equipa, Funcionarios funcionario)
+        {
+            return dataBase.DeleteFuncionario(equipa, funcionario);
+        }
     }
 }

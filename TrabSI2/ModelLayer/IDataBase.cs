@@ -8,6 +8,8 @@ namespace ModelLayer
         List<Funcionarios> GetAllFuncionarios();
         List<Competencias> GetAllCompetencias();
         List<Intervencoes> GetAllIntervencoes();
+        Equipas AddFuncionario(Equipas equipa, Funcionarios funcionario);
+        Equipas DeleteFuncionario(Equipas equipa, Funcionarios funcionario);
         int GetFreeEquipa(int competenciaId);
         
     }

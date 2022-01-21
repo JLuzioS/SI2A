@@ -74,6 +74,49 @@ namespace AdoNETLayer.concrete
             }
         }
 
+        public Equipas AddFuncionario(Equipas equipa, Funcionarios funcionario)
+        {
+            //insertFuncionariosEquipa @funcionario INT, @equipa INT, @dtEntrada DATE
+            using (TransactionScope ts = new TransactionScope(TransactionScopeOption.Required))
+            {
+                EnsureContext();
+                context.EnlistTransaction();
+                using (IDbCommand cmd = context.createCommand())
+                {
+                    cmd.CommandText = "insertFuncionariosEquipa";
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new SqlParameter("@funcionario", funcionario.id));
+                    cmd.Parameters.Add(new SqlParameter("@equipas", equipa.id));
+                    cmd.Parameters.Add(new SqlParameter("@dtEntrada", DateTime.Now));
+                    cmd.ExecuteNonQuery();
+                }
+                ts.Complete();
+            }
+            return equipa;
+        }
+
+        
+        public Equipas DeleteFuncionario(Equipas equipa, Funcionarios funcionario)
+        {
+            // deleteFuncionariosEquipa @funcionario INT, @equipa INT, @dtSaida DATE AS
+            using (TransactionScope ts = new TransactionScope(TransactionScopeOption.Required))
+            {
+                EnsureContext();
+                context.EnlistTransaction();
+                using (IDbCommand cmd = context.createCommand())
+                {
+                    cmd.CommandText = "deleteFuncionariosEquipa";
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new SqlParameter("@funcionario", funcionario.id));
+                    cmd.Parameters.Add(new SqlParameter("@equipas", equipa.id));
+                    cmd.Parameters.Add(new SqlParameter("@dtSaida", DateTime.Now));
+                    cmd.ExecuteNonQuery();
+                }
+                ts.Complete();
+            }
+            return equipa;
+        }
+
         public Equipas Read(int? id)
         {
             throw new NotImplementedException();
