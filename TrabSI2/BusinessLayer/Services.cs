@@ -1,6 +1,7 @@
 ﻿using ModelLayer;
 using System;
 using System.Collections.Generic;
+using System.Transactions;
 
 namespace BusinessLayer
 {
@@ -73,6 +74,29 @@ namespace BusinessLayer
         public bool DeleteFuncionarioFromEquipa(Equipas equipa, Funcionarios funcionario)
         {
             return dataBase.DeleteFuncionario(equipa, funcionario);
+        }
+
+
+        public bool CreateAndAttributeIntervencaoToEquipa(Intervencoes intervencoes) {
+            using (TransactionScope ts = new TransactionScope(TransactionScopeOption.Required))
+            {
+                int equipa = 0;
+                try
+                {
+                    equipa = GetFreeEquipa(intervencoes.competencias);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Nao existe equipas disponiveis para a competencia introduzida.");
+                }
+
+                if (CreateIntervencaoProcedure(intervencoes)) {
+                    // TODO
+                }
+
+
+                return false;
+            }
         }
     }
 }

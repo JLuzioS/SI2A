@@ -27,7 +27,7 @@ namespace EntityFrameworkLayer
 
                 ctx.SaveChanges();
             }
-            return false;
+            return true;
         }
 
         public List<ModelLayer.Competencias> GetAllCompetencias()
@@ -100,7 +100,24 @@ namespace EntityFrameworkLayer
 
         public List<ModelLayer.Intervencoes> GetAllIntervencoes()
         {
-            throw new System.NotImplementedException();
+            using (var ctx = new L51NG3Entities())
+            {
+                List< ModelLayer.Intervencoes > result = new List< ModelLayer.Intervencoes >();
+                foreach (var each in (from inter in ctx.Intervencoes select inter)) {
+                    result.Add(new ModelLayer.Intervencoes
+                    {
+                        id = each.id,
+                        competencias = each.competencias,
+                        estado = each.estado,
+                        activo = each.activo,
+                        vlMonetario = each.vlMonetario,
+                        dtInicio = each.dtInicio,
+                        dtFim = each.dtFim,
+                        perMeses = each.perMeses
+                    });
+                }
+                return result;
+            }
         }
 
         public bool CreateEquipa(string localizacao, int numElementos)
@@ -119,19 +136,49 @@ namespace EntityFrameworkLayer
             }
         }
 
-        public bool CreateIntervencao(ModelLayer.Intervencoes intervencoes)
-        {
-            throw new System.NotImplementedException();
-        }
+        
 
         public List<ModelLayer.Activos> GetAllActivos()
         {
-            throw new System.NotImplementedException();
+            using (var ctx = new L51NG3Entities())
+            {
+                List<ModelLayer.Activos> result = new List<ModelLayer.Activos>();
+                foreach (var each in (from activo in ctx.Activos select activo))
+                {
+                    result.Add(new ModelLayer.Activos
+                    {
+                        id = each.id,
+                        nome = each.nome,
+                        dtAaquisicao = each.dtAaquisicao,
+                        estado = each.estado,
+                        marca = each.marca,
+                        modelo = each.modelo,
+                        localizacao = each.localizacao, 
+                        funcionario = each.funcionario,
+                        tipo = each.tipo
+                    });
+                }
+                return result;
+            }
         }
 
         public ModelLayer.Activos GetActivo(int activo)
         {
-            throw new System.NotImplementedException();
+            using (var ctx = new L51NG3Entities())
+            {
+                var result = (from activos in ctx.Activos where activos.id == activo select activos).FirstOrDefault();
+                return new ModelLayer.Activos {
+                    id = result.id,
+                    nome = result.nome,
+                    dtAaquisicao = result.dtAaquisicao,
+                    estado = result.estado,
+                    marca = result.marca,
+                    modelo = result.modelo,
+                    localizacao = result.localizacao,
+                    funcionario = result.funcionario,
+                    tipo = result.tipo
+                };
+            }
         }
 
         public bool AddFuncionario(ModelLayer.Equipas equipa, ModelLayer.Funcionarios funcionario)
@@ -200,9 +247,36 @@ namespace EntityFrameworkLayer
             }
         }
 
+
+        public bool CreateIntervencao(ModelLayer.Intervencoes intervencoes)
+        {
+            using (var ctx = new L51NG3Entities())
+            {
+                Intervencoes newFunc = new Intervencoes
+                {
+                    id = intervencoes.id,
+                    competencias = intervencoes.competencias,
+                    estado = intervencoes.estado,
+                    activo = intervencoes.activo,
+                    vlMonetario = intervencoes.vlMonetario,
+                    dtInicio = intervencoes.dtInicio,
+                    dtFim = intervencoes.dtFim,
+                    perMeses = intervencoes.perMeses
+                };
+
+                ctx.SaveChanges();
+                return true;
+            }
+            
+        }
+
         public bool CreateIntervencaoProcedure(ModelLayer.Intervencoes intervencoes)
         {
-            throw new System.NotImplementedException();
+            using (var ctx = new L51NG3Entities())
+            {
+                ctx.p_CriaInter(intervencoes.competencias, intervencoes.activo, intervencoes.vlMonetario, intervencoes.dtInicio, intervencoes.perMeses);
+                return true;
+            }
         }
     }
 }
