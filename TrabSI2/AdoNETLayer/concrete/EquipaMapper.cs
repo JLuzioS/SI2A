@@ -9,7 +9,7 @@ using System.Transactions;
 
 namespace AdoNETLayer.concrete
 {
-    class EquipasMapper : AbstracMapper<Equipas, int, List<Equipas>>, IMapper<Equipas, int?, List<Equipas>>
+    class EquipasMapper : AbstracMapper<Equipas, int, List<Equipas>>
     {
         public EquipasMapper(IContext ctx) : base(ctx) { }
 
@@ -17,7 +17,7 @@ namespace AdoNETLayer.concrete
 
         protected override string SelectAllCommandText => $"select * from {this.Table}";
 
-        protected override string SelectCommandText => throw new NotImplementedException();
+        protected override string SelectCommandText => String.Format("{0} where id = @id", SelectAllCommandText);
 
         protected override string UpdateCommandText => throw new NotImplementedException();
 
@@ -46,7 +46,8 @@ namespace AdoNETLayer.concrete
 
         protected override void SelectParameters(IDbCommand command, int k)
         {
-            throw new NotImplementedException();
+            SqlParameter p = new SqlParameter("@id", k);
+            command.Parameters.Add(p);
         }
 
         protected override Equipas UpdateEntityID(IDbCommand cmd, Equipas e)
@@ -115,11 +116,6 @@ namespace AdoNETLayer.concrete
                 ts.Complete();
             }
             return equipa;
-        }
-
-        public Equipas Read(int? id)
-        {
-            throw new NotImplementedException();
         }
 
         public int GetFreeEquipa(int competenciaId)

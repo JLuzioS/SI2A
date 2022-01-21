@@ -13,5 +13,7 @@ namespace ModelLayer
         int GetFreeEquipa(int competenciaId);
         bool CreateIntervencao(Intervencoes intervencoes);
         List<Activos> GetAllActivos();
+        Funcionarios GetFuncionarios(int idFuncionario);
+        Equipas GetEquipas(int idEquipa);
     }
 }

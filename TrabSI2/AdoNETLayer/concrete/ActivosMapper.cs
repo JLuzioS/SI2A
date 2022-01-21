@@ -7,7 +7,7 @@ using System.Data;
 
 namespace AdoNETLayer.concrete
 {
-    class ActivosMapper : AbstracMapper<Activos, int, List<Activos>>, IMapper<Activos, int?, List<Activos>>
+    class ActivosMapper : AbstracMapper<Activos, int, List<Activos>>
     {
         public ActivosMapper(IContext ctx) : base(ctx) { }
 

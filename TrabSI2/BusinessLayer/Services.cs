@@ -15,6 +15,11 @@ namespace BusinessLayer
         {
             return dataBase.CreateFuncionario(funcionario);
         }
+        public Equipas GetEquipa(int idEquipa)
+        {
+            return dataBase.GetEquipas(idEquipa);
+        }
+
         public List<Funcionarios> GetAllFuncionarios()
         {
             return dataBase.GetAllFuncionarios();
@@ -42,12 +47,17 @@ namespace BusinessLayer
             return dataBase.GetAllActivos();
         }
 
-        public Equipas AddFuncionario(Equipas equipa, Funcionarios funcionario)
+        public Equipas AddFuncionarioToEquipa(Equipas equipa, Funcionarios funcionario)
         {
             return dataBase.AddFuncionario(equipa, funcionario);
         }
 
-        public Equipas DeleteFuncionario(Equipas equipa, Funcionarios funcionario)
+        public Funcionarios GetFuncionarios(int idFuncionario)
+        {
+            return dataBase.GetFuncionarios(idFuncionario);
+        }
+
+        public Equipas DeleteFuncionarioFromEquipa(Equipas equipa, Funcionarios funcionario)
         {
             return dataBase.DeleteFuncionario(equipa, funcionario);
         }
