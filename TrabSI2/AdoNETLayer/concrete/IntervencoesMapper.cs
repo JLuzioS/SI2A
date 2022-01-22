@@ -108,17 +108,12 @@ namespace AdoNETLayer.concrete
                     p1.Direction = ParameterDirection.Output;
                     cmd.Parameters.Add(p1);
 
-                    try
-                    {
-                        cmd.ExecuteNonQuery();
-                        var a = int.Parse(p1.SqlValue.ToString());
-                        ts.Complete();
-                        return a;
-                    } catch (Exception)
-                    {
-                        return -1;
-                    }
-                    
+                    cmd.ExecuteNonQuery();
+                    var a = int.Parse(p1.SqlValue.ToString());
+                    ts.Complete();
+                    return a;
+
+
                 }
                 
                 
@@ -205,15 +200,9 @@ namespace AdoNETLayer.concrete
 
                     cmd.Parameters.Add(p1);
                     cmd.Parameters.Add(p2);
-                    try
-                    {
-                        cmd.ExecuteNonQuery();
-                        ts.Complete();
-                        return true;
-                    } catch (Exception)
-                    {
-                        return false;
-                    }
+                    cmd.ExecuteNonQuery();
+                    ts.Complete();
+                    return true;
                 }
             }
         }

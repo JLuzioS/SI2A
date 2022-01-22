@@ -159,17 +159,10 @@ namespace EntityFrameworkLayer
         {
             using (var ctx = new L51NG3Entities())
             {
-                try
-                {
-                    ObjectParameter id = new ObjectParameter("id", typeof(Int32));
-                    ctx.insertEquipa(localizacao, numElementos, id);
-                    ctx.SaveChanges();
-                    return int.Parse(id.Value.ToString());
-                }
-                catch (Exception)
-                {
-                    return -1;
-                }
+                ObjectParameter id = new ObjectParameter("id", typeof(Int32));
+                ctx.insertEquipa(localizacao, numElementos, id);
+                ctx.SaveChanges();
+                return int.Parse(id.Value.ToString());
             }
         }
 
@@ -306,22 +299,15 @@ namespace EntityFrameworkLayer
                     dtAtribuicao = intervencaoEquipa.dtAtribuicao
                 };
 
-                try
-                {
-                    var entity = ctx.IntervencoesEquipas.Add(intervencoesEquipas);
+                var entity = ctx.IntervencoesEquipas.Add(intervencoesEquipas);
 
-                    if(entity == null)
-                    {
-                        return false;
-                    }
-
-                    ctx.SaveChanges();
-                    return true;
-                }
-                catch (Exception)
+                if (entity == null)
                 {
                     return false;
                 }
+
+                ctx.SaveChanges();
+                return true;
             }
         }
 
@@ -338,15 +324,8 @@ namespace EntityFrameworkLayer
 
                 intervencaoEf.estado = intervencoes.estado;
 
-                try
-                {
-                    ctx.SaveChanges();
-                    return true;
-                }
-                catch (Exception)
-                {
-                    return false;
-                }
+                ctx.SaveChanges();
+                return true;
             }
         }
 
@@ -400,7 +379,24 @@ namespace EntityFrameworkLayer
 
         public int ChangeFuncionarioCompetencia(ModelLayer.Funcionarios funcionario1, ModelLayer.Funcionarios funcionario2)
         {
-            throw new NotImplementedException();
+            using (var ctx = new L51NG3Entities())
+            {
+                var funcionario1EF = (from fcomp in ctx.Funcionarios where fcomp.id == funcionario1.id select fcomp).FirstOrDefault();
+
+                if (funcionario1EF == null)
+                {
+                    throw new Exception("Funcionario nao tem competencias associadas");
+                }
+
+                var funcionario2EF = (from fcomp in ctx.Funcionarios where fcomp.id == funcionario2.id select fcomp).FirstOrDefault();
+
+                if (funcionario2EF == null)
+                {
+                    throw new Exception("Funcionario nao tem competencias associadas");
+                }
+
+                return 1;
+            }
         }
     }
 }
