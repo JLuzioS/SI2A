@@ -1,0 +1,86 @@
+@startuml
+
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Dynamic.puml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Deployment.puml
+
+skinparam linetype polyline
+
+Container_Boundary(PresentationLayer, "PresentationLayer"){
+    Component(App, "App", "class", "Redirects user input for the correct operation.")
+    Component(EP, "EquipasPresentation", "class", "Implements the presentation for equipas operations.")
+    Component(FP, "FuncionarioPresentation", "class", "Implements the presentation for funcionario operations.")
+    Component(IP, "IntervencoesPresentation", "class", "implements the presentation for intervencoes operations.")
+    Rel(App, EP, "Uses")
+    Rel(App, FP, "Uses")
+    Rel(App, IP, "Uses")
+}
+
+Container_Boundary(BusinessLayer, "BusinessLayer"){
+    Component(Services, "Services", "class", "Implements the business logic.") 
+    Component(IDatabase, "IDatabase", "interface", "Interface that defines all necessary operations the business layer requires.")
+}
+
+Container_Boundary(ModelLayer, "ModelLayer") {
+    Component(Activos, "Activos", "dataclass", "reprensents Activo.")
+    Component(Competencias, "Competencias", "dataclass", "Represents Competencias.")
+    Component(Equipas, "Equipas", "dataclass", "represents Equipas.")
+    Component(Funcionarios, "Funcionarios", "dataclass", "Represents Funcionarios.")
+    Component(FuncionariosEquipas, "FuncionariosEquipas", "dataclass", "Represents FuncionariosEquipas.")
+    Component(Intervencoes, "Intervencoes", "dataclass", "Represents Intervencoes.")
+    Component(IntervencoesEquipas, "IntervencoesEquipas", "dataclass", "Represents IntervencoesEquipas.")
+    Component(PrecosActivos, "PrecosActivos", "dataclass", "Represents PrecosActivos.")
+    Component(Profissoes, "Profissoes", "dataclass", "Represents Profissoes.")
+    Component(TiposActivos, "TiposActivos", "dataclass", "Represents TiposActivos.")    
+}
+
+Container_Boundary(AdoNETLayer, "AdoNETLayer") {
+    Component(AdoNet, "AdoNet", "class", "Implements IDatabase operations using ADO.NET 6.")
+    
+    Component(AbstractMapper, "AbstractMapper", "abstract class", "Implements CRUD operations.")
+    Component(ActivosMapper, "ActivosMapper", "class", "Extends AbstractMapper with concrete operations for Activos.")
+    Component(CompetenciasMapper, "CompetenciasMapper", "class", "Extends AbstractMapper with concrete operations for Competencias.")
+    Component(EquipaMapper, "EquipaMapper", "class", "Extends AbstractMapper with concrete operations for Equipas.")
+    Component(FuncionarioMapper, "FuncionarioMapper", "class", "Extends AbstractMapper with concrete operations for Funcionarios.")
+    Component(IntervencoesMapper, "IntervencoesMapper", "class", "Extends AbstractMapper with concrete operations for Intervencoes.")
+    
+    Component(IContext, "IContext", "interface", "Defines operations in available in a context.")
+    Component(Context, "Context", "class", "Implements interface IContext that uses the same connection to the database.")
+    
+
+    Rel(AdoNet, AbstractMapper, "Uses")
+    Rel(AbstractMapper, IContext, "Uses")
+    Rel(Context, IContext, "Implements")
+    Rel(ActivosMapper, AbstractMapper, "Extends")
+    Rel(CompetenciasMapper, AbstractMapper, "Extends")
+    Rel(EquipaMapper, AbstractMapper, "Extends")
+    Rel(FuncionarioMapper, AbstractMapper, "Extends")
+    Rel(IntervencoesMapper, AbstractMapper, "Extends")
+}
+
+Container_Boundary(EntityFrameworkLayer, "EntityFrameworkLayer"){
+    Component(EntityFramework, "EntityFramework", "class", "Implements IDatabase operations using EntityFramework 6.")
+    Component(CodeGenerated, "Generated Code", "class", "Generated code from database model using EntityFramework 6.")
+
+    Rel(EntityFramework, CodeGenerated, "Uses")
+}
+
+SystemDb(Database, "Database", "TSQL")
+
+Rel_D(EP, Services, "Uses")
+Rel_D(FP, Services, "Uses")
+Rel_D(IP, Services, "Uses")
+
+Rel_D(Services, IDatabase, "Uses")
+
+
+Rel_L(AdoNet, IDatabase, "Implements")
+Rel_U(EntityFramework, IDatabase, "Implements")
+Rel_D(IContext, Database, "Reads/Writes")
+Rel_D(CodeGenerated, Database, "Reads/Writes")
+
+Rel(BusinessLayer, ModelLayer, "Uses")
+
+@enduml
