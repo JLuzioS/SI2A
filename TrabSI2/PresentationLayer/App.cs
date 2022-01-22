@@ -121,15 +121,15 @@ namespace PresentationLayer
 
             while (true)
             {
-                var option = Console.ReadKey();
+                var option = Console.ReadLine();
 
-                switch (option.KeyChar)
+                switch (option)
                 {
-                    case '1':
+                    case "1":
                         return DataAccessModel.AdoNET;
-                    case '2':
+                    case "2":
                         return DataAccessModel.EntityFramework;
-                    case '3':
+                    case "3":
                         return DataAccessModel.Exit;
                     default:
                         Console.WriteLine("\nNot a valid option.");
@@ -148,10 +148,11 @@ namespace PresentationLayer
             Console.WriteLine("E1. Get free Equipa");
             Console.WriteLine("F1. Create Intervencao Procedure");
             Console.WriteLine("F2. Create Intervencao");
-            Console.WriteLine("G1. Add Funcionario to Equipa");
+            Console.WriteLine("G1. Create Equipa");
             Console.WriteLine("H1. Add Funcionario to Equipa");
             Console.WriteLine("H2. Remove Funcionario from Equipa");
-            Console.WriteLine("Z. Obter o codigo de uma equipa livre, criar o procedimento e actualiza lo");
+            Console.WriteLine("I1. GetAll Intervencoes of year");
+            Console.WriteLine("Z1. Obter o codigo de uma equipa livre, criar o procedimento e actualiza lo");
             Console.WriteLine("0. Exit");
 
             while (true)
@@ -182,7 +183,7 @@ namespace PresentationLayer
                         return Operation.RemoveUserFromEquipa;
                     case "I1":
                         return Operation.GetALLIntervYear;
-                    case "Z":
+                    case "Z1":
                         return Operation.CreateAndAttributeIntervencaoToEquipa;
                     case "0":
                         return Operation.Exit; 

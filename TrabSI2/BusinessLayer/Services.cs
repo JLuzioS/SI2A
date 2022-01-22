@@ -91,7 +91,6 @@ namespace BusinessLayer
                 int equipa = 0;
                 try
                 {
-                    // 2
                     equipa = GetFreeEquipa(intervencoes.competencias);
                 }
                 catch (Exception)

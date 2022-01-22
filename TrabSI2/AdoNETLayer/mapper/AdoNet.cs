@@ -115,15 +115,9 @@ namespace AdoNETLayer
 
         public bool DeleteFuncionario(Equipas equipa, Funcionarios funcionario)
         {
-            try
-            {
-                equipasMapper.DeleteFuncionario(equipa, funcionario);
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+
+            equipasMapper.DeleteFuncionario(equipa, funcionario);
+            return true;
         }
 
         public Funcionarios GetFuncionarios(int idFuncionario)

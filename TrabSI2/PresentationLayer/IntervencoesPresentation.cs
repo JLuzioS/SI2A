@@ -56,28 +56,29 @@ namespace PresentationLayer
 
             Intervencoes intervencoes = CreateAndGetIntervencao();
 
-            if (service.CreateIntervencao(intervencoes))
+            try
             {
+                service.CreateIntervencao(intervencoes);
                 Console.WriteLine("Intervencao criado com sucesso!");
             }
-            else
+            catch (Exception ex)
             {
-                Console.WriteLine("Algo correu mal! Nao sei");
+                Console.WriteLine(ex.Message);
             }
         }
 
         public void CreateAndAttributeIntervencaoToEquipa()
         {
             Intervencoes intervencao = CreateAndGetIntervencao();
-            if (service.CreateAndAttributeIntervencaoToEquipa(intervencao))
+            try
             {
+                service.CreateAndAttributeIntervencaoToEquipa(intervencao);
                 Console.WriteLine("Operacao concluida com exito.");
             }
-            else
+            catch (Exception ex)
             {
-                Console.WriteLine("Houve um erro na operacao pedida.");
+                Console.WriteLine(ex.Message);
             }
-
         }
 
         private void GetAllCompetencias()

@@ -124,7 +124,8 @@ GO
 -- G
 CREATE OR ALTER PROCEDURE insertEquipa
 							@localizacao VARCHAR(256),
-							@numElementos INT AS
+							@numElementos INT,
+							@id INT OUTPUT AS
     BEGIN
 		BEGIN TRY
         IF (NULLIF(@localizacao, '') IS NULL)
@@ -133,6 +134,7 @@ CREATE OR ALTER PROCEDURE insertEquipa
             RAISERROR ('numElementos tem que ser pelo menos 2', 16, 0)
         INSERT INTO Equipas(localizacao, numElementos) VALUES
         (@localizacao, @numElementos)
+		SELECT @id = SCOPE_IDENTITY();
 		END TRY
 		BEGIN CATCH
 			THROW

@@ -25,7 +25,7 @@ namespace EntityFrameworkLayer
                     telefone = funcionario.telefone,
                     telemovel = funcionario.telemovel
                 };
-
+                ctx.Funcionarios.Add(newFunc);
                 ctx.SaveChanges();
             }
             return true;
@@ -128,6 +128,7 @@ namespace EntityFrameworkLayer
                 try
                 {
                     ctx.insertEquipa(localizacao, numElementos);
+                    ctx.SaveChanges();
                     return true;
                 }
                 catch (Exception)
@@ -258,28 +259,6 @@ namespace EntityFrameworkLayer
             }
         }
 
-        public bool UpdateIntervencao(ModelLayer.Intervencoes intervencoes)
-        {
-            using (var ctx = new L51NG3Entities())
-            {
-                var intervencaoEf = (from i in ctx.Intervencoes where intervencoes.id == i.id select i).FirstOrDefault();
-
-                if(intervencaoEf == null)
-                {
-                    return false;
-                }
-                
-                try
-                {
-                    ctx.SaveChanges();
-                    return true;
-                } catch (Exception)
-                {
-                    return false;
-                }
-            }
-        }
-
         public bool AddEquipaToIntervencao(ModelLayer.IntervencoesEquipas intervencaoEquipa)
         {
             using (var ctx = new L51NG3Entities())
@@ -337,7 +316,23 @@ namespace EntityFrameworkLayer
 
         public bool CreateIntervencao(ModelLayer.Intervencoes intervencoes)
         {
-            throw new NotImplementedException();
+            using (var ctx = new L51NG3Entities())
+            {
+                Intervencoes newFunc = new Intervencoes
+                {
+                    competencias = intervencoes.competencias,
+                    estado = intervencoes.estado,
+                    activo = intervencoes.activo,
+                    vlMonetario = intervencoes.vlMonetario,
+                    dtInicio = intervencoes.dtInicio,
+                    dtFim = intervencoes.dtFim,
+                    perMeses = intervencoes.perMeses
+                };
+
+                ctx.Intervencoes.Add(newFunc);
+                ctx.SaveChanges();
+                return true;
+            }
         }
 
         List<ModelLayer.listAllIntervencoesFromDate_Result> IDataBase.GetALLIntervYear(string anoIntervencao)

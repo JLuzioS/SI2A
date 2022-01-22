@@ -49,7 +49,14 @@ namespace PresentationLayer
             var localizacao = Console.ReadLine();
             Console.WriteLine("Insira o número minimo de funcionários: ");
             var numfuncionarios = Console.ReadLine();
-            service.CreateEquipa(localizacao, Int32.Parse(numfuncionarios));
+            try
+            {
+                service.CreateEquipa(localizacao, Int32.Parse(numfuncionarios));
+                Console.WriteLine("Equipa criada com sucesso");
+            }
+            catch {
+                Console.WriteLine("Houve um erro a criar a equipa");
+            }
             // TODO DATA Validation
         }
 
@@ -146,7 +153,7 @@ namespace PresentationLayer
             }
             catch (Exception)
             {
-                Console.WriteLine("Houve um erro a adicionar o funcionario à equipa");
+                Console.WriteLine("Houve um erro a remover o funcionario à equipa");
             }
         }
     }
