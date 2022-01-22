@@ -25,6 +25,7 @@ namespace PresentationLayer
             RemoveUserFromEquipa,
             GetALLIntervYear,
             CreateAndAttributeIntervencaoToEquipa,
+            ChangeFuncionarioCompetencia,
             Exit }
 
         public static void Main()
@@ -105,6 +106,9 @@ namespace PresentationLayer
                     case Operation.GetALLIntervYear:
                         iP.GetALLIntervYear();
                         break;
+                    case Operation.ChangeFuncionarioCompetencia:
+                        fP.ChangeFuncionarioCompetencia();
+                        break;
                     case Operation.Exit:
                         return;
                 }
@@ -153,6 +157,7 @@ namespace PresentationLayer
             Console.WriteLine("H2. Remove Funcionario from Equipa");
             Console.WriteLine("I1. GetAll Intervencoes of year");
             Console.WriteLine("Z1. Obter o codigo de uma equipa livre, criar o procedimento e actualiza lo");
+            Console.WriteLine("Z2. Troca de competência entre dois elementos de equipa");
             Console.WriteLine("0. Exit");
 
             while (true)
@@ -185,6 +190,8 @@ namespace PresentationLayer
                         return Operation.GetALLIntervYear;
                     case "Z1":
                         return Operation.CreateAndAttributeIntervencaoToEquipa;
+                    case "Z2":
+                        return Operation.ChangeFuncionarioCompetencia;
                     case "0":
                         return Operation.Exit; 
                     default:

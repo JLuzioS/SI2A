@@ -131,5 +131,14 @@ namespace BusinessLayer
         {
             return dataBase.GetALLIntervYear(anoIntervencao);
         }
+
+        public void ChangeFuncionarioCompetencia(Funcionarios funcionario1, Funcionarios funcionario2)
+        {
+            int numrows = dataBase.ChangeFuncionarioCompetencia(funcionario1, funcionario2);
+            if (numrows <= 0)
+            {
+                throw new Exception("Houve um erro a trocar a competencia entre os dois funcionarios");
+            }
+        }
     }
 }

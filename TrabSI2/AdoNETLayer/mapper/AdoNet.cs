@@ -170,5 +170,10 @@ namespace AdoNETLayer
         {
             equipasMapper.Delete(equipa);
         }
+
+        public int ChangeFuncionarioCompetencia(Funcionarios funcionario1, Funcionarios funcionario2)
+        {
+            throw new Exception("Opção implementada apenas em Entity Framework");
+        }
     }
 }

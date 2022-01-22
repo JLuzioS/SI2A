@@ -24,5 +24,6 @@ namespace BusinessLayer
         bool UpdateIntervencaoState(Intervencoes intervencoes);
         void RemoveFuncionario(Funcionarios func);
         void RemoveEquipa(Equipas equipa);
+        int ChangeFuncionarioCompetencia(Funcionarios funcionario1, Funcionarios funcionario2);
     }
 }

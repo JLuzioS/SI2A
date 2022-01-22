@@ -397,5 +397,10 @@ namespace EntityFrameworkLayer
         {
             throw new NotImplementedException();
         }
+
+        public int ChangeFuncionarioCompetencia(ModelLayer.Funcionarios funcionario1, ModelLayer.Funcionarios funcionario2)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
