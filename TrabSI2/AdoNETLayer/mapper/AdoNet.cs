@@ -83,11 +83,9 @@ namespace AdoNETLayer
             return true;
         }
 
-        public bool DeleteFuncionario(Equipas equipa, Funcionarios funcionario)
+        public int DeleteFuncionario(Equipas equipa, Funcionarios funcionario)
         {
-
-            equipasMapper.DeleteFuncionario(equipa, funcionario);
-            return true;
+            return equipasMapper.DeleteFuncionario(equipa, funcionario);
         }
 
         public Funcionarios GetFuncionarios(int idFuncionario)
@@ -130,6 +128,11 @@ namespace AdoNETLayer
         public void RemoveEquipa(Equipas equipa)
         {
             equipasMapper.Delete(equipa);
+        }
+
+        public int ChangeFuncionarioCompetencia(Funcionarios funcionario1, Funcionarios funcionario2)
+        {
+            throw new Exception("Opção implementada apenas em Entity Framework");
         }
     }
 }

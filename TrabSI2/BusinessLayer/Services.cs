@@ -71,9 +71,13 @@ namespace BusinessLayer
             return dataBase.GetFuncionarios(idFuncionario);
         }
 
-        public bool DeleteFuncionarioFromEquipa(Equipas equipa, Funcionarios funcionario)
+        public void DeleteFuncionarioFromEquipa(Equipas equipa, Funcionarios funcionario)
         {
-            return dataBase.DeleteFuncionario(equipa, funcionario);
+            int numrows = dataBase.DeleteFuncionario(equipa, funcionario);
+            if (numrows <= 0)
+            {
+                throw new Exception("Houve um erro a remover o funcionario à equipa");
+            }
         }
 
 
@@ -124,6 +128,15 @@ namespace BusinessLayer
         public List<listAllIntervencoesFromDate_Result> GetALLIntervYear(string anoIntervencao)
         {
             return dataBase.GetALLIntervYear(anoIntervencao);
+        }
+
+        public void ChangeFuncionarioCompetencia(Funcionarios funcionario1, Funcionarios funcionario2)
+        {
+            int numrows = dataBase.ChangeFuncionarioCompetencia(funcionario1, funcionario2);
+            if (numrows <= 0)
+            {
+                throw new Exception("Houve um erro a trocar a competencia entre os dois funcionarios");
+            }
         }
     }
 }

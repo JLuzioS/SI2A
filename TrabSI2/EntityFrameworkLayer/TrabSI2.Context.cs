@@ -72,7 +72,7 @@ namespace EntityFrameworkLayer
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("deleteFuncionariosCompetencias", funcionarioParameter, competenciaParameter);
         }
     
-        public virtual int deleteFuncionariosEquipa(Nullable<int> funcionario, Nullable<int> equipa, Nullable<System.DateTime> dtSaida)
+        public virtual int deleteFuncionariosEquipa(Nullable<int> funcionario, Nullable<int> equipa, Nullable<System.DateTime> dtSaida, ObjectParameter numrows)
         {
             var funcionarioParameter = funcionario.HasValue ?
                 new ObjectParameter("funcionario", funcionario) :
@@ -86,7 +86,7 @@ namespace EntityFrameworkLayer
                 new ObjectParameter("dtSaida", dtSaida) :
                 new ObjectParameter("dtSaida", typeof(System.DateTime));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("deleteFuncionariosEquipa", funcionarioParameter, equipaParameter, dtSaidaParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("deleteFuncionariosEquipa", funcionarioParameter, equipaParameter, dtSaidaParameter, numrows);
         }
     
         public virtual int insertEquipa(string localizacao, Nullable<int> numElementos, ObjectParameter id)

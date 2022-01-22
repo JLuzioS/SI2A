@@ -220,12 +220,13 @@ namespace EntityFrameworkLayer
             }
         }
 
-        public bool DeleteFuncionario(ModelLayer.Equipas equipa, ModelLayer.Funcionarios funcionario)
+        public int DeleteFuncionario(ModelLayer.Equipas equipa, ModelLayer.Funcionarios funcionario)
         {
             using (var ctx = new L51NG3Entities())
             {
-                ctx.deleteFuncionariosEquipa(funcionario.id, equipa.id, DateTime.Now);
-                return true;
+                ObjectParameter numrows = new ObjectParameter("numrows", typeof(Int32));
+                ctx.deleteFuncionariosEquipa(funcionario.id, equipa.id, DateTime.Now, numrows);
+                return int.Parse(numrows.Value.ToString());
             }
         }
 
@@ -374,6 +375,28 @@ namespace EntityFrameworkLayer
         public void RemoveEquipa(ModelLayer.Equipas equipa)
         {
             throw new NotImplementedException();
+        }
+
+        public int ChangeFuncionarioCompetencia(ModelLayer.Funcionarios funcionario1, ModelLayer.Funcionarios funcionario2)
+        {
+            using (var ctx = new L51NG3Entities())
+            {
+                var funcionario1EF = (from fcomp in ctx.Funcionarios where fcomp.id == funcionario1.id select fcomp).FirstOrDefault();
+
+                if (funcionario1EF == null)
+                {
+                    throw new Exception("Funcionario nao tem competencias associadas");
+                }
+
+                var funcionario2EF = (from fcomp in ctx.Funcionarios where fcomp.id == funcionario2.id select fcomp).FirstOrDefault();
+
+                if (funcionario2EF == null)
+                {
+                    throw new Exception("Funcionario nao tem competencias associadas");
+                }
+
+                return 1;
+            }
         }
     }
 }

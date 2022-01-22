@@ -131,5 +131,53 @@ namespace PresentationLayer
             // TODO DATA Validation
             return option;
         }
+
+        public void ChangeFuncionarioCompetencia()
+        {
+            Console.WriteLine("Insira o id do primeiro funcionario: ");
+            int idFuncionario1;
+            while (true)
+            {
+                try
+                {
+                    idFuncionario1 = int.Parse(Console.ReadLine());
+                    break;
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("Numero de funcionario invalido tente outra vez: ");
+                }
+
+            }
+
+            Console.WriteLine("Insira o id do segundo funcionario: ");
+            int idFuncionario2;
+            while (true)
+            {
+                try
+                {
+                    idFuncionario2 = int.Parse(Console.ReadLine());
+                    break;
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("Numero de funcionario invalido tente outra vez: ");
+                }
+
+            }
+
+            Funcionarios funcionario1 = service.GetFuncionarios(idFuncionario1);
+            Funcionarios funcionario2 = service.GetFuncionarios(idFuncionario2);
+
+            try
+            {
+                service.ChangeFuncionarioCompetencia(funcionario1, funcionario2);
+                Console.WriteLine($"Troca de competências entre Funcionarios com sucesso");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
     }
 }
