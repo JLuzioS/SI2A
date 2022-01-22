@@ -21,13 +21,14 @@ namespace AdoNETLayer.concrete
 
         protected override string UpdateCommandText => throw new NotImplementedException();
 
-        protected override string DeleteCommandText => throw new NotImplementedException();
+        protected override string DeleteCommandText => $"delete from {this.Table} where id=@id";
 
         protected override string InsertCommandText => throw new NotImplementedException();
 
-        protected override void DeleteParameters(IDbCommand command, Equipas e)
+        protected override void DeleteParameters(IDbCommand cmd, Equipas e)
         {
-            throw new NotImplementedException();
+            SqlParameter p = new SqlParameter("@id", e.id);
+            cmd.Parameters.Add(p);  
         }
 
         protected override void InsertParameters(IDbCommand command, Equipas e)
@@ -106,12 +107,18 @@ namespace AdoNETLayer.concrete
                 context.EnlistTransaction();
                 using (IDbCommand cmd = context.createCommand())
                 {
+                    int numrow;
                     cmd.CommandText = "deleteFuncionariosEquipa";
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add(new SqlParameter("@funcionario", funcionario.id));
                     cmd.Parameters.Add(new SqlParameter("@equipa", equipa.id));
                     cmd.Parameters.Add(new SqlParameter("@dtSaida", DateTime.Now));
+                    SqlParameter p1 = new SqlParameter("@numrows", 0);
+                    p1.Direction = ParameterDirection.Output;
+                    cmd.Parameters.Add(p1);
+
                     cmd.ExecuteNonQuery();
+                    numrow = int.Parse(p1.Value.ToString());
                 }
                 ts.Complete();
             }
