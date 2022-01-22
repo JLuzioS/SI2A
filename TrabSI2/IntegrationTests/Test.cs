@@ -109,10 +109,20 @@ namespace IntegrationTests
         {
             using (TransactionScope ts = new TransactionScope(TransactionScopeOption.Required))
             {
-                service.DeleteFuncionario(equipa, func);
-                service.RemoveFuncionario(func);
-                service.RemoveEquipa(equipa);
-                ts.Complete();
+                if(func != null)
+                {
+                    service.RemoveFuncionario(func);
+                }
+                if (equipa != null)
+                {
+                    service.RemoveEquipa(equipa);
+                }
+                if(func != null && equipa != null)
+                {
+                    service.DeleteFuncionario(equipa, func);
+                }
+
+                    ts.Complete();
             }
         }
 
@@ -126,7 +136,7 @@ namespace IntegrationTests
             }
         }
 
-        
+
 
         static void Main(string[] args)
         {
@@ -134,83 +144,82 @@ namespace IntegrationTests
 
             AdoNet ado = new AdoNet(ctx);
             EntityFramework ef = new EntityFramework();
-            
+
             long adoTime, EFTime;
+            ModelLayer.Funcionarios funcADO = null, funcEF = null;
+            ModelLayer.Equipas equipaADO = null, equipaEF = null;
 
-            for (int i = 0; i < 5; i++)
+            ModelLayer.Intervencoes intervencao = new ModelLayer.Intervencoes
             {
-                ModelLayer.Intervencoes intervencao = new ModelLayer.Intervencoes
-                {
-                    competencias = 1,
-                    activo = 1,
-                    vlMonetario = 1,
-                    dtInicio = DateTime.Now,
-                    perMeses = 1
-                };
-                ModelLayer.Competencias c1 = new ModelLayer.Competencias
-                {
-                    descricao = "cenas1"
-                };
-                ModelLayer.Competencias c2 = new ModelLayer.Competencias
-                {
-                    descricao = "cenas2"
-                };
+                competencias = 1,
+                activo = 1,
+                vlMonetario = 1,
+                dtInicio = DateTime.Now,
+                perMeses = 1
+            };
+            ModelLayer.Competencias c1 = new ModelLayer.Competencias
+            {
+                descricao = "cenas1"
+            };
+            ModelLayer.Competencias c2 = new ModelLayer.Competencias
+            {
+                descricao = "cenas2"
+            };
 
-                ModelLayer.Funcionarios func;
-                ModelLayer.Equipas equipa;
-                using (TransactionScope ts = new TransactionScope(TransactionScopeOption.Required))
+
+
+            for (int i = 0; i < 10; i++)
+            {
+                try
                 {
-                    func = CreateFunc1(ado);
-                    equipa = CreateEquipa1(ado);
-                    ts.Complete();
+                    using (TransactionScope ts = new TransactionScope(TransactionScopeOption.Required))
+                    {
+                        funcADO = CreateFunc1(ado);
+                        equipaADO = CreateEquipa1(ado);
+                        ts.Complete();
+                    }
+
+                    using (TransactionScope ts = new TransactionScope(TransactionScopeOption.Required))
+                    {
+                        AddComp(ef, funcADO, c1);
+                    }
+
+                    using (TransactionScope ts = new TransactionScope(TransactionScopeOption.Required))
+                    {
+                        AddFuncToEquipa(ado, equipaADO, funcADO);
+                    }
+
+                    using (TransactionScope ts = new TransactionScope(TransactionScopeOption.Required))
+                    {
+                        funcEF = CreateFunc2(ado);
+                        equipaEF = CreateEquipa2(ado);
+                        ts.Complete();
+                    }
+
+                    using (TransactionScope ts = new TransactionScope(TransactionScopeOption.Required))
+                    {
+                        AddComp(ef, funcEF, c2);
+                    }
+
+                    using (TransactionScope ts = new TransactionScope(TransactionScopeOption.Required))
+                    {
+                        AddFuncToEquipa(ado, equipaEF, funcEF);
+                    }
+                    adoTime = adoTester(ctx, intervencao, ef, funcADO, equipaADO);
+                    EFTime = efTester(ctx, intervencao, ef, funcEF, equipaEF);
+
+                    Console.WriteLine($"{i} iterations");
+                    Console.WriteLine($"ADO.NET time was = {adoTime}");
+                    Console.WriteLine($"Entity Framework time was = {EFTime}");
+                    Console.WriteLine();
                 }
-
-                using (TransactionScope ts = new TransactionScope(TransactionScopeOption.Required))
+                finally
                 {
-                    AddComp(ef, func, c1);
+                    DeleteAll(ado, equipaEF, funcEF);
+                    DeleteAll(ado, equipaADO, funcADO);
                 }
-
-                using (TransactionScope ts = new TransactionScope(TransactionScopeOption.Required))
-                {
-                    AddFuncToEquipa(ado, equipa, func);
-                }
-
-                using (TransactionScope ts = new TransactionScope(TransactionScopeOption.Required))
-                {
-                    DeleteAll(ado, equipa, func);
-                }
-
-                adoTime = adoTester(ctx, intervencao, ef, func, equipa);
-
-
-                using (TransactionScope ts = new TransactionScope(TransactionScopeOption.Required))
-                {
-                    func = CreateFunc2(ado);
-                    equipa = CreateEquipa2(ado);
-                    ts.Complete();
-                }
-
-                using (TransactionScope ts = new TransactionScope(TransactionScopeOption.Required))
-                {
-                    AddComp(ef, func, c2);
-                }
-
-                using (TransactionScope ts = new TransactionScope(TransactionScopeOption.Required))
-                {
-                    AddFuncToEquipa(ado, equipa, func);
-                }
-
-                EFTime = efTester(ctx, intervencao, ef, func, equipa);
-
-                using (TransactionScope ts = new TransactionScope(TransactionScopeOption.Required))
-                {
-                    DeleteAll(ado, equipa, func);
-                }
-                Console.WriteLine($"{i} iterations");
-                Console.WriteLine($"ADO.NET time was = {adoTime}");
-                Console.WriteLine($"Entity Framework time was = {EFTime}");
             }
-
+            Console.WriteLine("Benchmark finshed. Press any Key to close console window.");
             Console.ReadKey();
         }
 

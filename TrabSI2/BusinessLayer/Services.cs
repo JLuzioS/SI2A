@@ -104,8 +104,6 @@ namespace BusinessLayer
                         dtAtribuicao = DateTime.Now
                     };
 
-                    Console.WriteLine($"{intervencoes.estado}");
-
                     if(dataBase.AddEquipaToIntervencao(intervencoesEquipas))
                     {
                         intervencoes.estado = "Em Análise";

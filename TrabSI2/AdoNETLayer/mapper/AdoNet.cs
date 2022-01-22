@@ -28,14 +28,7 @@ namespace AdoNETLayer
 
         public int CreateFuncionario(Funcionarios funcionario)
         {
-            try
-            {
-                return funcionarioMapper.Create(funcionario).id;
-            }
-            catch (Exception)
-            {
-                return -1;
-            }
+            return funcionarioMapper.Create(funcionario).id;
         }
 
         public List<Funcionarios> GetAllFuncionarios()
@@ -60,15 +53,8 @@ namespace AdoNETLayer
 
         public bool CreateIntervencao(Intervencoes intervencoes)
         {
-            try
-            {
-                intervencoesMapper.Create(intervencoes);
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+            intervencoesMapper.Create(intervencoes);
+            return true;
         }
 
         public List<Activos> GetAllActivos()
@@ -78,14 +64,7 @@ namespace AdoNETLayer
 
         public int CreateEquipa(string localizacao, int numElementos)
         {
-            try
-            {
-                return equipasMapper.CreateEquipa(localizacao, numElementos);
-            }
-            catch (Exception)
-            {
-                return -1;
-            }
+            return equipasMapper.CreateEquipa(localizacao, numElementos);
         }
 
         public Activos GetActivo(int activo)
@@ -100,15 +79,8 @@ namespace AdoNETLayer
 
         public bool AddFuncionario(Equipas equipa, Funcionarios funcionario)
         {
-            try
-            {
-                equipasMapper.AddFuncionario(equipa, funcionario);
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+            equipasMapper.AddFuncionario(equipa, funcionario);
+            return true;
         }
 
         public bool DeleteFuncionario(Equipas equipa, Funcionarios funcionario)
@@ -135,27 +107,14 @@ namespace AdoNETLayer
 
         public bool UpdateIntervencao(Intervencoes intervencoes)
         {
-            try
-            {
-                intervencoesMapper.Update(intervencoes);
-                return true;
-            } catch (Exception)
-            {
-                return false;
-            }
+            intervencoesMapper.Update(intervencoes);
+            return true; return false;
         }
 
         public bool AddEquipaToIntervencao(IntervencoesEquipas intervencoesEquipas)
         {
-            try
-            {
-                intervencoesEquipasMapper.AddEquipaToIntervencao(intervencoesEquipas);
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+            intervencoesEquipasMapper.AddEquipaToIntervencao(intervencoesEquipas);
+            return true;
         }
 
         public bool UpdateIntervencaoState(Intervencoes intervencoes)

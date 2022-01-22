@@ -159,17 +159,10 @@ namespace EntityFrameworkLayer
         {
             using (var ctx = new L51NG3Entities())
             {
-                try
-                {
-                    ObjectParameter id = new ObjectParameter("id", typeof(Int32));
-                    ctx.insertEquipa(localizacao, numElementos, id);
-                    ctx.SaveChanges();
-                    return int.Parse(id.Value.ToString());
-                }
-                catch (Exception)
-                {
-                    return -1;
-                }
+                ObjectParameter id = new ObjectParameter("id", typeof(Int32));
+                ctx.insertEquipa(localizacao, numElementos, id);
+                ctx.SaveChanges();
+                return int.Parse(id.Value.ToString());
             }
         }
 
@@ -305,22 +298,15 @@ namespace EntityFrameworkLayer
                     dtAtribuicao = intervencaoEquipa.dtAtribuicao
                 };
 
-                try
-                {
-                    var entity = ctx.IntervencoesEquipas.Add(intervencoesEquipas);
+                var entity = ctx.IntervencoesEquipas.Add(intervencoesEquipas);
 
-                    if(entity == null)
-                    {
-                        return false;
-                    }
-
-                    ctx.SaveChanges();
-                    return true;
-                }
-                catch (Exception)
+                if (entity == null)
                 {
                     return false;
                 }
+
+                ctx.SaveChanges();
+                return true;
             }
         }
 
@@ -337,15 +323,8 @@ namespace EntityFrameworkLayer
 
                 intervencaoEf.estado = intervencoes.estado;
 
-                try
-                {
-                    ctx.SaveChanges();
-                    return true;
-                }
-                catch (Exception)
-                {
-                    return false;
-                }
+                ctx.SaveChanges();
+                return true;
             }
         }
 
