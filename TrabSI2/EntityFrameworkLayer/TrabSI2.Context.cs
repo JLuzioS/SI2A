@@ -198,7 +198,7 @@ namespace EntityFrameworkLayer
             var perMesesParameter = perMeses.HasValue ?
                 new ObjectParameter("perMeses", perMeses) :
                 new ObjectParameter("perMeses", typeof(int));
-
+    
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("p_CriaInter", competenciasParameter, activoParameter, vlMonetarioParameter, dtInicioParameter, perMesesParameter, id);
         }
     
@@ -369,9 +369,7 @@ namespace EntityFrameworkLayer
 
         public int obtainCodigoDeEquipaLivre(int descricao)
         {
-            var value = Database.SqlQuery<int>("select dbo.obtainCodigoDeEquipaLivre(@descricao) equipaId",
-                new System.Data.SqlClient.SqlParameter("@descricao", descricao))
-                .Single();
+            var value = Database.SqlQuery<int>("select dbo.obtainCodigoDeEquipaLivre(@descricao) equipaId", new System.Data.SqlClient.SqlParameter("@descricao", descricao)).Single();
             return value;
         }
     }

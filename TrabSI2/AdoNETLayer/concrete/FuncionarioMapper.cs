@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Transactions;
 
 namespace AdoNETLayer.concrete
 {
@@ -60,7 +61,24 @@ namespace AdoNETLayer.concrete
             }
         }
 
-        
+        public override Funcionarios Create(Funcionarios entity)
+        {
+            using (TransactionScope ts = new TransactionScope(TransactionScopeOption.Required))
+            {
+                EnsureContext();
+                using (IDbCommand cmd = context.createCommand())
+                {
+                    cmd.CommandText = InsertCommandText;
+                    cmd.CommandType = InsertCommandType;
+                    InsertParameters(cmd, entity);
+                    cmd.ExecuteNonQuery();
+                    cmd.Parameters.Clear();
+                    ts.Complete();
+                    return entity;
+                }
+            }
+        }
+
         protected override void DeleteParameters(IDbCommand cmd, Funcionarios entity)
         {
             SqlParameter p1 = new SqlParameter("@id", entity.id);
@@ -83,14 +101,14 @@ namespace AdoNETLayer.concrete
         {
             SqlParameter p = new SqlParameter("@cc", entity.cc);
             SqlParameter p1 = new SqlParameter("@nif", entity.nif);
-            SqlParameter p2 = new SqlParameter("@nome", entity.cc);
-            SqlParameter p3 = new SqlParameter("@dtNascimento", entity.nif);
-            SqlParameter p4 = new SqlParameter("@morada", entity.cc);
-            SqlParameter p5 = new SqlParameter("@codigoPostal", entity.nif);
-            SqlParameter p6 = new SqlParameter("@localidade", entity.cc);
-            SqlParameter p7 = new SqlParameter("@profissao", entity.nif);
-            SqlParameter p8 = new SqlParameter("@telefone", entity.nif);
-            SqlParameter p9 = new SqlParameter("@telemovel", entity.nif);
+            SqlParameter p2 = new SqlParameter("@nome", entity.nome);
+            SqlParameter p3 = new SqlParameter("@dtNascimento", entity.dtNascimento);
+            SqlParameter p4 = new SqlParameter("@morada", entity.morada);
+            SqlParameter p5 = new SqlParameter("@codigoPostal", entity.codigoPostal);
+            SqlParameter p6 = new SqlParameter("@localidade", entity.localidade);
+            SqlParameter p7 = new SqlParameter("@profissao", entity.profissao);
+            SqlParameter p8 = new SqlParameter("@telefone", entity.telefone);
+            SqlParameter p9 = new SqlParameter("@telemovel", entity.telemovel);
 
             cmd.Parameters.Add(p);
             cmd.Parameters.Add(p1);
