@@ -4,6 +4,7 @@ using EntityFrameworkLayer;
 using ModelLayer;
 using System;
 using AdoNETLayer.concrete;
+using System.Configuration;
 
 namespace PresentationLayer
 {
@@ -27,7 +28,8 @@ namespace PresentationLayer
 
         public static void Main()
         {
-            string connectionString = "Data Source=10.62.73.87;Initial Catalog=L51NG3;User Id=L51NG3;Password=L51NG3.passwd88;";
+            string connectionString = ConfigurationManager.ConnectionStrings["L51NG3"].ConnectionString;
+
 
             while (true) {
                 var DataAccessModelOption = GetDataAccessModelFromUser();
