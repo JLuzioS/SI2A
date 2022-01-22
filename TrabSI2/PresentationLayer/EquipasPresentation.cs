@@ -40,7 +40,11 @@ namespace PresentationLayer
             GetAllCompetencias();
 
             int competenciaId = GetCompetencia();
-            Console.WriteLine("A equipa " + service.GetFreeEquipa(competenciaId) + " contendo funcionários com a competência " + competenciaId + " está disponível.");
+            int equipa = service.GetFreeEquipa(competenciaId);
+            if(equipa > 0)
+                Console.WriteLine("A equipa " + equipa + " contendo funcionários com a competência " + competenciaId + " está disponível.");
+            else
+                Console.WriteLine("Não existem equipas contendo funcionários com a competência " + competenciaId + " disponíveis.");
         }
 
         public void CreateEquipa()
