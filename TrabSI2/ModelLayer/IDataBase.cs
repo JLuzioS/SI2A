@@ -20,5 +20,6 @@ namespace ModelLayer
         Funcionarios GetFuncionarios(int idFuncionario);
         Equipas GetEquipas(int idEquipa);
         List<listAllIntervencoesFromDate_Result> GetALLIntervYear(string anoIntervencao);
+        bool UpdateIntervencaoState(Intervencoes intervencoes);
     }
 }

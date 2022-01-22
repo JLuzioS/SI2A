@@ -147,13 +147,9 @@ namespace PresentationLayer
             Console.WriteLine("E1. Get free Equipa");
             Console.WriteLine("F1. Create Intervencao Procedure");
             Console.WriteLine("F2. Create Intervencao");
-            Console.WriteLine("G1. Create Equipa");
+            Console.WriteLine("G1. Add Funcionario to Equipa");
             Console.WriteLine("H1. Add Funcionario to Equipa");
             Console.WriteLine("H2. Remove Funcionario from Equipa");
-            Console.WriteLine("I1. GetAll Intervencoes of year");
-            Console.WriteLine("G. Create Equipa");
-            Console.WriteLine("G1. Add Funcionario to Equipa");
-            Console.WriteLine("G2. Remove Funcionario from Equipa");
             Console.WriteLine("Z. Obter o codigo de uma equipa livre, criar o procedimento e actualiza lo");
             Console.WriteLine("0. Exit");
 
@@ -185,10 +181,10 @@ namespace PresentationLayer
                         return Operation.RemoveUserFromEquipa;
                     case "I1":
                         return Operation.GetALLIntervYear;
-                    case "0":
-                        return Operation.Exit;
                     case "Z":
-                        return Operation.CreateAndAttributeIntervencaoToEquipa;  
+                        return Operation.CreateAndAttributeIntervencaoToEquipa;
+                    case "0":
+                        return Operation.Exit; 
                     default:
                         Console.WriteLine("\nNot a valid option.");
                         break;
