@@ -278,5 +278,22 @@ namespace EntityFrameworkLayer
                 return true;
             }
         }
+
+        List<ModelLayer.listAllIntervencoesFromDate_Result> IDataBase.GetALLIntervYear(string anoIntervencao)
+        {
+            using (var ctx = new L51NG3Entities())
+            {
+                List<ModelLayer.listAllIntervencoesFromDate_Result> result = new List<ModelLayer.listAllIntervencoesFromDate_Result>();
+                foreach (var each in ctx.listAllIntervencoesFromDate(anoIntervencao))
+                {
+                    result.Add(new ModelLayer.listAllIntervencoesFromDate_Result
+                    {
+                        id = each.id,
+                        descricao = each.descricao
+                    });
+                }
+                return result;
+            }
+        }
     }
 }

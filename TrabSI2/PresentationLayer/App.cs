@@ -11,7 +11,19 @@ namespace PresentationLayer
     {
 
         enum DataAccessModel { AdoNET, EntityFramework, Exit }
-        enum Operation { CreateFunc, ReadFunc, UpdateFunc, GetALLFunc, GetFreeEqu, CreateInterv, CreateIntervProc, CreateEqu, AddUserToEquipa, RemoveUserFromEquipa,  Exit }
+        enum Operation {
+            CreateFunc,
+            ReadFunc,
+            UpdateFunc,
+            GetALLFunc,
+            GetFreeEqu,
+            CreateIntervProc,
+            CreateInterv,
+            CreateEqu,
+            AddUserToEquipa,
+            RemoveUserFromEquipa,
+            GetALLIntervYear,
+            Exit }
 
         public static void Main()
         {
@@ -83,6 +95,9 @@ namespace PresentationLayer
                     case Operation.RemoveUserFromEquipa:
                         eP.DeleteFuncionarioFromEquipa();
                         break;
+                    case Operation.GetALLIntervYear:
+                        iP.GetALLIntervYear();
+                        break;
                     case Operation.Exit:
                         return;
                 }
@@ -124,11 +139,12 @@ namespace PresentationLayer
             Console.WriteLine("D3. Update Funcionario");
             Console.WriteLine("D4. GetAll Funcionarios");
             Console.WriteLine("E1. Get free Equipa");
-            Console.WriteLine("FA. Create Intervencao Procedure");
-            Console.WriteLine("FB. Create Intervencao");
-            Console.WriteLine("G. Create Equipa");
-            Console.WriteLine("G1. Add Funcionario to Equipa");
-            Console.WriteLine("G2. Remove Funcionario from Equipa");
+            Console.WriteLine("F1. Create Intervencao Procedure");
+            Console.WriteLine("F2. Create Intervencao");
+            Console.WriteLine("G1. Create Equipa");
+            Console.WriteLine("H1. Add Funcionario to Equipa");
+            Console.WriteLine("H2. Remove Funcionario from Equipa");
+            Console.WriteLine("I1. GetAll Intervencoes of year");
             Console.WriteLine("0. Exit");
 
             while (true)
@@ -147,16 +163,18 @@ namespace PresentationLayer
                         return Operation.GetALLFunc;
                     case "E1":
                         return Operation.GetFreeEqu;
-                    case "FA":
+                    case "F1":
                         return Operation.CreateIntervProc;
-                    case "FB":
+                    case "F2":
                         return Operation.CreateInterv;
-                    case "G":
-                        return Operation.CreateEqu;
                     case "G1":
+                        return Operation.CreateEqu;
+                    case "H1":
                         return Operation.AddUserToEquipa;
-                    case "G2":
+                    case "H2":
                         return Operation.RemoveUserFromEquipa;
+                    case "I1":
+                        return Operation.GetALLIntervYear;
                     case "0":
                         return Operation.Exit;
                     default:

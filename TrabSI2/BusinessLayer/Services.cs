@@ -85,7 +85,7 @@ namespace BusinessLayer
                 {
                     equipa = GetFreeEquipa(intervencoes.competencias);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     throw new Exception("Nao existe equipas disponiveis para a competencia introduzida.");
                 }
@@ -97,6 +97,11 @@ namespace BusinessLayer
 
                 return false;
             }
+        }
+
+        public List<listAllIntervencoesFromDate_Result> GetALLIntervYear(string anoIntervencao)
+        {
+            return dataBase.GetALLIntervYear(anoIntervencao);
         }
     }
 }

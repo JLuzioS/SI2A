@@ -132,5 +132,10 @@ namespace AdoNETLayer
         {
             return equipasMapper.Read(idEquipa);
         }
+
+        public List<listAllIntervencoesFromDate_Result> GetALLIntervYear(string anoIntervencao)
+        {
+            return intervencoesMapper.GetALLIntervYear(anoIntervencao);
+        }
     }
 }

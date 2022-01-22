@@ -54,6 +54,7 @@
     <Compile Include="IDataBase.cs" />
     <Compile Include="Intervencoes.cs" />
     <Compile Include="IntervencoesEquipas.cs" />
+    <Compile Include="listAllIntervencoesFromDate_Result.cs" />
     <Compile Include="PrecosActivos.cs" />
     <Compile Include="Profissoes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -133,5 +133,24 @@ namespace PresentationLayer
             // TODO DATA Validation
             return int.Parse(option);
         }
+
+        private string GetAnoIntervencao()
+        {
+            Console.WriteLine("Ano da intervenção (YYYY): ");
+            var option = Console.ReadLine();
+            // TODO DATA Validation
+            return option;
+        }
+
+        public void GetALLIntervYear()
+        {
+            string anoIntervencao = GetAnoIntervencao();
+            Console.WriteLine("Lista de Intervenções do ano " + anoIntervencao + ": ");
+            foreach (var intervencao in service.GetALLIntervYear(anoIntervencao))
+            {
+                Console.WriteLine(intervencao.id + " - " + intervencao.descricao);
+            }
+        }
+
     }
 }
