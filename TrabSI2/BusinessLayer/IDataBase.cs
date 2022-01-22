@@ -10,7 +10,7 @@ namespace BusinessLayer
         List<Competencias> GetAllCompetencias();
         List<Intervencoes> GetAllIntervencoes();
         bool AddFuncionario(Equipas equipa, Funcionarios funcionario);
-        bool DeleteFuncionario(Equipas equipa, Funcionarios funcionario);
+        int DeleteFuncionario(Equipas equipa, Funcionarios funcionario);
         int GetFreeEquipa(int competenciaId);
         int CreateEquipa(string localizacao, int numElementos);
         bool CreateIntervencao(Intervencoes intervencoes);

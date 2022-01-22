@@ -71,9 +71,13 @@ namespace BusinessLayer
             return dataBase.GetFuncionarios(idFuncionario);
         }
 
-        public bool DeleteFuncionarioFromEquipa(Equipas equipa, Funcionarios funcionario)
+        public void DeleteFuncionarioFromEquipa(Equipas equipa, Funcionarios funcionario)
         {
-            return dataBase.DeleteFuncionario(equipa, funcionario);
+            int numrows = dataBase.DeleteFuncionario(equipa, funcionario);
+            if (numrows <= 0)
+            {
+                throw new Exception("Houve um erro a remover o funcionario à equipa");
+            }
         }
 
 

@@ -98,8 +98,9 @@ namespace AdoNETLayer.concrete
         }
 
         
-        public Equipas DeleteFuncionario(Equipas equipa, Funcionarios funcionario)
+        public int DeleteFuncionario(Equipas equipa, Funcionarios funcionario)
         {
+            int numrow = 0;
             // deleteFuncionariosEquipa @funcionario INT, @equipa INT, @dtSaida DATE AS
             using (TransactionScope ts = new TransactionScope(TransactionScopeOption.Required))
             {
@@ -107,7 +108,6 @@ namespace AdoNETLayer.concrete
                 context.EnlistTransaction();
                 using (IDbCommand cmd = context.createCommand())
                 {
-                    int numrow;
                     cmd.CommandText = "deleteFuncionariosEquipa";
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add(new SqlParameter("@funcionario", funcionario.id));
@@ -122,7 +122,7 @@ namespace AdoNETLayer.concrete
                 }
                 ts.Complete();
             }
-            return equipa;
+            return numrow;
         }
 
         public int GetFreeEquipa(int competenciaId)

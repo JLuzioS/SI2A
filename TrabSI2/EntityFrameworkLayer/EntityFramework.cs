@@ -227,12 +227,13 @@ namespace EntityFrameworkLayer
             }
         }
 
-        public bool DeleteFuncionario(ModelLayer.Equipas equipa, ModelLayer.Funcionarios funcionario)
+        public int DeleteFuncionario(ModelLayer.Equipas equipa, ModelLayer.Funcionarios funcionario)
         {
             using (var ctx = new L51NG3Entities())
             {
-                ctx.deleteFuncionariosEquipa(funcionario.id, equipa.id, DateTime.Now);
-                return true;
+                ObjectParameter numrows = new ObjectParameter("numrows", typeof(Int32));
+                ctx.deleteFuncionariosEquipa(funcionario.id, equipa.id, DateTime.Now, numrows);
+                return int.Parse(numrows.Value.ToString());
             }
         }
 

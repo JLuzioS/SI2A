@@ -343,6 +343,7 @@ warning 6002: The table/view 'L51NG3.dbo.ResumoIntervencoes' does not have a pri
           <Parameter Name="funcionario" Type="int" Mode="In" />
           <Parameter Name="equipa" Type="int" Mode="In" />
           <Parameter Name="dtSaida" Type="date" Mode="In" />
+          <Parameter Name="numrows" Type="int" Mode="InOut" />
         </Function>
         <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
         <Function Name="insertEquipa" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -905,6 +906,7 @@ warning 6002: The table/view 'L51NG3.dbo.ResumoIntervencoes' does not have a pri
             <Parameter Name="funcionario" Mode="In" Type="Int32" />
             <Parameter Name="equipa" Mode="In" Type="Int32" />
             <Parameter Name="dtSaida" Mode="In" Type="DateTime" />
+            <Parameter Name="numrows" Mode="InOut" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="insertEquipa">
             <Parameter Name="localizacao" Mode="In" Type="String" />

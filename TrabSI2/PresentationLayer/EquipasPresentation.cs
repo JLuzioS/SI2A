@@ -155,9 +155,9 @@ namespace PresentationLayer
                 service.DeleteFuncionarioFromEquipa(equipa, funcionario);
                 Console.WriteLine($"Funcionario removido com sucesso");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                Console.WriteLine("Houve um erro a remover o funcionario à equipa");
+                Console.WriteLine(ex.Message);
             }
         }
     }

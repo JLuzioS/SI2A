@@ -158,14 +158,16 @@ GO
 CREATE OR ALTER PROCEDURE deleteFuncionariosEquipa
 							@funcionario INT,
 							@equipa INT,
-							@dtSaida DATE AS
+							@dtSaida DATE,
+							@numrows INT OUTPUT AS
 	BEGIN
 		SET @dtSaida = NULLIF(@dtSaida, '')
 		
 		UPDATE FuncionariosEquipas 
 		SET dtSaida = ISNULL(@dtSaida, GETDATE()) 
 	    WHERE funcionario = @funcionario
-	    AND equipa = @equipa;
+	    AND equipa = @equipa
+		SELECT @numrows = @@ROWCOUNT;
 	END
 GO 
 
