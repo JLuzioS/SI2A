@@ -148,6 +148,10 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BusinessLayer\BusinessLayer.csproj">
+      <Project>{C632CD05-10A2-4100-A26E-38104327617E}</Project>
+      <Name>BusinessLayer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ModelLayer\ModelLayer.csproj">
       <Project>{8720df66-2fe6-4c16-b1cf-6fc68ce491ed}</Project>
       <Name>ModelLayer</Name>

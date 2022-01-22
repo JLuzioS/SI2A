@@ -61,7 +61,8 @@ namespace PresentationLayer
 
         }
 
-        private static void OperationsMenu(IDataBase db) {
+        private static void OperationsMenu(IDataBase db)
+        {
             Services service = new Services(db);
             FuncionarioPresentation fP = new FuncionarioPresentation(service);
             EquipasPresentation eP = new EquipasPresentation(service);

@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using ModelLayer;
+using System.Collections.Generic;
 
-namespace ModelLayer
+namespace BusinessLayer
 {
     public interface IDataBase
     {

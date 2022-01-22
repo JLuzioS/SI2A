@@ -51,7 +51,6 @@
     <Compile Include="Equipas.cs" />
     <Compile Include="Funcionarios.cs" />
     <Compile Include="FuncionariosEquipas.cs" />
-    <Compile Include="IDataBase.cs" />
     <Compile Include="Intervencoes.cs" />
     <Compile Include="IntervencoesEquipas.cs" />
     <Compile Include="listAllIntervencoesFromDate_Result.cs" />
