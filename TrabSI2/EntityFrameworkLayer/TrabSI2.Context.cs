@@ -369,7 +369,7 @@ namespace EntityFrameworkLayer
 
         public int obtainCodigoDeEquipaLivre(int descricao)
         {
-            var value = Database.SqlQuery<int>("select dbo.obtainCodigoDeEquipaLivre(@descricao) equipaId", new System.Data.SqlClient.SqlParameter("@descricao", descricao)).Single();
+            var value = Database.SqlQuery<int>("select ISNULL(dbo.obtainCodigoDeEquipaLivre(@descricao), -1) equipaId", new System.Data.SqlClient.SqlParameter("@descricao", descricao)).Single();
             return value;
         }
     }

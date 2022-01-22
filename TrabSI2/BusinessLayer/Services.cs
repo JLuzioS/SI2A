@@ -88,14 +88,10 @@ namespace BusinessLayer
 
             using (TransactionScope ts = new TransactionScope(TransactionScopeOption.Required))
             {
-                int equipa = 0;
-                try
+                int equipa = GetFreeEquipa(intervencoes.competencias);
+                if(equipa <= 0)
                 {
-                    equipa = GetFreeEquipa(intervencoes.competencias);
-                }
-                catch (Exception)
-                {
-                    throw new Exception("Nao existe equipas disponiveis para a competencia introduzida.");
+                    throw new Exception("Nao existem equipas disponiveis para a competencia introduzida.");
                 }
                 int id = dataBase.CreateIntervencaoProcedure(intervencoes);
                 if (id != -1) 
