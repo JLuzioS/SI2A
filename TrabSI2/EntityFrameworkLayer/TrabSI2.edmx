@@ -390,6 +390,7 @@ warning 6002: The table/view 'L51NG3.dbo.ResumoIntervencoes' does not have a pri
           <Parameter Name="vlMonetario" Type="decimal" Mode="In" />
           <Parameter Name="dtInicio" Type="date" Mode="In" />
           <Parameter Name="perMeses" Type="int" Mode="In" />
+          <Parameter Name="id" Type="int" Mode="InOut" />
         </Function>
         <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
@@ -935,6 +936,7 @@ warning 6002: The table/view 'L51NG3.dbo.ResumoIntervencoes' does not have a pri
             <Parameter Name="vlMonetario" Mode="In" Type="Decimal" />
             <Parameter Name="dtInicio" Mode="In" Type="DateTime" />
             <Parameter Name="perMeses" Mode="In" Type="Int32" />
+            <Parameter Name="id" Mode="InOut" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_alterdiagram">
             <Parameter Name="diagramname" Mode="In" Type="String" />

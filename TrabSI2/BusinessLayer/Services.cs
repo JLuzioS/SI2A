@@ -42,7 +42,7 @@ namespace BusinessLayer
             return dataBase.CreateIntervencao(intervencoes);
         }
 
-        public bool CreateIntervencaoProcedure(Intervencoes intervencoes)
+        public int CreateIntervencaoProcedure(Intervencoes intervencoes)
         {
             return dataBase.CreateIntervencaoProcedure(intervencoes);
         }
@@ -78,23 +78,52 @@ namespace BusinessLayer
 
 
         public bool CreateAndAttributeIntervencaoToEquipa(Intervencoes intervencoes) {
+            /* (e) Obter o codigo de uma equipa livre, dada uma descricao de intervencao, capaz de
+                resolver o problema. Em caso de haver varias equipas deve escolher-se a que teve uma
+                intervencao atribuıda a mais tempo  */
+
+            /*(f) Criar o procedimento p criaInter que permite criar uma intervencao */
+
+            /*(j) Actualizar o estado de uma intervencao*/
+
             using (TransactionScope ts = new TransactionScope(TransactionScopeOption.Required))
             {
                 int equipa = 0;
                 try
                 {
+                    // 2
                     equipa = GetFreeEquipa(intervencoes.competencias);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     throw new Exception("Nao existe equipas disponiveis para a competencia introduzida.");
                 }
+                int id = dataBase.CreateIntervencaoProcedure(intervencoes);
+                if (id != -1) 
+                {
+                    intervencoes.id = id;
+                    IntervencoesEquipas intervencoesEquipas = new IntervencoesEquipas
+                    {
+                        equipa = equipa,
+                        intervencao = intervencoes.id,
+                        dtAtribuicao = DateTime.Now
+                    };
 
-                if (CreateIntervencaoProcedure(intervencoes)) {
-                    // TODO
+                    Console.WriteLine($"{intervencoes.estado}");
+
+                    if(dataBase.AddEquipaToIntervencao(intervencoesEquipas))
+                    {
+                        intervencoes.estado = "Em Análise";
+                        
+                        if(dataBase.UpdateIntervencaoState(intervencoes))
+                        {
+                            ts.Complete();
+                            return true;
+                        }
+                        
+                    }
                 }
-
-
+                
                 return false;
             }
         }

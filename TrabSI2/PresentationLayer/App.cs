@@ -11,7 +11,8 @@ namespace PresentationLayer
     {
 
         enum DataAccessModel { AdoNET, EntityFramework, Exit }
-        enum Operation { CreateFunc, ReadFunc, UpdateFunc, GetALLFunc, GetFreeEqu, CreateInterv, CreateIntervProc, CreateEqu, AddUserToEquipa, RemoveUserFromEquipa,  Exit }
+        enum Operation { CreateFunc, ReadFunc, UpdateFunc, GetALLFunc, GetFreeEqu, CreateInterv, CreateIntervProc, 
+            CreateEqu, AddUserToEquipa, RemoveUserFromEquipa, CreateAndAttributeIntervencaoToEquipa,  Exit }
 
         public static void Main()
         {
@@ -74,6 +75,9 @@ namespace PresentationLayer
                     case Operation.CreateInterv:
                         iP.CreateIntervencao();
                         break;
+                    case Operation.CreateAndAttributeIntervencaoToEquipa:
+                        iP.CreateAndAttributeIntervencaoToEquipa();
+                        break;
                     case Operation.CreateEqu:
                         eP.CreateEquipa();
                         break;
@@ -129,6 +133,7 @@ namespace PresentationLayer
             Console.WriteLine("G. Create Equipa");
             Console.WriteLine("G1. Add Funcionario to Equipa");
             Console.WriteLine("G2. Remove Funcionario from Equipa");
+            Console.WriteLine("Z. Obter o codigo de uma equipa livre, criar o procedimento e actualiza lo");
             Console.WriteLine("0. Exit");
 
             while (true)
@@ -159,6 +164,8 @@ namespace PresentationLayer
                         return Operation.RemoveUserFromEquipa;
                     case "0":
                         return Operation.Exit;
+                    case "Z":
+                        return Operation.CreateAndAttributeIntervencaoToEquipa;  
                     default:
                         Console.WriteLine("\nNot a valid option.");
                         break;

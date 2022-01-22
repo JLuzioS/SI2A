@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="concrete\ActivosMapper.cs" />
     <Compile Include="concrete\EquipaMapper.cs" />
+    <Compile Include="concrete\IntervencoesEquipasMapper.cs" />
     <Compile Include="mapper\AdoNet.cs" />
     <Compile Include="concrete\CompetenciaMapper.cs" />
     <Compile Include="concrete\Context.cs" />

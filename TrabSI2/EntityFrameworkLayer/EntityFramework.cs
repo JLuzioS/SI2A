@@ -1,6 +1,7 @@
 ﻿using ModelLayer;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Objects;
 using System.Linq;
 
 namespace EntityFrameworkLayer
@@ -247,36 +248,96 @@ namespace EntityFrameworkLayer
             }
         }
 
+        public int CreateIntervencaoProcedure(ModelLayer.Intervencoes intervencoes)
+        {
+            using (var ctx = new L51NG3Entities())
+            {
+                ObjectParameter id = new ObjectParameter("id", typeof(Int32));
+                ctx.p_CriaInter(intervencoes.competencias, intervencoes.activo, intervencoes.vlMonetario, intervencoes.dtInicio, intervencoes.perMeses, id);
+                return int.Parse(id.Value.ToString());
+            }
+        }
+
+        public bool UpdateIntervencao(ModelLayer.Intervencoes intervencoes)
+        {
+            using (var ctx = new L51NG3Entities())
+            {
+                var intervencaoEf = (from i in ctx.Intervencoes where intervencoes.id == i.id select i).FirstOrDefault();
+
+                if(intervencaoEf == null)
+                {
+                    return false;
+                }
+                
+                try
+                {
+                    ctx.SaveChanges();
+                    return true;
+                } catch (Exception)
+                {
+                    return false;
+                }
+            }
+        }
+
+        public bool AddEquipaToIntervencao(ModelLayer.IntervencoesEquipas intervencaoEquipa)
+        {
+            using (var ctx = new L51NG3Entities())
+            {
+                IntervencoesEquipas intervencoesEquipas = new IntervencoesEquipas
+                {
+                    equipa = intervencaoEquipa.equipa,
+                    intervencao = intervencaoEquipa.intervencao,
+                    dtAtribuicao = intervencaoEquipa.dtAtribuicao
+                };
+
+                try
+                {
+                    var entity = ctx.IntervencoesEquipas.Add(intervencoesEquipas);
+
+                    if(entity == null)
+                    {
+                        return false;
+                    }
+
+                    ctx.SaveChanges();
+                    return true;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+        }
+
+        public bool UpdateIntervencaoState(ModelLayer.Intervencoes intervencoes)
+        {
+            using (var ctx = new L51NG3Entities())
+            {
+                var intervencaoEf = (from i in ctx.Intervencoes where intervencoes.id == i.id select i).FirstOrDefault();
+
+                if (intervencaoEf == null)
+                {
+                    return false;
+                }
+
+                intervencaoEf.estado = intervencoes.estado;
+
+                try
+                {
+                    ctx.SaveChanges();
+                    return true;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+        }
 
         public bool CreateIntervencao(ModelLayer.Intervencoes intervencoes)
         {
-            using (var ctx = new L51NG3Entities())
-            {
-                Intervencoes newFunc = new Intervencoes
-                {
-                    id = intervencoes.id,
-                    competencias = intervencoes.competencias,
-                    estado = intervencoes.estado,
-                    activo = intervencoes.activo,
-                    vlMonetario = intervencoes.vlMonetario,
-                    dtInicio = intervencoes.dtInicio,
-                    dtFim = intervencoes.dtFim,
-                    perMeses = intervencoes.perMeses
-                };
-
-                ctx.SaveChanges();
-                return true;
-            }
-            
-        }
-
-        public bool CreateIntervencaoProcedure(ModelLayer.Intervencoes intervencoes)
-        {
-            using (var ctx = new L51NG3Entities())
-            {
-                ctx.p_CriaInter(intervencoes.competencias, intervencoes.activo, intervencoes.vlMonetario, intervencoes.dtInicio, intervencoes.perMeses);
-                return true;
-            }
+            throw new NotImplementedException();
         }
     }
 }

@@ -13,6 +13,7 @@ namespace AdoNETLayer
         private IntervencoesMapper intervencoesMapper;
         private EquipasMapper equipasMapper;
         private ActivosMapper activosMapper;
+        private IntervencoesEquipasMapper intervencoesEquipasMapper;
 
         public AdoNet(IContext ctx)
         {
@@ -21,6 +22,7 @@ namespace AdoNETLayer
             intervencoesMapper = new IntervencoesMapper(ctx);
             equipasMapper = new EquipasMapper(ctx);
             activosMapper = new ActivosMapper(ctx);
+            intervencoesEquipasMapper = new IntervencoesEquipasMapper(ctx);
         }
 
         public bool CreateFuncionario(Funcionarios funcionario)
@@ -92,7 +94,7 @@ namespace AdoNETLayer
             return activosMapper.Read(activo);
         }
 
-        public bool CreateIntervencaoProcedure(Intervencoes intervencoes)
+        public int CreateIntervencaoProcedure(Intervencoes intervencoes)
         {
             return intervencoesMapper.CreateWithProcedure(intervencoes);
         }
@@ -131,6 +133,36 @@ namespace AdoNETLayer
         public Equipas GetEquipas(int idEquipa)
         {
             return equipasMapper.Read(idEquipa);
+        }
+
+        public bool UpdateIntervencao(Intervencoes intervencoes)
+        {
+            try
+            {
+                intervencoesMapper.Update(intervencoes);
+                return true;
+            } catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public bool AddEquipaToIntervencao(IntervencoesEquipas intervencoesEquipas)
+        {
+            try
+            {
+                intervencoesEquipasMapper.AddEquipaToIntervencao(intervencoesEquipas);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public bool UpdateIntervencaoState(Intervencoes intervencoes)
+        {
+            return intervencoesMapper.UpdateIntervencaoState(intervencoes);
         }
     }
 }

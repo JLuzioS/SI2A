@@ -13,10 +13,13 @@ namespace ModelLayer
         int GetFreeEquipa(int competenciaId);
         bool CreateEquipa(string localizacao, int numElementos);
         bool CreateIntervencao(Intervencoes intervencoes);
+        bool AddEquipaToIntervencao(IntervencoesEquipas entity);
         List<Activos> GetAllActivos();
         Activos GetActivo(int activo);
-        bool CreateIntervencaoProcedure(Intervencoes intervencoes);
+        int CreateIntervencaoProcedure(Intervencoes intervencoes);
         Funcionarios GetFuncionarios(int idFuncionario);
         Equipas GetEquipas(int idEquipa);
+        bool UpdateIntervencao(Intervencoes intervencoes);
+        bool UpdateIntervencaoState(Intervencoes intervencoes);
     }
 }

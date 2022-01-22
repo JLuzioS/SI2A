@@ -40,7 +40,7 @@ namespace PresentationLayer
             intervencoes.dtFim = null;
             intervencoes.perMeses = GetPerMeses();
 
-            if (service.CreateIntervencaoProcedure(intervencoes))
+            if (service.CreateIntervencaoProcedure(intervencoes) != -1)
             {
                 Console.WriteLine("Intervencao criado com sucesso!");
             }
@@ -54,17 +54,7 @@ namespace PresentationLayer
         {
             Console.WriteLine("Insira os dados para nova intervenção: ");
 
-            Intervencoes intervencoes = new Intervencoes();
-
-            GetAllCompetencias();
-            intervencoes.competencias = GetCompetencia();
-            intervencoes.estado = "Por atribuir";
-            GetAllActivos();
-            intervencoes.activo = GetActivo();
-            intervencoes.vlMonetario = GetValorMonetario();
-            intervencoes.dtInicio = GetDataInicio();
-            intervencoes.dtFim = null;
-            intervencoes.perMeses = GetPerMeses();
+            Intervencoes intervencoes = CreateAndGetIntervencao();
 
             if (service.CreateIntervencao(intervencoes))
             {
@@ -74,6 +64,20 @@ namespace PresentationLayer
             {
                 Console.WriteLine("Algo correu mal! Nao sei");
             }
+        }
+
+        public void CreateAndAttributeIntervencaoToEquipa()
+        {
+            Intervencoes intervencao = CreateAndGetIntervencao();
+            if (service.CreateAndAttributeIntervencaoToEquipa(intervencao))
+            {
+                Console.WriteLine("Operacao concluida com exito.");
+            }
+            else
+            {
+                Console.WriteLine("Houve um erro na operacao pedida.");
+            }
+
         }
 
         private void GetAllCompetencias()
@@ -132,6 +136,23 @@ namespace PresentationLayer
             var option = Console.ReadLine();
             // TODO DATA Validation
             return int.Parse(option);
+        }
+
+        private Intervencoes CreateAndGetIntervencao()
+        {
+            Intervencoes intervencoes = new Intervencoes();
+
+            GetAllCompetencias();
+            intervencoes.competencias = GetCompetencia();
+            intervencoes.estado = "Por atribuir";
+            GetAllActivos();
+            intervencoes.activo = GetActivo();
+            intervencoes.vlMonetario = GetValorMonetario();
+            intervencoes.dtInicio = GetDataInicio();
+            intervencoes.dtFim = null;
+            intervencoes.perMeses = GetPerMeses();
+
+            return intervencoes;
         }
     }
 }

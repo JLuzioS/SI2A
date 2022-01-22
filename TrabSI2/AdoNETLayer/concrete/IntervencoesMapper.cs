@@ -51,9 +51,9 @@ namespace AdoNETLayer.concrete
         {
             get
             {
-                return "update Intervencoes set id=@id competencias=@competencias, estado=@estado" +
+                return "update Intervencoes set competencias=@competencias, estado=@estado" +
                     ", activo=@activo, vlMonetario=@vlMonetario, dtInicio=@dtInicio," +
-                    " dtFim=@dtFim, perMeses=@perMeses where studentNumber=@id";
+                    " dtFim=@dtFim, perMeses=@perMeses where id=@id";
             }
         }
 
@@ -87,7 +87,7 @@ namespace AdoNETLayer.concrete
             cmd.Parameters.Add(p7);
         }
 
-        internal bool CreateWithProcedure(Intervencoes intervencoes)
+        internal int CreateWithProcedure(Intervencoes intervencoes)
         {
             using (TransactionScope ts = new TransactionScope(TransactionScopeOption.Required))
             {
@@ -95,6 +95,7 @@ namespace AdoNETLayer.concrete
                 context.EnlistTransaction();
                 using (IDbCommand cmd = context.createCommand())
                 {
+                    int id = 0;
                     cmd.CommandText = "p_CriaInter";
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add(new SqlParameter("@competencias", intervencoes.competencias));
@@ -102,18 +103,44 @@ namespace AdoNETLayer.concrete
                     cmd.Parameters.Add(new SqlParameter("@vlMonetario", intervencoes.vlMonetario));
                     cmd.Parameters.Add(new SqlParameter("@dtInicio", intervencoes.dtInicio));
                     cmd.Parameters.Add(new SqlParameter("@perMeses", intervencoes.perMeses));
-                    cmd.ExecuteNonQuery();
+
+                    SqlParameter p1 = new SqlParameter("@id", id);
+                    p1.Direction = ParameterDirection.Output;
+                    cmd.Parameters.Add(p1);
+
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                        var a = int.Parse(p1.SqlValue.ToString());
+                        ts.Complete();
+                        return a;
+                    } catch (Exception)
+                    {
+                        return -1;
+                    }
+                    
                 }
-                ts.Complete();
-                return true;
+                
+                
             }
+            
         }
 
         protected override void UpdateParameters(IDbCommand cmd, Intervencoes entity)
         {
             SqlParameter p = new SqlParameter("@id", entity.id);
+            SqlParameter p1;
+            if (entity.dtFim == null)
+            {
+                p1 = new SqlParameter("@dtFim", DBNull.Value);
+            }
+            else
+            {
+                p1 = new SqlParameter("@dtFim", entity.dtFim);
+            }
 
             cmd.Parameters.Add(p);
+            cmd.Parameters.Add(p1);
             InsertParameters(cmd, entity);
         }
 
@@ -160,6 +187,35 @@ namespace AdoNETLayer.concrete
                 }
             }
                
+        }
+
+        public bool UpdateIntervencaoState(Intervencoes intervencoes)
+        {
+            using (TransactionScope ts = new TransactionScope(TransactionScopeOption.Required))
+            {
+                EnsureContext();
+                using (IDbCommand cmd = context.createCommand())
+                {
+                    cmd.CommandText = "updateIntervencaoState";
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+
+                    SqlParameter p1 = new SqlParameter("@id", intervencoes.id);
+                    SqlParameter p2 = new SqlParameter("@estado", intervencoes.estado);
+
+                    cmd.Parameters.Add(p1);
+                    cmd.Parameters.Add(p2);
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                        ts.Complete();
+                        return true;
+                    } catch (Exception)
+                    {
+                        return false;
+                    }
+                }
+            }
         }
     }
 }

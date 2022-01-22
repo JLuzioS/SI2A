@@ -131,14 +131,9 @@ namespace AdoNETLayer.concrete
                     cmd.Parameters.Add(new SqlParameter("@descricao", competenciaId));
                     using (var query = cmd.ExecuteReader())
                     { 
-                        if (query.Read())
-                        {
-                            return query.GetInt32(0);
-                        }
-                        else
-                        {
-                            return 0;
-                        }
+                        int result = query.Read() ? query.GetInt32(0) : 0;
+                        ts.Complete();
+                        return result;
                     }
                 }
             }

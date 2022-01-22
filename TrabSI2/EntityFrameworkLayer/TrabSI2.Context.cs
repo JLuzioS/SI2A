@@ -177,7 +177,7 @@ namespace EntityFrameworkLayer
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("insertFuncionariosEquipa", funcionarioParameter, equipaParameter, dtEntradaParameter);
         }
     
-        public virtual int p_CriaInter(Nullable<int> competencias, Nullable<int> activo, Nullable<decimal> vlMonetario, Nullable<System.DateTime> dtInicio, Nullable<int> perMeses)
+        public virtual int p_CriaInter(Nullable<int> competencias, Nullable<int> activo, Nullable<decimal> vlMonetario, Nullable<System.DateTime> dtInicio, Nullable<int> perMeses, ObjectParameter id)
         {
             var competenciasParameter = competencias.HasValue ?
                 new ObjectParameter("competencias", competencias) :
@@ -198,8 +198,8 @@ namespace EntityFrameworkLayer
             var perMesesParameter = perMeses.HasValue ?
                 new ObjectParameter("perMeses", perMeses) :
                 new ObjectParameter("perMeses", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("p_CriaInter", competenciasParameter, activoParameter, vlMonetarioParameter, dtInicioParameter, perMesesParameter);
+
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("p_CriaInter", competenciasParameter, activoParameter, vlMonetarioParameter, dtInicioParameter, perMesesParameter, id);
         }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
@@ -369,7 +369,9 @@ namespace EntityFrameworkLayer
 
         public int obtainCodigoDeEquipaLivre(int descricao)
         {
-            var value = Database.SqlQuery<int>("select dbo.obtainCodigoDeEquipaLivre(@descricao) equipaId", new System.Data.SqlClient.SqlParameter("@descricao", descricao)).Single();
+            var value = Database.SqlQuery<int>("select dbo.obtainCodigoDeEquipaLivre(@descricao) equipaId",
+                new System.Data.SqlClient.SqlParameter("@descricao", descricao))
+                .Single();
             return value;
         }
     }
