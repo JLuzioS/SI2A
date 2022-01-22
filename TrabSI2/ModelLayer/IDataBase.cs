@@ -19,7 +19,6 @@ namespace ModelLayer
         int CreateIntervencaoProcedure(Intervencoes intervencoes);
         Funcionarios GetFuncionarios(int idFuncionario);
         Equipas GetEquipas(int idEquipa);
-        bool UpdateIntervencao(Intervencoes intervencoes);
-        bool UpdateIntervencaoState(Intervencoes intervencoes);
+        List<listAllIntervencoesFromDate_Result> GetALLIntervYear(string anoIntervencao);
     }
 }

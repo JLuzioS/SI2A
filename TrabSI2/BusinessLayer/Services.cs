@@ -127,5 +127,10 @@ namespace BusinessLayer
                 return false;
             }
         }
+
+        public List<listAllIntervencoesFromDate_Result> GetALLIntervYear(string anoIntervencao)
+        {
+            return dataBase.GetALLIntervYear(anoIntervencao);
+        }
     }
 }

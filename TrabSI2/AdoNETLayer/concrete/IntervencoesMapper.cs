@@ -217,5 +217,32 @@ namespace AdoNETLayer.concrete
                 }
             }
         }
+
+        public List<listAllIntervencoesFromDate_Result> GetALLIntervYear(string anoIntervencao)
+        {
+            using (TransactionScope ts = new TransactionScope(TransactionScopeOption.Required))
+            {
+                EnsureContext();
+                context.EnlistTransaction();
+                using (IDbCommand cmd = context.createCommand())
+                {
+                    cmd.CommandText = "select * from dbo.listAllIntervencoesFromDate(@data)";
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Parameters.Add(new SqlParameter("@data", anoIntervencao));
+                    using (var query = cmd.ExecuteReader())
+                    {
+                        List<listAllIntervencoesFromDate_Result> list = new List<listAllIntervencoesFromDate_Result>();
+                        while (query.Read())
+                        {
+                            listAllIntervencoesFromDate_Result intervencao = new listAllIntervencoesFromDate_Result();
+                            intervencao.id = (int)query["id"];
+                            intervencao.descricao = (string)query["descricao"];
+                            list.Add(intervencao);
+                        }
+                        return list;
+                    }
+                }
+            }
+        }
     }
 }
