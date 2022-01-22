@@ -97,7 +97,8 @@ CREATE OR ALTER PROCEDURE p_CriaInter
                             @activo INT,
                             @vlMonetario DECIMAL(9,2),
                             @dtInicio DATE,
-                            @perMeses INT AS
+                            @perMeses INT,
+							@id INT OUTPUT AS
 	BEGIN
 		BEGIN TRY
 			DECLARE @dtAaquisicao DATE
@@ -107,6 +108,7 @@ CREATE OR ALTER PROCEDURE p_CriaInter
 				BEGIN
 					INSERT INTO Intervencoes(competencias, estado, activo, vlMonetario , dtInicio, dtFim, perMeses) VALUES
 					(@competencias, 'Por Atribuir', @activo, @vlMonetario, @dtInicio, NULL, @perMeses)
+					SELECT @id = SCOPE_IDENTITY();
 				END
 			ELSE
 				BEGIN
