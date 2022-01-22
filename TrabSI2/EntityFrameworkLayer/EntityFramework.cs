@@ -8,11 +8,12 @@ namespace EntityFrameworkLayer
 {
     public class EntityFramework : IDataBase
     {
-        public bool CreateFuncionario(ModelLayer.Funcionarios funcionario)
+        public int CreateFuncionario(ModelLayer.Funcionarios funcionario)
         {
+            Funcionarios newFunc;
             using (var ctx = new L51NG3Entities())
             {
-                Funcionarios newFunc = new Funcionarios
+                newFunc  = new Funcionarios
                 {
                     cc = funcionario.cc,
                     nif = funcionario.nif,
@@ -28,7 +29,7 @@ namespace EntityFrameworkLayer
                 ctx.Funcionarios.Add(newFunc);
                 ctx.SaveChanges();
             }
-            return true;
+            return newFunc.id;
         }
 
         public List<ModelLayer.Competencias> GetAllCompetencias()
@@ -45,6 +46,39 @@ namespace EntityFrameworkLayer
                 }
 
                 return ModelComp;
+            }
+        }
+
+        public void GetCompetencia(ModelLayer.Competencias c)
+        {
+            using (var ctx = new L51NG3Entities())
+            {
+                Competencias comp = new Competencias
+                {
+                    descricao = c.descricao
+                };
+
+                comp = ctx.Competencias.Add(comp);
+                ctx.SaveChanges();
+                c.id = comp.id;
+            }
+        }
+
+        public void AddCompToFunc(ModelLayer.Funcionarios func, ModelLayer.Competencias comp)
+        {
+            using (var ctx = new L51NG3Entities())
+            {
+                var f = (from fun in ctx.Funcionarios where func.id == fun.id select fun).FirstOrDefault();
+
+                if(f != null)
+                {
+                    f.Competencias.Add(new Competencias
+                    {
+                        id = comp.id,
+                        descricao = comp.descricao
+                    });
+                }
+                ctx.SaveChanges();
             }
         }
 
@@ -121,19 +155,20 @@ namespace EntityFrameworkLayer
             }
         }
 
-        public bool CreateEquipa(string localizacao, int numElementos)
+        public int CreateEquipa(string localizacao, int numElementos)
         {
             using (var ctx = new L51NG3Entities())
             {
                 try
                 {
-                    ctx.insertEquipa(localizacao, numElementos);
+                    ObjectParameter id = new ObjectParameter("id", typeof(Int32));
+                    ctx.insertEquipa(localizacao, numElementos, id);
                     ctx.SaveChanges();
-                    return true;
+                    return int.Parse(id.Value.ToString());
                 }
                 catch (Exception)
                 {
-                    return false;
+                    return -1;
                 }
             }
         }
@@ -350,6 +385,16 @@ namespace EntityFrameworkLayer
                 }
                 return result;
             }
+        }
+
+        public void RemoveFuncionario(ModelLayer.Funcionarios func)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveEquipa(ModelLayer.Equipas equipa)
+        {
+            throw new NotImplementedException();
         }
     }
 }

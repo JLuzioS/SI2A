@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLayer", "BusinessLa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdoNETLayer", "AdoNETLayer\AdoNETLayer.csproj", "{A64D4220-9F37-4390-9579-65BA8875D5A1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTests", "IntegrationTests\IntegrationTests.csproj", "{C60DA595-E5AF-4919-A85C-989BC8A68FCF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{A64D4220-9F37-4390-9579-65BA8875D5A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A64D4220-9F37-4390-9579-65BA8875D5A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A64D4220-9F37-4390-9579-65BA8875D5A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C60DA595-E5AF-4919-A85C-989BC8A68FCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C60DA595-E5AF-4919-A85C-989BC8A68FCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C60DA595-E5AF-4919-A85C-989BC8A68FCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C60DA595-E5AF-4919-A85C-989BC8A68FCF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

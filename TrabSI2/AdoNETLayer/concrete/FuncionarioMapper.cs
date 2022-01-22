@@ -30,7 +30,7 @@ namespace AdoNETLayer.concrete
             {
                 return $"INSERT INTO {this.Table} values(@cc,@nif, " +
                         "@nome, @dtNascimento, @morada, @codigoPostal, @localidade, @profissao" +
-                        ", @telefone, @telemovel);";
+                        ", @telefone, @telemovel); SELECT SCOPE_IDENTITY();";
             }
         }
 
@@ -71,10 +71,16 @@ namespace AdoNETLayer.concrete
                     cmd.CommandText = InsertCommandText;
                     cmd.CommandType = InsertCommandType;
                     InsertParameters(cmd, entity);
-                    cmd.ExecuteNonQuery();
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        if (!reader.Read()) throw new Exception("Id was not returned.");
+                        SqlParameter p = new SqlParameter("@id", reader.GetValue(0));
+                        cmd.Parameters.Add(p);
+                    }
+                    Funcionarios ent = UpdateEntityID(cmd, entity);
                     cmd.Parameters.Clear();
                     ts.Complete();
-                    return entity;
+                    return ent;
                 }
             }
         }

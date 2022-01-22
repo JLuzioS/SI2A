@@ -348,6 +348,7 @@ warning 6002: The table/view 'L51NG3.dbo.ResumoIntervencoes' does not have a pri
         <Function Name="insertEquipa" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="localizacao" Type="varchar" Mode="In" />
           <Parameter Name="numElementos" Type="int" Mode="In" />
+          <Parameter Name="id" Type="int" Mode="InOut" />
         </Function>
         <Function Name="insertFuncionario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="cc" Type="varchar" Mode="In" />
@@ -908,6 +909,7 @@ warning 6002: The table/view 'L51NG3.dbo.ResumoIntervencoes' does not have a pri
           <FunctionImport Name="insertEquipa">
             <Parameter Name="localizacao" Mode="In" Type="String" />
             <Parameter Name="numElementos" Mode="In" Type="Int32" />
+            <Parameter Name="id" Mode="InOut" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="insertFuncionario">
             <Parameter Name="cc" Mode="In" Type="String" />

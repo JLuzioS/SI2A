@@ -42,7 +42,7 @@ namespace PresentationLayer
             funcionario.telefone = GetPhone();
             funcionario.telemovel = GetCellPhone();
 
-            if (service.CreateFuncionario(funcionario))
+            if (service.CreateFuncionario(funcionario) > 0)
             {
                 Console.WriteLine("Funcionario criado com sucesso!");
             }

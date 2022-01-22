@@ -89,7 +89,7 @@ namespace EntityFrameworkLayer
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("deleteFuncionariosEquipa", funcionarioParameter, equipaParameter, dtSaidaParameter);
         }
     
-        public virtual int insertEquipa(string localizacao, Nullable<int> numElementos)
+        public virtual int insertEquipa(string localizacao, Nullable<int> numElementos, ObjectParameter id)
         {
             var localizacaoParameter = localizacao != null ?
                 new ObjectParameter("localizacao", localizacao) :
@@ -99,7 +99,7 @@ namespace EntityFrameworkLayer
                 new ObjectParameter("numElementos", numElementos) :
                 new ObjectParameter("numElementos", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("insertEquipa", localizacaoParameter, numElementosParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("insertEquipa", localizacaoParameter, numElementosParameter, id);
         }
     
         public virtual int insertFuncionario(string cc, string nif, string nome, Nullable<System.DateTime> dtNascimento, string morada, string codigoPostal, string localidade, Nullable<int> profissao, string telefone, string telemovel)

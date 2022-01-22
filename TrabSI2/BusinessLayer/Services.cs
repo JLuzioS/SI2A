@@ -13,7 +13,7 @@ namespace BusinessLayer
         {
             dataBase = db;
         }
-        public bool CreateFuncionario(Funcionarios funcionario)
+        public int CreateFuncionario(Funcionarios funcionario)
         {
             return dataBase.CreateFuncionario(funcionario);
         }
@@ -51,7 +51,7 @@ namespace BusinessLayer
         {
             return dataBase.GetAllActivos();
         }
-        public bool CreateEquipa(string localizacao, int numElementos)
+        public int CreateEquipa(string localizacao, int numElementos)
         {
             return dataBase.CreateEquipa(localizacao, numElementos);
         }

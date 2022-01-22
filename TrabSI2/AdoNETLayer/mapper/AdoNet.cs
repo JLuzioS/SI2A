@@ -26,16 +26,15 @@ namespace AdoNETLayer
             intervencoesEquipasMapper = new IntervencoesEquipasMapper(ctx);
         }
 
-        public bool CreateFuncionario(Funcionarios funcionario)
+        public int CreateFuncionario(Funcionarios funcionario)
         {
             try
             {
-                funcionarioMapper.Create(funcionario);
-                return true;
+                return funcionarioMapper.Create(funcionario).id;
             }
             catch (Exception)
             {
-                return false;
+                return -1;
             }
         }
 
@@ -77,16 +76,15 @@ namespace AdoNETLayer
             return activosMapper.ReadAll();
         }
 
-        public bool CreateEquipa(string localizacao, int numElementos)
+        public int CreateEquipa(string localizacao, int numElementos)
         {
             try
             {
-                equipasMapper.CreateEquipa(localizacao, numElementos);
-                return true;
+                return equipasMapper.CreateEquipa(localizacao, numElementos);
             }
             catch (Exception)
             {
-                return false;
+                return -1;
             }
         }
 
@@ -163,6 +161,16 @@ namespace AdoNETLayer
         public bool UpdateIntervencaoState(Intervencoes intervencoes)
         {
             return intervencoesMapper.UpdateIntervencaoState(intervencoes);
+        }
+
+        public void RemoveFuncionario(Funcionarios func)
+        {
+            funcionarioMapper.Delete(func);
+        }
+
+        public void RemoveEquipa(Equipas equipa)
+        {
+            equipasMapper.Delete(equipa);
         }
     }
 }

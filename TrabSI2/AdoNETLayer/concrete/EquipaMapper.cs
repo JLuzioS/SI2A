@@ -139,21 +139,29 @@ namespace AdoNETLayer.concrete
             }
         }
 
-        public void CreateEquipa(string localizacao, int numElementos)
+        public int CreateEquipa(string localizacao, int numElementos)
         {
             using (TransactionScope ts = new TransactionScope(TransactionScopeOption.Required))
             {
                 EnsureContext();
                 context.EnlistTransaction();
+                int id;
                 using (IDbCommand cmd = context.createCommand())
                 {
                     cmd.CommandText = "insertEquipa";
                     cmd.CommandType = CommandType.StoredProcedure;
+                    SqlParameter p1 = new SqlParameter("@id", 0);
+                    p1.Direction = ParameterDirection.Output;
+
                     cmd.Parameters.Add(new SqlParameter("@localizacao", localizacao));
                     cmd.Parameters.Add(new SqlParameter("@numElementos", numElementos));
+                    cmd.Parameters.Add(p1);
+
                     cmd.ExecuteNonQuery();
+                    id = int.Parse(p1.Value.ToString());
                 }
                 ts.Complete();
+                return id;
             }
         }
     }
